@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.25",
+  "date": "2026-11-23",
+  "notes": "Every bill goes to the technicians (repair box on by itself, Send-to-technician on any bill); technician WORK board with all jobs, device photo and who took each one — Tray / List / Big cards, filters, TAKE & START, next-job suggestion, 4-step workflow; owner decides which tabs each role or person sees; cost code removed",
+  "hi": "हर बिल टेक्नीशियन तक; टेक्नीशियन का काम बोर्ड — सब काम, फोटो, किसने लिया — ट्रे / सूची / बड़े कार्ड, फ़िल्टर, लें + शुरू, अगला काम; मालिक तय करे कौन कौन सा टैब देखे; कॉस्ट कोड हटाया"
+ },
+ {
   "v": "9.24",
   "date": "2026-11-23",
   "notes": "Your own storage places (tray/box/drawer) with photo, camera barcode scanner, pop-ups only for recent alerts, clear technician workspace (Now / Today / Pending / Previous), chat bubble with beep, part return, photo for sending parts and handover, admin clean screen + restore, typing never closes the keyboard, Quick Billing lists only after typing, 4 free servers with automatic switch",

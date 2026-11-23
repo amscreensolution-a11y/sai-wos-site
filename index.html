@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.23';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.24';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -593,6 +593,45 @@ body.kbOpen~#chatBall{display:none}
 .msgCard.kpartret{border-color:var(--amb)}.msgCard.kpartret .msgHead{color:var(--amb)}
 
 #popArea .popCard{max-height:calc(80vh - 12px)!important;overflow:auto}
+
+/* ===== v9.25 ===== */
+.twSteps{display:flex;gap:6px;margin:0 0 12px;overflow-x:auto}
+.twSteps div{flex:1;min-width:92px;border:2px solid var(--line2);border-radius:12px;padding:8px 6px;text-align:center;background:var(--panel);font-size:13px;font-weight:700;color:var(--dim)}
+.twSteps div b{display:block;font-size:22px}.twSteps div.on{border-color:var(--grn);color:var(--grn);background:rgba(16,185,129,.12)}.twSteps div.ok{border-color:var(--cyn);color:var(--cyn)}
+.twBH{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.twBH h2{margin:0}
+.twViews{display:flex;gap:4px}.twViews button{border:1.5px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:10px;padding:6px 10px;font-size:13px;font-weight:700;cursor:pointer}
+.twViews button.on{border-color:var(--cyn);color:var(--cyn);background:rgba(34,211,238,.12)}
+.twFl{display:flex;gap:6px;overflow-x:auto;margin:10px 0;padding-bottom:2px}
+.twFl button{white-space:nowrap;border:1.5px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:18px;padding:7px 12px;font-size:14px;font-weight:700;cursor:pointer}
+.twFl button b{background:var(--panel);border-radius:9px;padding:0 6px;margin-left:3px}.twFl button.on{border-color:var(--amb);color:var(--amb);background:rgba(255,179,0,.12)}
+.twTray{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.twT{border:2px solid var(--line2);border-radius:14px;overflow:hidden;background:var(--panel2);cursor:pointer;display:flex;flex-direction:column}
+.twT.stNEW{border-color:var(--amb)}.twT.mine{border-color:var(--grn);box-shadow:0 0 0 3px rgba(16,185,129,.15)}.twT.stPARTS{border-color:var(--red)}
+.twTph{position:relative;aspect-ratio:4/3;background:#000;display:flex;align-items:center;justify-content:center;font-size:34px}
+.twTph img{width:100%;height:100%;object-fit:cover}
+.twTid{position:absolute;left:6px;top:6px;background:rgba(0,0,0,.72);color:#fff;border-radius:8px;padding:2px 7px;font-size:13px}
+.twTph .twAge{position:absolute;right:6px;top:6px}.twTu{position:absolute;left:6px;bottom:6px;font-style:normal;font-size:20px}
+.twAge{border-radius:8px;padding:2px 7px;font-size:12px;font-weight:800;background:rgba(0,0,0,.72);color:#fff}.twAge.g{color:#4ade80}.twAge.a{color:#fbbf24}.twAge.r{color:#f87171}
+.twTb{padding:8px;display:flex;flex-direction:column;gap:3px;flex:1}
+.twTm{font-size:17px;font-weight:900;line-height:1.15}.twTp{font-size:14px;color:var(--amb);font-weight:700}
+.twWho{font-size:13px;font-weight:800;color:var(--cyn)}.twWho.free{color:var(--amb)}.twWho.me{color:var(--grn)}
+.twTbtn{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:4px}.twTbtn .tkB{flex:1;margin:0}
+.twList{display:flex;flex-direction:column;gap:6px}
+.twR{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line2);border-left:5px solid var(--cyn);border-radius:12px;padding:6px;background:var(--panel2);cursor:pointer}
+.twR.stNEW{border-left-color:var(--amb)}.twR.mine{border-left-color:var(--grn)}.twR.stPARTS{border-left-color:var(--red)}
+.twR img,.twR .twNoP{width:54px;height:54px;object-fit:cover;border-radius:8px;flex:none}
+.twRt{flex:1;min-width:0}.twRb{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.twCardWho{margin:4px 0 -6px 4px}.twEmpty{color:var(--dim);padding:14px;text-align:center}
+.twNextH{margin:10px 0 6px;color:var(--txt);font-weight:800}.twIdle .twT{max-width:260px;margin:0 auto;text-align:left}
+.bJobLine{display:block;width:100%;margin:10px 0 0;border:1.5px dashed #0B72E7;border-radius:10px;padding:12px;background:#F5FAFF;color:#0B72E7;font-size:15px;font-weight:600;cursor:pointer;text-align:center}
+.bJobLine.on{border-style:solid;background:#ECFDF3;border-color:#12B76A;color:#027A48}
+.accWrap{overflow-x:auto}.accT{border-collapse:collapse;width:100%;min-width:560px;font-size:13px}
+.accT th,.accT td{border-bottom:1px solid var(--line2);padding:6px 4px;text-align:center}.accT td:first-child,.accT th:first-child{text-align:left;white-space:nowrap}
+.accT th{position:sticky;top:0;background:var(--panel);font-size:12px}.accC input{width:20px;height:20px}
+.accChips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.accChips label{border:1.5px solid var(--line2);border-radius:16px;padding:5px 10px;font-size:13px;cursor:pointer;display:flex;gap:5px;align-items:center}
+.accChips label.on{border-color:var(--grn);color:var(--grn)}.accF{display:flex;gap:8px;align-items:center;padding:6px 0;font-size:15px}.accF input{width:20px;height:20px}
+.accP select{width:100%;font-size:15px;margin-top:4px}
+.twNote{font-size:13px;font-weight:800;color:var(--cyn);background:rgba(34,211,238,.1);border-left:3px solid var(--cyn);border-radius:6px;padding:3px 6px}
 </style>
 </head>
 <body>
@@ -600,7 +639,7 @@ body.kbOpen~#chatBall{display:none}
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.24</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.25</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -692,7 +731,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.24';
+var APP_VER='9.25';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -1301,14 +1340,14 @@ function attPunchOut(){try{if(!USER)return;var e=attToday(USER);if(e&&!e.out){e.
 function logout(){try{wtStop();wtRelease();}catch(e){}attPunchOut();USER=null;sessionStorage.removeItem('SSM_WOS_USER');location.reload();}
 
 /* ================= TABS + ROUTER ================= */
-function tabList(){var r=role();
+function tabListDef(r){r=r||role();
   if(r==='reception')return ['EXPRESS','QUICK','BILLER','MOBILES','TEAM','LIVE','TRACK','FASTBILL','NEWJOB','SHOP','SCAN','BOARD','DAYBOOK','REGISTER','ITEMS','STOCK','SEARCH','PRINTS'];
   if(r==='tech')return ['JOBS','LIVE','BOARD'];   /* repair work only — no billing, shop, items or money screens */
   if(r==='stockman')return ['SHOP','LIVE','SEARCH'];
   if(r==='billing')return ['BILLER'];   /* Quick Billing login: the Biller only */
   if(r==='manager')return ['MOBILES','EXPRESS','BILLER'];   /* Mobile Manager: phones in / rack / handover */
   return ['DASH','INSIGHTS','LIVE','EXPRESS','QUICK','BILLER','MOBILES','TEAM','TRACK','FASTBILL','DAYBOOK','SHOP','SCAN','BOARD','NEWJOB','REGISTER','ITEMS','STOCK','PHOTOS','SEARCH','PRINTS','STAFF','REPORTS','AUDIT','SETTINGS'];}
-var tabLbl={MOBILES:'📱 MOBILE MANAGER',TEAM:'💬 TEAM',QBILL:'🧾 QUICK BILLING',BILLER:'🧾 BILLER',INSIGHTS:'🧠 INSIGHTS',EXPRESS:'⚡ EXPRESS',LIVE:'📺 LIVE',NEWJOB:'＋ NEW JOB',BOARD:'BOARD',JOBS:'🛠 MY WORK',SEARCH:'SEARCH',DASH:'DASHBOARD',QUICK:'⚡ QUICK',TRACK:'🔎 TRACK',FASTBILL:'⚡ FAST BILL',DAYBOOK:'📅 DAY BOOK',SHOP:'🛒 SHOP',SCAN:'📷 SCAN',REGISTER:'📒 REGISTER',ITEMS:'ITEMS',STOCK:'STOCK',PHOTOS:'PHOTOS',PRINTS:'PRINTS',STAFF:'STAFF',REPORTS:'REPORTS',AUDIT:'AUDIT',SETTINGS:'SETTINGS'};
+var tabLbl={MOBILES:'📱 MOBILE MANAGER',TEAM:'💬 TEAM',QBILL:'🧾 QUICK BILLING',BILLER:'🧾 BILLER',INSIGHTS:'🧠 INSIGHTS',EXPRESS:'⚡ EXPRESS',LIVE:'📺 LIVE',NEWJOB:'＋ NEW JOB',BOARD:'BOARD',JOBS:'🛠 WORK',SEARCH:'SEARCH',DASH:'DASHBOARD',QUICK:'⚡ QUICK',TRACK:'🔎 TRACK',FASTBILL:'⚡ FAST BILL',DAYBOOK:'📅 DAY BOOK',SHOP:'🛒 SHOP',SCAN:'📷 SCAN',REGISTER:'📒 REGISTER',ITEMS:'ITEMS',STOCK:'STOCK',PHOTOS:'PHOTOS',PRINTS:'PRINTS',STAFF:'STAFF',REPORTS:'REPORTS',AUDIT:'AUDIT',SETTINGS:'SETTINGS'};
 var _renderedTab='';
 function buildVip(){var m={};jobsArr().forEach(function(j){m[j.c.mob]=(m[j.c.mob]||0)+1;});window._vipMap=m;}
 function renderTabs(){var t=document.getElementById('tabs');t.innerHTML='';
@@ -5125,8 +5164,6 @@ function bilPreview(){var B=bilBuild();if(!B.items.length){toast('⚠ add an ite
 
 
 /* 🔧 a bill can also be a repair job: it then goes to the technicians (new-job alert, take, start, parts, done…) */
-function bilJobDef(){try{var v=localStorage.getItem('SSM_WOS_BILJOB');if(v!=null)return v==='1';}catch(e){}return role()==='billing';}
-function bilJobToggle(on){BIL.f.job.on=!!on;try{localStorage.setItem('SSM_WOS_BILJOB',on?'1':'0');}catch(e){}bilDraw();}
 var BIL_PROBS=['Display','Combo','Battery','Charging port','Not charging','Speaker','Mic','Camera','Back glass','Software','Water damage','Dead','Network','Touch'];
 function bilJobBox(){var f=BIL.f,J=f.job||(f.job={on:0,model:'',prob:'',to:'',urg:0}),hi=LANG==='hi';
   if(J.linked)return '<div class="bJob on"><div class="bJobH"><span>🔧 '+(hi?'रिपेयर काम':'Repair job')+' <b>'+esc(J.linked)+'</b></span><a class="bLink" style="margin:0" onclick="openJob(\''+esc(J.linked)+'\')">'+(hi?'खोलें':'Open')+'</a></div></div>';
@@ -5196,7 +5233,7 @@ function bilLowStock(list,yes){var o=document.getElementById('popArea');if(!o)re
 function bilSave(andNew,after,skipStock){var f=BIL.f;if(!f)return;var B=bilBuild(),nm=(''+f.cust).trim(),mb=bilMob(f.mob);
   if(f.credit&&!nm){toast('⚠ Customer name is required for a credit sale');var e=document.getElementById('bCust');if(e)e.focus();return;}
   if(!B.items.length||!B.tot){toast('⚠ Add an item with a rate');return;}
-  if(f.job&&f.job.on&&!f.job.linked&&!(''+f.job.model).trim()){toast('⚠ '+(LANG==='hi'?'टेक्नीशियन के लिए फोन मॉडल लिखें':'Enter the phone model for the technician'));var jm=document.getElementById('bJm');if(jm)jm.focus();return;}
+  if(f.job&&f.job.on&&!f.job.linked&&!(''+f.job.model).trim()&&(''+(f.job.prob||'')).trim()){toast('⚠ '+(LANG==='hi'?'टेक्नीशियन के लिए फोन मॉडल लिखें':'Enter the phone model for the technician'));var jm=document.getElementById('bJm');if(jm)jm.focus();return;}
   if(!skipStock&&ipS().lowAsk){var low=[];B.items.forEach(function(c){var p=c.pid&&DB.prod[c.pid];var had=(f.old||[]).filter(function(o){return o.pid&&o.pid===c.pid;}).reduce(function(x,o){return x+o.qty;},0);if(p&&p.qty+had<c.qty)low.push(p.name+' (in stock '+(p.qty+had)+')');});
     if(low.length){bilLowStock(low,function(){bilSave(andNew,after,1);});return;}}
   var id=f.edit||(f.noSet?f.no:bilNextNo());if(!f.edit&&DB.sale[id]){toast('⚠ Invoice '+id+' already exists — change the number');return;}
@@ -5213,7 +5250,7 @@ function bilSave(andNew,after,skipStock){var f=BIL.f;if(!f)return;var B=bilBuild
   var pids={};(f.old||[]).forEach(function(o){var p=o.pid&&DB.prod[o.pid];if(p){p.qty+=o.qty;prodMove(p,'IN',o.qty,'bill edited',id);pids[p.id]=1;}});
   B.items.forEach(function(c){var p=c.pid&&DB.prod[c.pid];if(p){p.qty-=c.qty;prodMove(p,'OUT',-c.qty,'sale',id);pids[p.id]=1;}});
   if(f.linkJob&&DB.jobs[f.linkJob]&&!sale.job){sale.job=f.linkJob;var lj=DB.jobs[f.linkJob];lj.billed=id;if(lj.st!=='DELIVERED')lj.pay={amt:0,paid:0,due:0,mode:'BILL',status:'PAID',bill:id};sale.model=((lj.c.brand||'')+' '+(lj.c.model||'')).trim();logA(lj,'🧾 BILL '+id+' made for this phone','','');save([lj.id]);}
-  if(f.job&&f.job.on&&!f.job.linked&&!sale.job){sale.model=(''+f.job.model).trim().toUpperCase();try{sale.job=bilMakeJob(sale,f.job);}catch(e){}}
+  if(f.job&&f.job.on&&!f.job.linked&&!sale.job&&(''+f.job.model).trim()){sale.model=(''+f.job.model).trim().toUpperCase();try{sale.job=bilMakeJob(sale,f.job);var _sj=sale.job;setTimeout(function(){toast('🔧 '+_sj+' → '+(f.job.to?esc(techName(f.job.to)):(LANG==='hi'?'सब टेक्नीशियन':'all technicians')));},700);}catch(e){toast('⚠ repair job not made: '+esc(e&&e.message||e));}}
   DB.sale[id]=sale;
   DB.audit.push({ts:now(),by:me().name,jid:id,a:(old?'✏ BILL EDITED ':'🧾 BILL ')+money(B.tot)+' — '+B.items.length+' item(s) ('+sale.mode+')'+(nm?' — '+nm:'')+(B.due?' DUE '+money(B.due):''),f:'',t:''});
   if(Object.keys(pids).length)saveColl('prod',Object.keys(pids));saveColl('sale',[id]);
@@ -5456,9 +5493,6 @@ function c128(txt){txt=(''+txt).replace(/[^\x20-\x7E]/g,'');var codes=[],i;
   var sum=codes[0];for(var k=1;k<codes.length;k++)sum+=codes[k]*k;codes.push(sum%103);codes.push(106);
   return codes.map(function(c){return C128P[c];}).join('');}
 function c128mods(w){var m=0;for(var i=0;i<w.length;i++)m+=+w[i];return m;}
-/* LUCKYSTAR cost code: 1=L 2=U 3=C 4=K 5=Y 6=S 7=T 8=A 9=R, 0 = D / Z / P in turn */
-function luckyCode(n){var z=['D','Z','P'],zi=0,m={1:'L',2:'U',3:'C',4:'K',5:'Y',6:'S',7:'T',8:'A',9:'R'};
-  return (''+Math.round(+n||0)).split('').map(function(d){return d==='0'?z[(zi++)%3]:(m[d]||d);}).join('');}
 function inWords(n){n=Math.round(Math.abs(+n||0));if(!n)return 'Zero';
   var a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'],
       b=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
@@ -5629,7 +5663,7 @@ function bilPreview2(){var pv=BIL.pv||{},sl=DB.sale[pv.sid];if(!sl)return bilHom
     +'<div class="bPvCard"><button class="bArr bArrL" onclick="bilTheme(-1)">‹</button>'+body+'<button class="bArr bArrR" onclick="bilTheme(1)">›</button>'
     +'<button class="bShare" title="share" onclick="'+(reg?'ipPrint(\''+sl.id+'\',\'regular\');toast(\'Choose Save as PDF to share\')':'ipShare(\''+sl.id+'\')')+'">➦</button></div>'
     +'<div class="bPvInfo">'+esc(sl.id)+' · '+esc(sl.cust||'Cash Sale')+' · '+bilMoney(sl.total)+(+sl.due?' · <span class="bRx">due '+bilMoney(sl.due)+'</span>':'')+'</div>'
-    +'<div style="height:80px"></div><div class="bSave"><button class="bSN" onclick="bilPreviewClose()">Close</button><button class="bS" onclick="ipPrint(\''+sl.id+'\')">🖨 Print</button>'
+    +bilJobLine(sl)+'<div style="height:80px"></div><div class="bSave"><button class="bSN" onclick="bilPreviewClose()">Close</button><button class="bS" onclick="ipPrint(\''+sl.id+'\')">🖨 Print</button>'
     +'<button class="bK" title="bill sticker" onclick="blSheet(\''+sl.id+'\')">🏷</button></div>';}
 function bilTheme(d){var I=ipS();if(I.mode==='regular'){var n=RG_THEMES.length,t=((+I.rg.theme||1)-1+d+n)%n+1;ipSet('rg.theme',t);}else{var n2=RC_THEMES.length,t2=((+I.th.theme||2)-1+d+n2)%n2+1;ipSet('th.theme',t2);}bilDraw();}
 function bilPreviewClose(){if(BIL.quick||role()==='billing'){BIL.pv=null;bilSaleStart();return;}var b=(BIL.pv&&BIL.pv.back)||'home';BIL.pv=null;if(b==='sale'&&!BIL.f)b='home';if(b==='home')BIL.tab=BIL.tab||'txn';bilGo(b);}
@@ -5726,7 +5760,7 @@ function blSheet(sid){var sl=DB.sale[sid],o=document.getElementById('popArea');i
   +'<div style="color:#888;font-size:12px;margin-top:10px">Uses the label printer set in Barcode Labels. Scan the sticker in TRACK or Biller search to open this bill.</div></div></div>';}
 
 /* ================= 🏷 BARCODE LABELS — any size, any time ================= */
-var LBL_DEF={w:50,h:25,cols:1,gap:2,hgap:2,dpi:203,shop:1,name:1,price:1,mrp:0,cost:0,code:1,bar:1,cat:0,date:0,fs:'m',lang:'tspl',paper:'gap',sheet:'roll',barH:40,inv:0,dens:10,bold:1};
+var LBL_DEF={w:50,h:25,cols:1,gap:2,hgap:2,dpi:203,shop:1,name:1,price:1,mrp:0,code:1,bar:1,cat:0,date:0,fs:'m',lang:'tspl',paper:'gap',sheet:'roll',barH:40,inv:0,dens:10,bold:1};
 function lblS(){return Object.assign({},LBL_DEF,DB.settings.lbl||{});}
 function lblSet(k,v){DB.settings.lbl=Object.assign({},DB.settings.lbl||{});DB.settings.lbl[k]=v;metaSave();}
 var LBL_PRESETS=[[50,25,1],[38,25,1],[50,30,1],[40,30,1],[60,40,1],[33,22,2],[25,15,3],[100,50,1]];
@@ -5735,7 +5769,7 @@ function lblCanvas(p,L){var dpm=L.dpi/25.4,W=Math.max(40,Math.round(L.w*dpm)),H=
   var c=cv.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,W,H);c.fillStyle='#000';c.textBaseline='top';var FF='Roboto,"Noto Sans","Noto Sans Devanagari",Arial,sans-serif',pad=Math.round(dpm*1.2),IW=W-2*pad;
   var code=lblCode(p),S=DB.settings,lines=[],BOLD=L.bold!==0;function ft(t,x,y){c.fillText(t,x,y);if(BOLD){var m=/(\d+(?:\.\d+)?)px/.exec(c.font),z=m?+m[1]:16;c.lineWidth=Math.max(0.7,z*0.05);c.lineJoin='round';c.strokeStyle=c.fillStyle;c.strokeText(t,x,y);}}
   if(L.shop)lines.push({k:'shop',w:0.75});if(L.name)lines.push({k:'name',w:1});if(L.price||L.mrp)lines.push({k:'price',w:1.25});
-  if(L.bar&&code)lines.push({k:'bar',w:Math.max(1,(+L.barH||40)/16)});if(L.code&&code)lines.push({k:'code',w:0.7});if(L.cat||L.date||L.cost)lines.push({k:'foot',w:0.7});
+  if(L.bar&&code)lines.push({k:'bar',w:Math.max(1,(+L.barH||40)/16)});if(L.code&&code)lines.push({k:'code',w:0.7});if(L.cat||L.date)lines.push({k:'foot',w:0.7});
   var tw=0;lines.forEach(function(l){tw+=l.w;});var unit=(H-2*pad)/Math.max(1,tw),scale={s:0.85,m:1,l:1.15}[L.fs]||1,y=pad;
   function fit(t,sz,b,maxW){c.font=(BOLD?'900 ':(b?'bold ':''))+Math.round(sz)+'px '+FF;while(sz>6&&c.measureText(t).width>maxW){sz-=1;c.font=(BOLD?'900 ':(b?'bold ':''))+Math.round(sz)+'px '+FF;}
     if(c.measureText(t).width>maxW){while(t.length>2&&c.measureText(t+'…').width>maxW)t=t.slice(0,-1);t+='…';}return t;}
@@ -5749,7 +5783,7 @@ function lblCanvas(p,L){var dpm=L.dpi/25.4,W=Math.max(40,Math.round(L.w*dpm)),H=
       for(var i=0;i<wd.length;i++){var ww=+wd[i]*mw;if(on)c.fillRect(x,y+Math.round(h*0.03),ww,bh);x+=ww;on=!on;}l.tight=bw>IW;}
     else if(l.k==='code'){c.textAlign='center';ft(fit(code,sz,0,IW),W/2,y+(h-sz)/2);}
     else if(l.k==='foot'){var a=[];if(L.cat&&p.cat)a.push(p.cat);if(L.date){var d=new Date();a.push(bilPad(d.getDate())+'/'+bilPad(d.getMonth()+1)+'/'+(''+d.getFullYear()).slice(2));}
-      c.textAlign='left';ft(fit(a.join(' · '),sz,0,IW*(L.cost?0.7:1)),pad,y+(h-sz)/2);if(L.cost&&p.buy){c.textAlign='right';c.font=(BOLD?'900 ':'bold ')+Math.round(sz)+'px '+FF;ft(luckyCode(p.buy),W-pad,y+(h-sz)/2);}}
+      c.textAlign='left';ft(fit(a.join(' · '),sz,0,IW),pad,y+(h-sz)/2);}
     y+=h;});
   c.textAlign='left';cv._tight=lines.some(function(l){return l.tight;});return cv;}
 function lblQueue(){var q=[];Object.keys(BIL.lb&&BIL.lb.sel||{}).forEach(function(pid){var n=+BIL.lb.sel[pid]||0,p=DB.prod[pid];if(p)for(var i=0;i<n;i++)q.push(p);});return q;}
@@ -5785,7 +5819,7 @@ function bilLabels(){var L=lblS(),lb=BIL.lb||(BIL.lb={sel:{},q:''}),q=(lb.q||'')
   +'<div class="lPrev">'+(pc?'<div class="lPrevBox"><img src="'+pc.toDataURL()+'" style="width:'+Math.min(300,L.w*6)+'px;aspect-ratio:'+L.w+'/'+L.h+'"></div><div class="lPrevT">'+L.w+' × '+L.h+' mm'+(L.cols>1?' · '+L.cols+' across':'')+(pc._tight?' · <b class="bRx">code too long for this width — make the label wider</b>':'')+'</div>':'<div class="bEmpty">Add an item to see the label</div>')+'</div>'
   +ipSec('Label size')+'<div class="lPre">'+LBL_PRESETS.map(function(x){var on=+L.w===x[0]&&+L.h===x[1]&&+L.cols===x[2];return '<button class="'+(on?'on':'')+'" onclick="lblSet(\'w\','+x[0]+');lblSet(\'h\','+x[1]+');lblSet(\'cols\','+x[2]+');bilKeepDraw()">'+x[0]+'×'+x[1]+(x[2]>1?' ×'+x[2]:'')+'</button>';}).join('')+'</div>'
   +'<div class="lGrid">'+[['Width mm','w'],['Height mm','h'],['Labels across','cols'],['Gap mm','gap'],['Side gap mm','hgap'],['Barcode height','barH']].map(function(x){return '<div class="bOut"><label>'+x[0]+'</label><input inputmode="decimal" value="'+esc(L[x[1]])+'" onchange="var v=parseFloat(this.value);if(v>0||(v===0&&/gap/.test(\''+x[1]+'\')))lblSet(\''+x[1]+'\',v);bilKeepDraw()"></div>';}).join('')+'</div>'
-  +ipSec('Print on the label')+'<div class="lChips">'+tg('shop','Shop name')+tg('name','Item name')+tg('price','Sale price')+tg('mrp','MRP')+tg('bar','Barcode')+tg('code','Code number')+tg('cat','Category')+tg('date','Date')+tg('cost','Cost code (LUCKYSTAR)')+tg('bold','Bold print')+'</div>'
+  +ipSec('Print on the label')+'<div class="lChips">'+tg('shop','Shop name')+tg('name','Item name')+tg('price','Sale price')+tg('mrp','MRP')+tg('bar','Barcode')+tg('code','Code number')+tg('cat','Category')+tg('date','Date')+tg('bold','Bold print')+'</div>'
   +'<div class="pRow"><span>Text size</span><select onchange="lblSet(\'fs\',this.value);bilKeepDraw()">'+[['s','Small'],['m','Medium'],['l','Large']].map(function(o){return '<option value="'+o[0]+'"'+(L.fs===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select></div>'
   +ipSec('Printer')+brStatusHtml()+'<div class="pRow"><span>Printer type</span><select onchange="lblSet(\'lang\',this.value);bilKeepDraw()"><option value="escpos"'+(L.lang==='escpos'?' selected':'')+'>Thermal / label printer (ESC/POS)</option><option value="tspl"'+(L.lang==='tspl'?' selected':'')+'>Xprinter label printer (TSPL)</option><option value="browser"'+(L.lang==='browser'?' selected':'')+'>Print dialog / PDF</option></select></div>'
   +(L.lang==='escpos'?'<div class="pRow"><span>Paper</span><select onchange="lblSet(\'paper\',this.value);bilKeepDraw()"><option value="gap"'+(L.paper==='gap'?' selected':'')+'>Sticker labels with gap</option><option value="roll"'+(L.paper==='roll'?' selected':'')+'>Continuous roll</option></select></div>':'')
@@ -8278,7 +8312,7 @@ var _rLater=0;
 try{document.addEventListener('focusout',function(){if(!_rLater)return;setTimeout(function(){if(!_rLater)return;var a=document.activeElement,v=document.getElementById('view'),o=document.getElementById('ovlBox');
   if(isTyping(a)&&((v&&v.contains(a))||(o&&o.contains(a))))return;_rLater=0;try{render();}catch(e){}},300);},true);}catch(e){}
 
-function render(force){if(!USER)return;if(role()==='tech'&&tabList().indexOf(curTab)<0)curTab='JOBS';buildVip();renderTabs();
+function render(force){if(!USER)return;var _TL=tabList();if(_TL.indexOf(curTab)<0&&curTab!=='QBILL')curTab=_TL[0];buildVip();renderTabs();
   try{chatEnsure();}catch(e){}
   var v=document.getElementById('view'),a=document.activeElement,same=curTab===_renderedTab,typing=!!(same&&v&&a&&v.contains(a)&&isTyping(a)),user=!!force||userEv();
   /* a background sync while someone types: wait until they leave the box */
@@ -8292,7 +8326,7 @@ function render(force){if(!USER)return;if(role()==='tech'&&tabList().indexOf(cur
     if(curTab==='NEWJOB'||curTab==='SETTINGS'){
       if(curTab==='NEWJOB'){var sw=document.getElementById('sbWrap');if(sw)sw.innerHTML=subsBanner();}
       if(ovlJob)openJob(ovlJob,true);return;}}
-  var f={MOBILES:vMobiles,TEAM:vTeam,QBILL:vQuickBill,EXPRESS:vExpress,LIVE:vLive,NEWJOB:vNewJob,BOARD:vBoard,JOBS:vTech,SEARCH:vSearch,SCAN:vScan,SHOP:vShop,QUICK:vQuick,TRACK:vTrack,FASTBILL:vFastBill,DAYBOOK:vDayBook,REGISTER:vRegister,ITEMS:vItems,STOCK:vStock,PHOTOS:vPhotos,PRINTS:vPrints,DASH:vDash,INSIGHTS:vInsights,BILLER:vBiller,STAFF:vStaff,REPORTS:vReports,AUDIT:vAudit,SETTINGS:vSettings}[curTab];
+  var f={MOBILES:vMobiles,TEAM:vTeam,QBILL:vQuickBill,EXPRESS:vExpress,LIVE:vLive,NEWJOB:vNewJob,BOARD:vBoard,JOBS:vTech,SEARCH:vSearch,SCAN:vScan,SHOP:vShop,QUICK:vQuick,TRACK:vTrack,FASTBILL:vFastBill,DAYBOOK:vDayBook,REGISTER:vRegister,ITEMS:vItems,STOCK:vStock,PHOTOS:vPhotos,PRINTS:vPrints,DASH:vDash,INSIGHTS:vInsights,BILLER:vBiller,STAFF:vStaff2,REPORTS:vReports,AUDIT:vAudit,SETTINGS:vSettings}[curTab];
   if(f){if(typing)swapKeep(v,f);else f(v);_renderedTab=curTab;} if(ovlJob)openJob(ovlJob,true);}
 function bilDraw(){var v=document.getElementById('view');if(!v)return;var fn=curTab==='BILLER'?vBiller:curTab==='QBILL'?vQuickBill:null;if(!fn)return;
   var a=document.activeElement;if(a&&v.contains(a)&&isTyping(a))swapKeep(v,fn);else fn(v);}
@@ -8641,44 +8675,6 @@ function techFeed(){var hi=LANG==='hi',id=me().id,lim=Math.max(now()-24*36e5,cle
   return '<div class="panel tmFeed twFeed"><h2>📢 '+(hi?'संदेश':'MESSAGES')+'</h2>'+L.map(function(m){var mine=m.from===id,seen=m.ack&&Object.keys(m.ack).length;
     return '<div class="tmMsg'+(mine?' me':'')+'"><div class="tmMeta">'+(mine?(hi?'आप → रिसेप्शन':'You → reception'):esc(m.fromName))+' · '+fmtT(m.ts)+(mine?(seen?' · ✔✔':' · ✔'):'')+'</div>'
       +'<div>'+(MSGK[m.kind]||MSGK.msg)[0]+' '+msgBody(m)+'</div>'+(m.jid?'<div class="tmMeta">'+msgJobLine(m)+'</div>':'')+'</div>';}).join('')+'</div>';}
-function vTech0(v){var a=jobsArr(),mine=me().id,hi=LANG==='hi',ds=dayStart(),ct=clearTs(),open=['ASSIGNED','REPAIR','PARTS'];
-  var nwAll=a.filter(function(j){return j.st==='NEW'&&techMatch(j)&&(!urgOn(j)||!j.urg.to||j.urg.to===mine);}).sort(function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(x.createdAt||0)-(y.createdAt||0);});
-  var nw=nwAll.filter(function(j){return !ct||(j.createdAt||0)>=ct||urgOn(j);}),nwHid=nwAll.length-nw.length;
-  var myAll=a.filter(function(j){return j.tech===mine&&open.indexOf(j.st)>=0;}),my=myAll.filter(techMatch);
-  var cur=my.filter(function(j){return j.st==='REPAIR'&&j.tm&&j.tm.run;}).sort(function(x,y){return (y.tm.run||0)-(x.tm.run||0);})[0]||null;
-  var rest=my.filter(function(j){return j!==cur;});
-  var takenToday=function(j){return (j.tm.accepted||j.createdAt||0)>=ds;};
-  var waitP=function(j){return (j.parts||[]).some(function(p){return p.status==='WAITING';});};
-  var today=rest.filter(function(j){return (j.st==='REPAIR'&&j.tm.run)||(!waitP(j)&&(takenToday(j)||(j.up||0)>=ds));}).sort(function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(x.tm.accepted||0)-(y.tm.accepted||0);});
-  var pendAll=rest.filter(function(j){return today.indexOf(j)<0;}).sort(function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(x.tm.accepted||x.createdAt||0)-(y.tm.accepted||y.createdAt||0);});
-  var pend=pendAll.filter(function(j){return !ct||(j.tm.accepted||j.createdAt||0)>=ct||urgOn(j)||j.st==='PARTS';}),pendHid=pendAll.length-pend.length;
-  var doneAll=a.filter(function(j){return j.tech===mine&&(j.tm.finished||0)>0&&['DONE','READY','DELIVERED'].indexOf(j.st)>=0;});
-  var dnToday=doneAll.filter(function(j){return j.tm.finished>=ds;});
-  var prev=doneAll.filter(function(j){return techMatch(j)&&j.tm.finished>=Math.max(ct,now()-7*864e5);}).sort(function(x,y){return y.tm.finished-x.tm.finished;}).slice(0,25);
-  var workToday=dnToday.concat(myAll).reduce(function(s,j){return s+wkMs(j);},0);
-  var waitParts=myAll.filter(function(j){return (j.parts||[]).some(function(p){return p.status==='WAITING';});}).length;
-  var seg=function(k,ic,lbl,n){return '<button class="'+(TW.seg===k?'on':'')+'" onclick="TW.seg=\''+k+'\';render()">'+ic+' '+lbl+' <b>'+n+'</b></button>';};
-  v.innerHTML=(soundReady()?'':'<button class="bigBtn" style="background:var(--red);border-color:var(--red);color:#fff;margin:0 0 12px" onclick="acUnlock();siren();setTimeout(render,400)">🔔 '+(hi?'अलार्म की आवाज़ चालू करने के लिए यहाँ दबाएँ':'TAP ONCE to switch on the alarm sound')+'</button>')
-    +'<div class="kpis twK"><span class="w">🔔 <b>'+nwAll.length+'</b> '+(hi?'नए':'new')+'</span><span>🛠 <b>'+myAll.length+'</b> '+(hi?'मेरे':'mine')+'</span><span class="r">🧩 <b>'+waitParts+'</b> '+(hi?'पार्ट':'parts')+'</span><span class="g">✔ <b>'+dnToday.length+'</b> '+(hi?'आज पूरे':'done today')+'</span><span>⏱ <b>'+durS(workToday)+'</b></span></div>'
-    +cleanStrip()
-    +'<div class="tmBar"><button class="tmBig" onclick="msgCompose(\'rec\')">💬 '+(hi?'रिसेप्शन को संदेश':'MESSAGE RECEPTION')+'</button><button class="tmBig part" onclick="techAskPart()">🧩 '+(hi?'पार्ट माँगें':'ASK FOR A PART')+'</button></div>'
-    +'<div class="mmSrch"><input id="techQ" class="tkSearch" autocomplete="off" placeholder="🔎 '+(hi?'R-नंबर, मॉडल, खराबी, नाम...':'R-no, model, problem, name...')+'" value="'+esc(TECHQ)+'" oninput="TECHQ=this.value;clearTimeout(window._tq);window._tq=setTimeout(function(){render(1)},120)"><button class="mmScanB" onclick="techScan()">📷</button></div>'
-    +'<div class="twSeg">'+seg('today','🛠',hi?'आज':'Today',(cur?1:0)+today.length+nw.length)+seg('pend','⏳',hi?'पेंडिंग':'Pending',pend.length)+seg('prev','✔',hi?'पहले के':'Previous',prev.length)+'</div>'
-    +'<div class="twGrid seg-'+TW.seg+'"><div class="twMain">'
-      +(cur?twNowCard(cur):'<div class="twIdle">▶ '+(hi?'अभी कोई काम नहीं चल रहा — नीचे से नया काम लें या पेंडिंग से उठाएँ':'Nothing running now — take a new job below, or pick one from Pending')+'</div>')
-      +(today.length?'<div class="panel"><h2>📋 '+(hi?'आज के मेरे काम':'MY JOBS TODAY')+' ('+today.length+')</h2>'+today.map(function(j){return techCard(j,'mine');}).join('')+'</div>':'')
-      +'<div class="panel"><h2>🔔 '+(hi?'नए काम — जो कर सकें वो लें':'NEW JOBS — take the one you can do')+' ('+nw.length+')</h2>'
-        +(nw.length?nw.map(function(j){return techCard(j,'new');}).join(''):'<div style="color:var(--dim)">'+(hi?'अभी कोई नया काम नहीं।':'No new jobs right now.')+'</div>')
-        +(nwHid?'<div class="twHid">🧹 '+nwHid+' '+(hi?'पुराने नए काम छिपे हैं (एडमिन ने साफ़ किया)':'older waiting jobs hidden (cleaned by admin)')+'</div>':'')+'</div>'
-    +'</div><div class="twSide">'
-      +'<div class="panel twPend"><h2>⏳ '+(hi?'पेंडिंग — उठाएँ और पूरा करें':'PENDING — pick & complete')+' ('+pend.length+')</h2>'
-        +(pend.length?pend.map(function(j){return twMini(j,'pend');}).join(''):'<div style="color:var(--dim)">'+(hi?'कोई पेंडिंग काम नहीं 👍':'No pending work 👍')+'</div>')
-        +(pendHid?'<div class="twHid">🧹 '+pendHid+' '+(hi?'पुराने पेंडिंग छिपे हैं':'older pending jobs hidden')+'</div>':'')+'</div>'
-      +'<div class="panel twPrev"><h2>✔ '+(hi?'पहले किए काम':'PREVIOUS WORK')+' ('+prev.length+')</h2>'
-        +(prev.length?prev.map(function(j){return twMini(j,'prev');}).join(''):'<div style="color:var(--dim)">—</div>')+'</div>'
-      +techFeed()
-    +'</div></div>';
-  FLASH={};}
 
 /* ---------- 💬 chat bubble: instant messages like a website chat, with a beep ---------- */
 var CHAT={open:0,th:''};
@@ -8765,6 +8761,158 @@ function msgCheck(){if(!USER||!DB||!DB.msg)return;var lim=now()-alertWinMs();
   var m=full[0],ov=document.getElementById('msgOvl'),ae=document.activeElement;
   if(MSGA.on!==m.id+'|'+full.length||!ov){if(!(ov&&ae&&ae.id==='msgRe'&&ae.value)){MSGA.on=m.id+'|'+full.length;msgOverlay(m,full.length);}}
   if(!MSGA.t){msgChime();MSGA.t=setInterval(msgChime,7000);}}
+
+
+/* ======================================================================================
+   v9.25 — every bill reaches the technicians · ALL WORK board (tray / list / cards) with who took what ·
+   one clear workflow · admin decides who sees which tab · no cost code anywhere
+   ====================================================================================== */
+
+/* ---------- 🔐 admin: who sees which tab ---------- */
+var ALL_TABS=['DASH','INSIGHTS','LIVE','EXPRESS','QUICK','BILLER','MOBILES','TEAM','JOBS','TRACK','FASTBILL','DAYBOOK','SHOP','SCAN','BOARD','NEWJOB','REGISTER','ITEMS','STOCK','PHOTOS','SEARCH','PRINTS','STAFF','REPORTS','AUDIT','SETTINGS'];
+var ACC_ROLES=[['reception','🧾 Reception','रिसेप्शन'],['tech','🧑‍🔧 Technician','टेक्नीशियन'],['stockman','📦 Stock','स्टॉक'],['billing','⚡ Quick Billing','क्विक बिलिंग'],['manager','📱 Mobile Manager','मोबाइल मैनेजर']];
+function accSet(){var A=(DB&&DB.settings&&DB.settings.access)||{};return {roles:A.roles||{},staff:A.staff||{},feat:A.feat||{}};}
+function accFeat(k,def){var f=accSet().feat;return f[k]==null?def:!!f[k];}
+function tabListFor(r,staffId){var d=tabListDef(r);if(r==='owner')return d;var A=accSet(),L=(staffId&&A.staff[staffId])||A.roles[r];
+  if(!L||!L.length)return d;L=L.filter(function(t){return ALL_TABS.indexOf(t)>=0;});return L.length?L:d;}
+function tabList(){var r=role(),id='';try{id=me().id;}catch(e){}return tabListFor(r,id);}
+function accDraft(){if(!window._accD){var A=accSet();window._accD=JSON.parse(JSON.stringify({roles:A.roles,staff:A.staff,feat:A.feat}));}return window._accD;}
+function accOrder(r,L){var d=tabListDef(r),k=function(t){var i=d.indexOf(t);return i>=0?i:100+ALL_TABS.indexOf(t);};return L.slice().sort(function(a,b){return k(a)-k(b);});}
+function accTick(kind,key,tab,on){var D=accDraft(),box=kind==='role'?D.roles:D.staff,r=kind==='role'?key:((DB.staff.filter(function(s){return s.id===key;})[0]||{}).role||'reception');
+  var L=(box[key]||(kind==='role'?null:D.roles[r])||tabListDef(r)).slice();var i=L.indexOf(tab);if(on&&i<0)L.push(tab);if(!on&&i>=0)L.splice(i,1);
+  box[key]=accOrder(r,L.filter(function(t){return ALL_TABS.indexOf(t)>=0;}));accDirty();}
+function accDirty(){var b=document.getElementById('accSave');if(b){b.disabled=false;b.textContent='💾 '+(LANG==='hi'?'सेव करें (बदलाव हैं)':'SAVE CHANGES');}}
+function accFeatSet(k,on){accDraft().feat[k]=on?1:0;accDirty();}
+function accSave(){var D=accDraft();DB.settings.access={roles:D.roles,staff:D.staff,feat:D.feat};metaSave();window._accD=null;
+  toast('🔐 '+(LANG==='hi'?'अनुमति सेव — सबके फोन पर अपने आप लागू':'Access saved — applies on every phone by itself'));render(1);}
+function accReset(){if(!confirm(LANG==='hi'?'सब अनुमति शुरू वाली कर दें?':'Reset everyone to the standard tabs?'))return;window._accD={roles:{},staff:{},feat:{}};accSave();}
+function accPerson(id){window._accP=id;render(1);}
+function accPanel(){if(role()!=='owner')return '';var hi=LANG==='hi',D=accDraft(),P=window._accP||'',people=DB.staff.filter(function(s){return s.role!=='owner'&&s.active!==false;});
+  var lbl=function(t){return T(tabLbl[t]||t);};
+  var h='<div class="panel accP"><h2>🔐 '+(hi?'कौन क्या देखे — टैब चुनें':'WHO SEES WHAT — tick the tabs')+'</h2>'
+    +'<div class="pdim">'+(hi?'हर काम वाले को सिर्फ़ वही टैब दिखेंगे जिन पर टिक है। मालिक को हमेशा सब दिखता है।':'Each role sees only the ticked tabs. The owner always sees everything.')+'</div>'
+    +'<div class="accWrap"><table class="accT"><tr><th>'+(hi?'टैब':'Tab')+'</th>'+ACC_ROLES.map(function(r){return '<th>'+(hi?r[2]:r[1])+'</th>';}).join('')+'</tr>'
+    +ALL_TABS.map(function(t){return '<tr><td>'+lbl(t)+'</td>'+ACC_ROLES.map(function(r){var L=D.roles[r[0]]||tabListDef(r[0]),on=L.indexOf(t)>=0;
+      return '<td><label class="accC"><input type="checkbox" '+(on?'checked':'')+' onchange="accTick(\'role\',\''+r[0]+'\',\''+t+'\',this.checked)"></label></td>';}).join('')+'</tr>';}).join('')+'</table></div>'
+    +'<h2 style="margin-top:14px">👤 '+(hi?'किसी एक व्यक्ति के लिए अलग':'DIFFERENT FOR ONE PERSON')+'</h2>'
+    +'<select onchange="accPerson(this.value)"><option value="">— '+(hi?'व्यक्ति चुनें':'choose a person')+' —</option>'+people.map(function(s){return '<option value="'+s.id+'"'+(P===s.id?' selected':'')+'>'+(ROLE_IC[s.role]||'👤')+' '+esc(s.name)+(D.staff[s.id]?' ✱':'')+'</option>';}).join('')+'</select>';
+  if(P){var s=DB.staff.filter(function(x){return x.id===P;})[0];if(s){var L2=D.staff[P]||D.roles[s.role]||tabListDef(s.role);
+    h+='<div class="accChips">'+ALL_TABS.map(function(t){var on=L2.indexOf(t)>=0;return '<label class="'+(on?'on':'')+'"><input type="checkbox" '+(on?'checked':'')+' onchange="accTick(\'staff\',\''+P+'\',\''+t+'\',this.checked);this.parentNode.classList.toggle(\'on\',this.checked)">'+lbl(t)+'</label>';}).join('')+'</div>'
+      +'<div class="pdim">'+(D.staff[P]?'✱ '+(hi?'इस व्यक्ति की अलग सेटिंग':'custom for this person')+' · <a class="tab" onclick="delete accDraft().staff[\''+P+'\'];accDirty();render(1)">'+(hi?'रोल वाली सेटिंग पर वापस':'use the role setting')+'</a>':(hi?'अभी रोल वाली सेटिंग':'using the role setting'))+'</div>';}}
+  h+='<h2 style="margin-top:14px">⚙ '+(hi?'टेक्नीशियन के नियम':'TECHNICIAN RULES')+'</h2>'
+    +[['techAll',1,'Technicians see ALL jobs and who took each one','टेक्नीशियन सब काम और किसने लिया देखें'],['techTake',1,'Technicians can take new jobs themselves','टेक्नीशियन खुद नया काम ले सकें']].map(function(f){var on=D.feat[f[0]]==null?!!f[1]:!!D.feat[f[0]];
+      return '<label class="accF"><input type="checkbox" '+(on?'checked':'')+' onchange="accFeatSet(\''+f[0]+'\',this.checked)"> '+(hi?f[3]:f[2])+'</label>';}).join('')
+    +'<div class="rowFlex" style="gap:8px;margin-top:12px"><button id="accSave" class="bigBtn bAccept" style="margin:0" disabled onclick="accSave()">💾 '+(hi?'सेव करें':'SAVE')+'</button>'
+    +'<button class="bigBtn bGhost" style="margin:0" onclick="window._accD=null;window._accP=\'\';render(1)">↺ '+(hi?'बदलाव हटाएँ':'UNDO CHANGES')+'</button>'
+    +'<button class="bigBtn bGhost" style="margin:0" onclick="accReset()">⟲ '+(hi?'शुरू वाली सेटिंग':'STANDARD TABS')+'</button></div></div>';
+  return h;}
+function vStaff2(v){vStaff(v);try{if(role()==='owner')v.insertAdjacentHTML('afterbegin',accPanel());}catch(e){}}
+
+/* ---------- 🧾 every bill can reach the technicians ---------- */
+function bilJobDef(){return true;}   /* repair box is ON for every new bill — untick it for a plain accessory sale */
+function bilJobToggle(on){BIL.f.job.on=!!on;bilDraw();}
+function bilToJob(sid){var s=DB.sale[sid],o=document.getElementById('popArea');if(!s||!o)return;if(s.job&&DB.jobs[s.job]){openJob(s.job);return;}var hi=LANG==='hi';
+  var techs=DB.staff.filter(function(x){return x.role==='tech'&&x.active!==false;});
+  o.innerHTML='<div class="bSheet bModalW"><div class="bModal"><div class="bModalT">🔧 '+(hi?'टेक्नीशियन को भेजें':'Send to technician')+' — '+esc(sid)+'</div><div class="bModalB">'
+    +'<div class="bOut"><label>'+(hi?'फोन मॉडल':'Phone model')+'</label><input id="tjM" value="'+esc(s.model||'')+'" placeholder="VIVO Y20"></div>'
+    +'<div class="bOut" style="margin-top:12px"><label>'+(hi?'खराबी':'Problem')+'</label><input id="tjP" value="'+esc((s.items||[]).map(function(i){return i.name;}).join(', '))+'"></div>'
+    +'<div class="bJChips">'+BIL_PROBS.map(function(p){return '<button onclick="var e=document.getElementById(\'tjP\');e.value=(e.value?e.value+\', \':\'\')+\''+p+'\'">'+p+'</button>';}).join('')+'</div>'
+    +'<div class="bJRow"><select id="tjT"><option value="">'+(hi?'सब टेक्नीशियन — जो पहले ले':'All technicians — first to take')+'</option>'+techs.map(function(t){return '<option value="'+t.id+'">🧑‍🔧 '+esc(t.name)+'</option>';}).join('')+'</select>'
+    +'<label class="bJUrg"><input type="checkbox" id="tjU">🚨 '+(hi?'अर्जेंट':'URGENT')+'</label></div>'
+    +'<div style="display:flex;gap:10px;margin-top:16px"><button class="bSN" style="flex:1" onclick="document.getElementById(\'popArea\').innerHTML=\'\'">'+(hi?'रद्द':'Cancel')+'</button><button class="bS" style="flex:2" onclick="bilToJobGo(\''+esc(sid)+'\')">🔧 '+(hi?'भेजें':'Send')+'</button></div></div></div></div>';}
+function bilToJobGo(sid){var s=DB.sale[sid];if(!s)return;var J={model:(gv('tjM')||'').trim(),prob:(gv('tjP')||'').trim(),to:gv('tjT')||'',urg:document.getElementById('tjU').checked?1:0};
+  var jid=bilMakeJob(s,J);s.job=jid;if(J.model)s.model=J.model.toUpperCase();s.up=now();saveColl('sale',[sid]);document.getElementById('popArea').innerHTML='';
+  toast('🔧 '+jid+' → '+(J.to?esc(techName(J.to)):(LANG==='hi'?'सब टेक्नीशियन':'all technicians')));bilDraw();}
+function bilJobLine(sl){var hi=LANG==='hi';if(sl.job&&DB.jobs[sl.job]){var j=DB.jobs[sl.job];
+    return '<div class="bJobLine on" onclick="openJob(\''+esc(j.id)+'\')">🔧 <b>'+esc(j.id)+'</b> · '+stName(j.st)+' · '+(j.tech?'🧑‍🔧 '+esc(techName(j.tech)):(hi?'टेक्नीशियन का इंतज़ार':'waiting for a technician'))+'</div>';}
+  return '<button class="bJobLine" onclick="bilToJob(\''+esc(sl.id)+'\')">🔧 '+(hi?'यह बिल टेक्नीशियन को भेजें':'Send this bill to a technician')+'</button>';}
+
+/* ---------- 🛠 technician: ALL WORK board — tray / list / cards — and one clear workflow ---------- */
+TW.view=(function(){try{return localStorage.getItem('SSM_WOS_TWVIEW')||'tray';}catch(e){return 'tray';}})();TW.f=TW.f||'all';
+function twSetView(v){TW.view=v;try{localStorage.setItem('SSM_WOS_TWVIEW',v);}catch(e){}render(1);}
+var TW_ORD={NEW:0,ASSIGNED:1,REPAIR:2,PARTS:3,DONE:4,READY:5,DELIVERED:6};
+function twWaitP(j){return (j.parts||[]).some(function(p){return p.status==='WAITING';});}
+function twBoard(){var mine=me().id,ds=dayStart(),all=accFeat('techAll',true),ct=clearTs(),open=['NEW','ASSIGNED','REPAIR','PARTS'];
+  var A=jobsArr().filter(function(j){if(!techMatch(j))return false;if(urgOn(j)&&j.st==='NEW'&&j.urg.to&&j.urg.to!==mine)return false;
+    var vis=all||j.st==='NEW'||j.tech===mine;if(!vis)return false;
+    if(open.indexOf(j.st)>=0)return !ct||(j.createdAt||0)>=ct||j.tech===mine||urgOn(j);
+    return (j.tm&&(j.tm.finished||0)>=Math.max(ds,ct));});
+  var F={all:function(j){return open.indexOf(j.st)>=0;},new:function(j){return j.st==='NEW';},mine:function(j){return j.tech===mine&&open.indexOf(j.st)>=0;},
+    others:function(j){return j.tech&&j.tech!==mine&&open.indexOf(j.st)>=0;},parts:twWaitP,urgent:urgOn,done:function(j){return open.indexOf(j.st)<0;}};
+  var n={};Object.keys(F).forEach(function(k){n[k]=A.filter(F[k]).length;});
+  var L=A.filter(F[TW.f]||F.all).sort(function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(TW_ORD[x.st]-TW_ORD[y.st])||((x.createdAt||0)-(y.createdAt||0));});
+  return {L:L,n:n};}
+function twBtns(j,big){var hi=LANG==='hi',mine=j.tech===me().id,id=j.id,b='';
+  if(j.st==='NEW'){if(!accFeat('techTake',true))return '<span class="twTw">'+(hi?'रिसेप्शन देगा':'reception will assign')+'</span>';
+    return '<button class="tkB" onclick="event.stopPropagation();takeJob(\''+id+'\')">✋ '+(hi?'लें':'TAKE')+'</button><button class="tkB go" onclick="event.stopPropagation();twTakeStart(\''+id+'\')">▶ '+(hi?'लें + शुरू':'TAKE & START')+'</button>';}
+  if(!mine)return '';
+  if(j.st==='ASSIGNED')b='<button class="tkB go" onclick="event.stopPropagation();twPick(\''+id+'\')">▶ '+(hi?'शुरू करें':'START')+'</button>';
+  else if(j.st==='REPAIR'&&j.tm.run)b='<button class="tkB done" onclick="event.stopPropagation();act(\''+id+'\',\'finish\')">✔ '+(hi?'पूरा':'COMPLETE')+'</button>';
+  else if(j.st==='REPAIR')b='<button class="tkB go" onclick="event.stopPropagation();twPick(\''+id+'\')">▶ '+(hi?'फिर शुरू':'CONTINUE')+'</button>';
+  else if(j.st==='PARTS')b=(twWaitP(j)?'<span class="twPw">🧩 '+(hi?'पार्ट आ रहा':'part coming')+'</span>':'')+'<button class="tkB go" onclick="event.stopPropagation();twPick(\''+id+'\')">▶ '+(hi?'फिर शुरू':'RESUME')+'</button>';
+  if(open3(j))b+='<button class="tkB" onclick="event.stopPropagation();askPartSheet(\''+id+'\')">🧩 '+(hi?'पार्ट':'PART')+'</button>';
+  return b;}
+function open3(j){return ['ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0;}
+function twWho(j){var hi=LANG==='hi';if(!j.tech)return '<span class="twWho free">✋ '+(hi?'खाली — कोई भी ले':'free — anyone can take')+'</span>';
+  if(j.tech===me().id)return '<span class="twWho me">🫵 '+(hi?'आपका':'yours')+'</span>';
+  return '<span class="twWho">🧑‍🔧 '+esc(techName(j.tech))+(j.tm&&j.tm.accepted?' · '+fmtT(j.tm.accepted):'')+'</span>';}
+function twNote(j){var n=(j.notes||[]).filter(function(x){return x.team==='rec';}).pop();return n?'<div class="twNote">📢 '+esc(n.txt)+'</div>':'';}
+function twAge(j){var a=now()-(j.createdAt||now());return '<span class="twAge '+(a<36e5?'g':a<4*36e5?'a':'r')+'">⏱ '+dur(a)+'</span>';}
+function twTile(j){var c=j.c||{},ps=photosOf(j),hi=LANG==='hi',mine=j.tech===me().id;
+  return '<div class="twT st'+j.st+(mine?' mine':'')+(urgOn(j)?' tkUrg':'')+(FLASH[j.id]?' newFlash':'')+'" onclick="openJob(\''+j.id+'\')">'
+    +'<div class="twTph">'+(ps.length?'<img src="'+imgSrc(ps[0].d)+'" alt="">':'<span>📵</span>')+'<b class="twTid">'+esc(j.id)+'</b>'+twAge(j)+(urgOn(j)?'<i class="twTu">🚨</i>':'')+'</div>'
+    +'<div class="twTb"><span class="pill p'+j.st+'">'+stName(j.st)+'</span><div class="twTm">'+esc(((c.brand||'')+' '+(c.model||'')).trim()||'—')+'</div>'
+    +'<div class="twTp">🔧 '+esc(c.prob||'—')+'</div>'+twNote(j)+twWho(j)+(twWaitP(j)?'<div class="twPw">🧩 '+(hi?'पार्ट का इंतज़ार':'waiting for a part')+'</div>':'')
+    +'<div class="twTbtn">'+twBtns(j)+'</div></div></div>';}
+function twRow(j){var c=j.c||{},ps=photosOf(j);
+  return '<div class="twR st'+j.st+(j.tech===me().id?' mine':'')+(urgOn(j)?' tkUrg':'')+'" onclick="openJob(\''+j.id+'\')">'+(ps.length?'<img src="'+imgSrc(ps[0].d)+'" alt="">':'<span class="twNoP">📵</span>')
+    +'<div class="twRt"><div><b class="jid">'+esc(j.id)+'</b> <span class="pill p'+j.st+'">'+stName(j.st)+'</span> '+twAge(j)+(urgOn(j)?' 🚨':'')+'</div>'
+    +'<div class="twMm">'+esc(((c.brand||'')+' '+(c.model||'')).trim())+' · <span class="twMp">'+esc(c.prob||'—')+'</span></div>'+twNote(j)+twWho(j)+'</div><div class="twRb">'+twBtns(j)+'</div></div>';}
+function twBoardHtml(){var hi=LANG==='hi',B=twBoard(),fl=[['all','📋',hi?'सब काम':'All work'],['new','🔔',hi?'नए':'New'],['mine','🫵',hi?'मेरे':'Mine'],['others','🧑‍🔧',hi?'दूसरों के':'Others'],['parts','🧩',hi?'पार्ट':'Parts'],['urgent','🚨',hi?'अर्जेंट':'Urgent'],['done','✔',hi?'आज पूरे':'Done today']];
+  if(!accFeat('techAll',true))fl=fl.filter(function(f){return f[0]!=='others';});
+  var views=[['tray','▦',hi?'ट्रे':'Tray'],['list','☰',hi?'सूची':'List'],['cards','🃏',hi?'बड़े कार्ड':'Big cards']];
+  var body=!B.L.length?'<div class="twEmpty">'+(hi?'यहाँ अभी कुछ नहीं':'Nothing here right now')+'</div>'
+    :TW.view==='list'?'<div class="twList">'+B.L.map(twRow).join('')+'</div>'
+    :TW.view==='cards'?B.L.map(function(j){var m=j.st==='NEW'?'new':(j.tech===me().id&&open3(j)?'mine':'done');return (j.tech&&j.tech!==me().id?'<div class="twCardWho">'+twWho(j)+'</div>':'')+techCard(j,m);}).join('')
+    :'<div class="twTray">'+B.L.map(twTile).join('')+'</div>';
+  return '<div class="panel twBoard"><div class="twBH"><h2>📋 '+(hi?'दुकान का सारा काम':'ALL WORK IN THE SHOP')+'</h2><div class="twViews">'+views.map(function(v){return '<button class="'+(TW.view===v[0]?'on':'')+'" onclick="twSetView(\''+v[0]+'\')">'+v[1]+' '+v[2]+'</button>';}).join('')+'</div></div>'
+    +'<div class="twFl">'+fl.map(function(f){return '<button class="'+(TW.f===f[0]?'on':'')+'" onclick="TW.f=\''+f[0]+'\';render(1)">'+f[1]+' '+f[2]+' <b>'+(B.n[f[0]]||0)+'</b></button>';}).join('')+'</div>'+body+'</div>';}
+function twSteps(cur){var hi=LANG==='hi',st=!cur?1:(twWaitP(cur)?3:2);
+  var S=[['✋',hi?'काम चुनें':'Pick a job'],['▶',hi?'शुरू करें':'Start'],['🧩',hi?'पार्ट चाहिए? माँगें':'Need a part? Ask'],['✔',hi?'पूरा करें':'Complete']];
+  return '<div class="twSteps">'+S.map(function(s,i){return '<div class="'+(i+1===st?'on':(i+1<st?'ok':''))+'"><b>'+s[0]+'</b><span>'+(i+1)+'. '+s[1]+'</span></div>';}).join('')+'</div>';}
+function twTakeStart(id){takeJob(id);var t0=now();(function wait(){var j=DB.jobs[id];if(j&&j.tech===me().id&&j.st==='ASSIGNED'){twPick(id);return;}if(j&&j.tech&&j.tech!==me().id)return;if(now()-t0<5000)setTimeout(wait,250);})();}
+function twNext(){var mine=me().id;return jobsArr().filter(function(j){return j.st==='NEW'&&(!urgOn(j)||!j.urg.to||j.urg.to===mine);}).sort(function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(x.createdAt||0)-(y.createdAt||0);})[0]
+  ||jobsArr().filter(function(j){return j.tech===mine&&(j.st==='ASSIGNED'||(j.st==='REPAIR'&&!j.tm.run));}).sort(function(x,y){return (x.createdAt||0)-(y.createdAt||0);})[0];}
+function vTech0(v){var a=jobsArr(),mine=me().id,hi=LANG==='hi',ds=dayStart(),ct=clearTs(),open=['ASSIGNED','REPAIR','PARTS'];
+  var myAll=a.filter(function(j){return j.tech===mine&&open.indexOf(j.st)>=0;});
+  var cur=myAll.filter(function(j){return j.st==='REPAIR'&&j.tm&&j.tm.run;}).sort(function(x,y){return (y.tm.run||0)-(x.tm.run||0);})[0]||null;
+  var pendAll=myAll.filter(function(j){return j!==cur&&!(j.st==='REPAIR'&&j.tm.run);}).sort(function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(x.tm.accepted||x.createdAt||0)-(y.tm.accepted||y.createdAt||0);});
+  var pend=pendAll.filter(function(j){return !ct||(j.tm.accepted||j.createdAt||0)>=ct||urgOn(j)||j.st==='PARTS';}),pendHid=pendAll.length-pend.length;
+  var doneAll=a.filter(function(j){return j.tech===mine&&(j.tm.finished||0)>0&&['DONE','READY','DELIVERED'].indexOf(j.st)>=0;});
+  var dnToday=doneAll.filter(function(j){return j.tm.finished>=ds;});
+  var prev=doneAll.filter(function(j){return techMatch(j)&&j.tm.finished>=Math.max(ct,now()-7*864e5);}).sort(function(x,y){return y.tm.finished-x.tm.finished;}).slice(0,25);
+  var workToday=dnToday.concat(myAll).reduce(function(s,j){return s+wkMs(j);},0),newN=a.filter(function(j){return j.st==='NEW';}).length;
+  var waitParts=myAll.filter(twWaitP).length,nx=cur?null:twNext();
+  var seg=function(k,ic,lbl,n){return '<button class="'+(TW.seg===k?'on':'')+'" onclick="TW.seg=\''+k+'\';render(1)">'+ic+' '+lbl+' <b>'+n+'</b></button>';};
+  v.innerHTML=(soundReady()?'':'<button class="bigBtn" style="background:var(--red);border-color:var(--red);color:#fff;margin:0 0 12px" onclick="acUnlock();siren();setTimeout(render,400)">🔔 '+(hi?'अलार्म की आवाज़ चालू करने के लिए यहाँ दबाएँ':'TAP ONCE to switch on the alarm sound')+'</button>')
+    +'<div class="kpis twK"><span class="w">🔔 <b>'+newN+'</b> '+(hi?'नए':'new')+'</span><span>🫵 <b>'+myAll.length+'</b> '+(hi?'मेरे':'mine')+'</span><span class="r">🧩 <b>'+waitParts+'</b> '+(hi?'पार्ट':'parts')+'</span><span class="g">✔ <b>'+dnToday.length+'</b> '+(hi?'आज पूरे':'done today')+'</span><span>⏱ <b>'+durS(workToday)+'</b></span></div>'
+    +cleanStrip()+twSteps(cur)
+    +'<div class="tmBar"><button class="tmBig" onclick="msgCompose(\'rec\')">💬 '+(hi?'रिसेप्शन को संदेश':'MESSAGE RECEPTION')+'</button><button class="tmBig part" onclick="techAskPart()">🧩 '+(hi?'पार्ट माँगें':'ASK FOR A PART')+'</button></div>'
+    +'<div class="mmSrch"><input id="techQ" class="tkSearch" autocomplete="off" placeholder="🔎 '+(hi?'R-नंबर, मॉडल, खराबी, नाम...':'R-no, model, problem, name...')+'" value="'+esc(TECHQ)+'" oninput="TECHQ=this.value;clearTimeout(window._tq);window._tq=setTimeout(function(){render(1)},120)"><button class="mmScanB" onclick="techScan()">📷</button></div>'
+    +'<div class="twSeg">'+seg('today','🛠',hi?'काम':'Work',(cur?1:0)+twBoard().n.all)+seg('pend','⏳',hi?'पेंडिंग':'Pending',pend.length)+seg('prev','✔',hi?'पहले के':'Previous',prev.length)+'</div>'
+    +'<div class="twGrid seg-'+TW.seg+'"><div class="twMain">'
+      +(cur?twNowCard(cur):'<div class="twIdle">▶ '+(hi?'अभी कोई काम नहीं चल रहा':'Nothing running now')
+        +(nx?'<div class="twNextH">'+(hi?'अगला काम यह लें':'Take this one next')+':</div>'+twTile(nx):' — '+(hi?'नीचे से काम चुनें':'pick a job below'))+'</div>')
+      +twBoardHtml()
+    +'</div><div class="twSide">'
+      +'<div class="panel twPend"><h2>⏳ '+(hi?'पेंडिंग — उठाएँ और पूरा करें':'PENDING — pick & complete')+' ('+pend.length+')</h2>'
+        +(pend.length?pend.map(function(j){return twMini(j,'pend');}).join(''):'<div style="color:var(--dim)">'+(hi?'कोई पेंडिंग काम नहीं 👍':'No pending work 👍')+'</div>')
+        +(pendHid?'<div class="twHid">🧹 '+pendHid+' '+(hi?'पुराने पेंडिंग छिपे हैं':'older pending jobs hidden')+'</div>':'')+'</div>'
+      +'<div class="panel twPrev"><h2>✔ '+(hi?'पहले किए काम':'PREVIOUS WORK')+' ('+prev.length+')</h2>'
+        +(prev.length?prev.map(function(j){return twMini(j,'prev');}).join(''):'<div style="color:var(--dim)">—</div>')+'</div>'
+      +techFeed()
+    +'</div></div>';
+  FLASH={};}
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>
