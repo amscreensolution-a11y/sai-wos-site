@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.26",
+  "date": "2026-11-23",
+  "notes": "Every bill is a repair job unless marked Selling bill (Biller, Quick Billing, Quick, Shop); phone model read from the items; missed bills become jobs automatically; Day Book with the day's mobiles, photos, search and date; big-photo search; technician: Today / Pending 1-2+ days, ask part for any phone or bill no, one-tap alerts to reception + admin, admin-only messages, bottom action bar with Next job",
+  "hi": "हर बिल रिपेयर जॉब जब तक 'सिर्फ़ बिक्री' न चुनें; आइटम से मॉडल; छूटे बिल अपने आप जॉब; डे बुक में दिन के मोबाइल फोटो, खोज, तारीख; बड़ी फोटो वाली खोज; टेक्नीशियन: आज / पुराने बाकी, किसी भी फोन/बिल नं पर पार्ट, एक टैप अलर्ट, नीचे बटन पट्टी"
+ },
+ {
   "v": "9.25",
   "date": "2026-11-23",
   "notes": "Every bill goes to the technicians (repair box on by itself, Send-to-technician on any bill); technician WORK board with all jobs, device photo and who took each one — Tray / List / Big cards, filters, TAKE & START, next-job suggestion, 4-step workflow; owner decides which tabs each role or person sees; cost code removed",
