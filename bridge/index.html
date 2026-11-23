@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAI WOS app</title>
+<style>
+:root{--b:#0B72E7;--g:#12B76A;--r:#ED1C3A;--t:#111827;--s:#6B7280;--bg:#F3F6FA;--card:#fff;--line:#E5E7EB}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--t:#F3F4F6;--s:#9CA3AF;--bg:#0B1220;--card:#111a2e;--line:#22304d}}
+:root[data-theme="dark"]{--t:#F3F4F6;--s:#9CA3AF;--bg:#0B1220;--card:#111a2e;--line:#22304d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:Roboto,"Noto Sans",system-ui,sans-serif}
+.w{max-width:640px;margin:0 auto;padding:22px 16px 40px}.hd{display:flex;gap:14px;align-items:center}.hd img{width:64px;height:64px;border-radius:16px}
+h1{font-size:26px;margin:0}.sub{color:var(--s);margin:4px 0 0}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+.dl{display:block;text-align:center;background:var(--b);color:#fff;text-decoration:none;font-weight:700;font-size:18px;padding:16px;border-radius:30px;margin:16px 0 6px}
+.meta{text-align:center;color:var(--s);font-size:13px}ol{padding-left:20px;margin:6px 0}li{margin:8px 0;line-height:1.5}b.ok{color:var(--g)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.two div{background:var(--bg);border-radius:10px;padding:12px}.two b{display:block;margin-bottom:4px}
+.hi{color:var(--s);font-size:14px}
+</style></head><body><div class="w">
+<div class="hd"><img src="wos_icon.png" alt=""><div><h1>SAI WOS</h1><p class="sub">The shop app for Android — camera, mic, photos and direct printing built in</p></div></div>
+<a class="dl" id="dl" href="sai-print.apk" download="SAI-WOS.apk">⬇ Download SAI WOS (Android)</a><div class="meta" id="meta">Android 5 or newer</div>
+<div class="card"><div class="two"><div><b>📷 Camera &amp; 🎤 mic</b>Photos, barcode scan, walkie-talkie — all allowed</div><div><b>🔔 Alerts &amp; files</b>Notifications, downloads, sharing, A4 printing</div></div></div>
+<div class="card"><div class="two"><div><b>🧾 Receipt printer</b>Thermal 58 / 80 mm — Bluetooth, USB or WiFi</div><div><b>🏷 Label printer</b>Xprinter barcode labels and bill stickers (TSPL)</div></div></div>
+<div class="card"><b>Set up once (2 minutes)</b><ol>
+<li>Tap <b>Download</b>, open the file and allow <i>Install unknown apps</i>. If Play Protect warns, tap <b>More details → Install anyway</b>. This one file is the whole app — the printer setup (<b>SAI Print</b> icon) comes inside it; do not install an older SAI Print file over it.</li>
+<li>Open <b>SAI WOS</b> and tap <b>Allow</b> on every question (camera, microphone, location, notifications, nearby devices) and on <i>battery</i>.</li>
+<li>Pair both printers in the phone's <b>Bluetooth settings</b> (PIN 0000 or 1234). USB printers: plug in with an OTG cable.</li>
+<li>Open the <b>SAI Print</b> icon (or Biller → print settings → Printer setup) → under <i>Receipt printer</i> tap Bluetooth / USB / WiFi IP and pick the thermal printer. A test slip prints.</li>
+<li>Under <i>Label printer</i> pick the <b>Xprinter</b>. A test label prints.</li>
+<li>Use <b>SAI WOS</b> for billing. Print settings say <b class="ok">✔ Printing built into the SAI WOS app</b>. Every bill, label and sticker prints straight away. You can remove the old app made with Median.</li>
+</ol><p class="hi">एक बार सेट करें: SAI WOS ऐप डाउनलोड करें → खोलकर हर अनुमति (कैमरा, माइक, लोकेशन, नोटिफिकेशन, बैटरी) पर Allow दबाएँ → प्रिंटर Bluetooth में पेयर करें → SAI Print आइकन में रसीद प्रिंटर और Xprinter लेबल प्रिंटर चुनें। अब कैमरा, माइक और प्रिंट सब सीधे चलेंगे।</p></div>
+<div class="card hi">Jobs never leave the phone: the shop app hands each bill to SAI Print on the same phone, which keeps the printer link open so a bill prints in about a second.</div>
+</div><script>
+fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(v){document.getElementById('meta').textContent='Version '+v.ver+' · '+Math.round(v.size/1024)+' KB · Android 5 or newer';document.getElementById('dl').href='sai-print.apk?v='+v.ver;}).catch(function(){});
+</script></body></html>

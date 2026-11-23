@@ -1,0 +1,12 @@
+/*
+  Access-Control-Allow-Origin: *
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/versions.json
+  Cache-Control: no-cache
+/hosts.json
+  Cache-Control: no-cache
+/sw.js
+  Cache-Control: no-cache

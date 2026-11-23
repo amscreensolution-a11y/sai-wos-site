@@ -1,0 +1,128 @@
+[
+ {
+  "v": "9.24",
+  "date": "2026-11-23",
+  "notes": "Your own storage places (tray/box/drawer) with photo, camera barcode scanner, pop-ups only for recent alerts, clear technician workspace (Now / Today / Pending / Previous), chat bubble with beep, part return, photo for sending parts and handover, admin clean screen + restore, typing never closes the keyboard, Quick Billing lists only after typing, 4 free servers with automatic switch",
+  "hi": "अपनी जगहें (ट्रे/बॉक्स/दराज़) फोटो के साथ, कैमरा बारकोड स्कैनर, सिर्फ़ ताज़ा अलर्ट पॉप-अप, साफ़ टेक्नीशियन स्क्रीन, चैट बटन बीप के साथ, पार्ट वापसी, पार्ट भेजने व देने पर फोटो, एडमिन स्क्रीन साफ़/वापस, टाइप करते समय कीबोर्ड बंद नहीं होगा, 4 मुफ़्त सर्वर — एक बंद तो दूसरा अपने आप"
+ },
+ {
+  "v": "9.23",
+  "date": "2026-11-22",
+  "notes": "Mobile Manager login + MOBILE MANAGER tab (also for reception and owner): receive back from technician room, rack map with slots, keep any phone in a rack, scan-checked handover to the customer, phone stock check, search phones and bills, link a bill or Vyapar invoice number",
+  "hi": "मोबाइल मैनेजर लॉगिन: टेक्नीशियन से फोन लें, रैक में रखें, स्कैन करके ग्राहक को दें, स्टॉक जाँच, बिल / Vyapar नंबर जोड़ें"
+ },
+ {
+  "v": "9.22",
+  "date": "2026-11-22",
+  "notes": "Bills become repair jobs for technicians (model, problem, technician, URGENT); TEAM tab: messages between reception and technicians with full-screen alerts, notes linked to a phone, send parts, parts journey; technician tab: message reception + ask for a part; app 1.4 wakes the screen for alerts",
+  "hi": "बिल से टेक्नीशियन को रिपेयर काम (अर्जेंट भी); TEAM टैब: रिसेप्शन–टेक्नीशियन संदेश, फुल-स्क्रीन अलर्ट, पार्ट भेजें, पार्ट की पूरी यात्रा"
+ },
+ {
+  "v": "9.21",
+  "date": "2026-11-22",
+  "notes": "Quick Billing login on the home screen (like Reception / technicians / owner) with only the Biller — opens straight on a new bill",
+  "hi": "होम स्क्रीन पर Quick Billing लॉगिन — सिर्फ़ बिलर, सीधे नया बिल"
+ },
+ {
+  "v": "9.20",
+  "date": "2026-11-22",
+  "notes": "QUICK BILLING tab: the bill screen alone, always a fresh bill; device photo after every bill (camera opens by itself, required); PIN / pattern / password box beside Description, printed on the bill sticker (never on the customer receipt)",
+  "hi": "क्विक बिलिंग टैब; हर बिल के बाद मोबाइल फोटो ज़रूरी (कैमरा अपने आप खुलेगा); विवरण के पास PIN / पैटर्न बॉक्स — स्टिकर पर छपेगा"
+ },
+ {
+  "v": "9.19",
+  "date": "2026-11-22",
+  "notes": "Phone permissions panel (camera, mic, gallery, notifications, Bluetooth, location) with Allow all; walkie-talkie asks for the microphone itself; SAI WOS app update bar; app 1.3 adds gallery permissions",
+  "hi": "फोन अनुमति पैनल (कैमरा, माइक, गैलरी…) — सब चालू करें; वॉकी-टॉकी खुद माइक की अनुमति माँगता है; ऐप अपडेट पट्टी"
+ },
+ {
+  "v": "9.18",
+  "date": "2026-11-22",
+  "notes": "Bold, easy-to-read printing on bills, labels and stickers (on by default); the new SAI WOS Android app: camera, microphone, location, notifications, photo upload, downloads, sharing and A4 printing all allowed, with receipt + Xprinter printing built in",
+  "hi": "बिल, लेबल और स्टिकर पर मोटे, साफ़ अक्षर; नया SAI WOS ऐप: कैमरा, माइक, नोटिफिकेशन, फोटो, डाउनलोड और प्रिंटिंग सब अंदर"
+ },
+ {
+  "v": "9.17",
+  "date": "2026-11-22",
+  "notes": "Direct printing with the SAI Print Android app: thermal receipts and Xprinter barcode labels / bill stickers print instantly over Bluetooth, USB or WiFi — no RawBT, no popups; labels default to Xprinter TSPL with darkness control",
+  "hi": "SAI Print ऐप से सीधा प्रिंट: रसीद और Xprinter बारकोड लेबल तुरंत, बिना RawBT और पॉपअप"
+ },
+ {
+  "v": "9.16",
+  "date": "2026-11-22",
+  "notes": "Save / Save & New bar always at the bottom like the billing app; walkie-talkie is now a round ball you can drag anywhere (hold = talk, tap = messages); bill barcode sticker (default 2 x 2 inch, any size) with customer, mobile, items, total/due — scan it to open the bill",
+  "hi": "सेव बटन हमेशा नीचे; वॉकी-टॉकी अब गोल बटन जिसे कहीं भी खींच सकते हैं; बिल बारकोड स्टिकर (2×2 इंच, साइज़ बदल सकते हैं)"
+ },
+ {
+  "v": "9.15",
+  "date": "2026-11-22",
+  "notes": "Biller: preview after Save with 4 thermal + 3 A4 themes, Print / Share; full Invoice Print settings (paper 2/3/4 inch, copies, extra lines, cut, drawer, header/table/totals/footer); barcode labels in any size (ESC/POS, TSPL, A4 sheet); saved-party and item dropdowns, invoice prefix, low-stock dialog, Party Details; Save button no longer hidden",
+  "hi": "बिलर: सेव के बाद प्रीव्यू (थीम, प्रिंट, शेयर), पूरी प्रिंट सेटिंग, किसी भी साइज़ के बारकोड लेबल, सेव बटन ठीक"
+ },
+ {
+  "v": "9.14",
+  "date": "2026-11-22",
+  "notes": "New BILLER tab: billing-app style sale screen (Credit/Cash, item rows that auto-add, barcode, party balance, payment types, photo, saved T&C, Save & New), parties with You'll Get / You'll Give, Payment-In / Payment-Out, items list",
+  "hi": "नया BILLER टैब: बिलिंग ऐप जैसा सेल स्क्रीन, पार्टी बैलेंस (मिलेगा / देना है), पेमेंट-इन / पेमेंट-आउट, आइटम लिस्ट"
+ },
+ {
+  "v": "9.13",
+  "date": "2026-11-19",
+  "notes": "Live announcements from real data: every change names the real part, technician, repair time and expected landing; a live roll call every 4 minutes reads the true status of each phone in the shop; sound starts with one tap; screens that cannot speak say so; 📢 announce-now button",
+  "hi": "असली डेटा से लाइव घोषणा: हर बदलाव में असली पार्ट, टेक्नीशियन, रिपेयर का समय और संभावित समय; हर 4 मिनट दुकान के हर फोन का असली हाल; एक टैप से आवाज़ शुरू; जो स्क्रीन बोल नहीं सकती वह बताती है; 📢 अभी घोषणा बटन"
+ },
+ {
+  "v": "9.12",
+  "date": "2026-11-19",
+  "notes": "Airport PA on the TV board: chime + English & Hindi announcement for every change (check-in, boarding at gate, departed, delayed for part, final approach, landed, final call, collected, running late), regular terminal announcements, soft terminal ambience, on-screen PA bar",
+  "hi": "TV बोर्ड पर एयरपोर्ट जैसी घोषणा: हर बदलाव पर चाइम + अंग्रेज़ी व हिंदी घोषणा (चेक-इन, गेट पर बोर्डिंग, उड़ान, पार्ट से देरी, आख़िरी जाँच, लैंड, आख़िरी कॉल, ले गए, देरी), नियमित टर्मिनल घोषणाएँ, हल्का टर्मिनल संगीत, स्क्रीन पर घोषणा पट्टी"
+ },
+ {
+  "v": "9.11",
+  "date": "2026-11-19",
+  "notes": "INSIGHTS command centre for the owner: plain-language headlines, act-now alerts by money, revenue/profit/collection trends vs previous period, busy-hour heatmap, bottleneck finder, technician scorecard with comebacks, price guide, top customers and win-back list, udhaar aging with WhatsApp reminders, stock reorder and dead stock, 7-day and month-end forecast, CSV export",
+  "hi": "मालिक के लिए INSIGHTS: आसान भाषा में समझ, पैसे के हिसाब से ज़रूरी काम, कमाई/मुनाफ़ा/वसूली का ट्रेंड, भीड़ का समय, देरी कहाँ, टेक्नीशियन स्कोरकार्ड, रेट गाइड, बड़े ग्राहक और वापस बुलाने की सूची, उधार और WhatsApp याद, स्टॉक ऑर्डर और पड़ा स्टॉक, 7 दिन और महीने का अनुमान, CSV"
+ },
+ {
+  "v": "9.10",
+  "date": "2026-11-17",
+  "notes": "TV / Shop display button on the main screen with PIN; permanent customer board (/tv) and reception board (/desk); new airport departures board with announcements; staff names and settings now sync item by item so no phone can wipe them",
+  "hi": "मुख्य स्क्रीन पर PIN वाला TV बटन; ग्राहकों का स्थायी बोर्ड (/tv) और रिसेप्शन बोर्ड (/desk); नया एयरपोर्ट बोर्ड और घोषणा; स्टाफ़ नाम और सेटिंग्स अब अलग-अलग सिंक — कोई फोन मिटा नहीं सकता"
+ },
+ {
+  "v": "9.9.2",
+  "date": "2026-11-17",
+  "notes": "Reception board (staff link): who took each phone, who is repairing, pending, who completed, device photo, customer and receipt, live feed. Quick bills from phones still on an old version now show on the screens too.",
+  "hi": "रिसेप्शन बोर्ड (स्टाफ़ लिंक): किसने लिया, कौन बना रहा, क्या बाकी, किसने पूरा किया, फोन की फोटो, ग्राहक और रसीद, लाइव फ़ीड। पुराने वर्ज़न वाले फोन के क्विक बिल भी अब स्क्रीन पर।"
+ },
+ {
+  "v": "9.9.1",
+  "date": "2026-11-17",
+  "notes": "Telegram setup is permanent: set once, restored automatically on every phone and every update",
+  "hi": "टेलीग्राम सेटअप स्थायी: एक बार भरें, हर फोन और हर अपडेट में अपने आप बना रहता है"
+ },
+ {
+  "v": "9.9",
+  "date": "2026-11-17",
+  "notes": "Version switcher: any phone can go back to an earlier version and return in one tap; start-up guard offers the previous version if one ever fails to open",
+  "hi": "वर्ज़न बदलने का बटन: कोई भी फोन पुराने वर्ज़न पर जा सकता है और एक टैप में वापस; ऐप न खुले तो पिछला वर्ज़न खुद ऑफर होता है"
+ },
+ {
+  "v": "9.8.1",
+  "date": "2026-11-17",
+  "notes": "Updates install themselves at a safe moment — nothing half-typed is lost",
+  "hi": "अपडेट अपने आप, सही समय पर — अधूरा लिखा कुछ नहीं जाता"
+ },
+ {
+  "v": "9.8",
+  "date": "2026-11-17",
+  "notes": "Quick bills become live tickets on the shop display; Telegram setup can no longer be wiped by another phone",
+  "hi": "क्विक बिल लाइव टिकट बनते हैं; टेलीग्राम सेटअप अब कोई फोन मिटा नहीं सकता"
+ },
+ {
+  "v": "9.7",
+  "date": "2026-11-16",
+  "notes": "Telegram vault, archive, Drive vault, health report, EXPRESS check-in, LIVE screen, shop display",
+  "hi": "टेलीग्राम वॉल्ट, आर्काइव, ड्राइव, एक्सप्रेस चेक-इन, लाइव स्क्रीन, शॉप डिस्प्ले"
+ }
+]

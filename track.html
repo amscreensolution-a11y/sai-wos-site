@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track Your Repair</title>
+<style>
+:root{--bg:#07090d;--panel:#0e1219;--line:#1c2430;--tx:#cdd6e4;--dim:#6b7891;--amb:#ffb300;--grn:#00e08a;--red:#ff4d5e;--cyn:#22d3ee}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:ui-monospace,'JetBrains Mono',Consolas,monospace;font-size:14px;padding:16px;max-width:520px;margin:0 auto}
+.shop{text-align:center;padding:14px 0 4px}
+.shop b{color:var(--amb);letter-spacing:.2em;font-size:17px}
+.shop div{color:var(--dim);font-size:11px;margin-top:4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+.jid{color:var(--amb);font-size:20px;font-weight:700}
+.pill{display:inline-block;padding:4px 12px;border-radius:12px;font-size:11px;font-weight:700;letter-spacing:.08em}
+.pG{background:#062b1e;color:var(--grn)} .pA{background:#2b2306;color:var(--amb)} .pC{background:#083039;color:var(--cyn)} .pD{background:#1a2230;color:var(--dim)} .pR{background:#340f14;color:var(--red)}
+.dev{font-size:16px;margin:8px 0 2px}
+.dim{color:var(--dim);font-size:12px}
+.steps{margin:6px 0}
+.step{display:flex;gap:14px;position:relative;padding-bottom:22px}
+.step:last-child{padding-bottom:0}
+.step::before{content:'';position:absolute;left:13px;top:28px;bottom:0;width:2px;background:var(--line)}
+.step:last-child::before{display:none}
+.ic{width:28px;height:28px;border-radius:50%;background:var(--panel);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;flex:none;z-index:1}
+.step.done .ic{border-color:var(--grn);background:#062b1e}
+.step.cur .ic{border-color:var(--amb);background:#2b2306;box-shadow:0 0 12px rgba(255,179,0,.4);animation:pu 1.6s infinite}
+@keyframes pu{50%{box-shadow:0 0 20px rgba(255,179,0,.6)}}
+.step b{display:block;font-size:13px}
+.step.done b{color:var(--grn)} .step.cur b{color:var(--amb)}
+.step .tt{color:var(--dim);font-size:11px;margin-top:2px}
+.part{background:#131a24;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-top:6px;font-size:12px}
+.btn{display:block;text-align:center;text-decoration:none;background:var(--amb);color:#111;font-weight:700;padding:14px;border-radius:10px;margin-top:10px;letter-spacing:.1em}
+.btn.g{background:transparent;border:1px solid var(--line);color:var(--tx);font-weight:400}
+.live{color:var(--grn);font-size:10px;letter-spacing:.15em}
+.live::before{content:'●';margin-right:5px;animation:bl 1.4s infinite}
+@keyframes bl{50%{opacity:.25}}
+.foot{text-align:center;color:#3a4557;font-size:10px;padding:18px 0}
+.err{text-align:center;color:var(--dim);padding:40px 10px}
+</style>
+</head>
+<body>
+<div id="app"><div class="err">⏳ Loading your repair status…</div></div>
+<script>
+function pad(n){return (n<10?'0':'')+n;}
+function fmtT(ts){if(!ts)return '';var d=new Date(ts),h=d.getHours(),ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+pad(d.getMinutes())+' '+ap;}
+function fmtD(ts){var d=new Date(ts);return pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();}
+function fmtDT(ts){return ts?fmtD(ts)+' '+fmtT(ts):'';}
+function esc(s){return (s==null?'':''+s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+var P=null;try{P=JSON.parse(atob(location.hash.slice(1).replace(/-/g,'+').replace(/_/g,'/')));}catch(e){}
+var META={};
+function fail(m){document.getElementById('app').innerHTML='<div class="err">'+m+'</div>';}
+if(!P||!P.j||!P.k){fail('⚠ Invalid tracking link.<br>कृपया दुकान से नया लिंक माँगें।');}
+else{
+  var s1=document.createElement('script');s1.src='https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js';
+  s1.onload=function(){var s2=document.createElement('script');s2.src='https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js';
+    s2.onload=start;s2.onerror=function(){fail('⚠ No internet — इंटरनेट चालू करके दोबारा खोलें');};document.head.appendChild(s2);};
+  s1.onerror=function(){fail('⚠ No internet — इंटरनेट चालू करके दोबारा खोलें');};
+  document.head.appendChild(s1);
+}
+function start(){try{
+  firebase.initializeApp({apiKey:P.k,projectId:P.p,appId:P.i,authDomain:P.a});
+  var db=firebase.firestore(),cid=P.c||'main';
+  db.collection('c_'+cid+'_meta').doc('main').get().then(function(d){META=(d.data()||{}).settings||{};}).catch(function(){});
+  db.collection('c_'+cid+'_jobs').doc(P.j).onSnapshot(function(doc){
+    if(!doc.exists){fail('⚠ Job '+esc(P.j)+' not found');return;}
+    render(doc.data());
+  },function(){fail('⚠ Could not load — try again later');});
+}catch(e){fail('⚠ '+esc(e.message));}}
+function stPill(st){
+  var m={NEW:['pA','WAITING • प्रतीक्षा में'],ASSIGNED:['pA','ACCEPTED • स्वीकृत'],REPAIR:['pG','REPAIR IN PROGRESS • रिपेयर चालू'],
+    PARTS:['pR','WAITING FOR SPARE PART • पार्ट का इंतज़ार'],DONE:['pC','REPAIR COMPLETE • रिपेयर पूरा'],
+    READY:['pG','READY FOR PICKUP • ले जाने के लिए तैयार'],DELIVERED:['pD','DELIVERED • डिलीवर हो गया']};
+  var x=m[st]||['pD',st];return '<span class="pill '+x[0]+'">'+x[1]+'</span>';}
+function render(j){
+  var tm=j.tm||{},c=j.c||{};
+  var steps=[
+    ['📥','Received at shop • दुकान में जमा',tm.created],
+    ['👨‍🔧','Technician assigned • टेक्नीशियन मिला',tm.accepted],
+    ['🔧','Repair in progress • रिपेयर चालू',tm.started],
+    ['🏁','Repair complete • रिपेयर पूरा',tm.finished],
+    ['📦','Ready for pickup • तैयार',tm.ready],
+    ['🙌','Delivered • डिलीवर',tm.delivered]];
+  var cur=-1;steps.forEach(function(s,i){if(s[2])cur=i;});
+  var parts=(j.parts||[]).filter(function(p){return p.status!=='REJECTED';});
+  var html='<div class="shop"><b>'+esc(META.shop||'SHRI SAI MOBILE')+'</b><div>'+esc(META.addr||'')+'</div></div>'
+  +'<div class="card"><span class="jid">'+esc(j.id)+'</span> '+stPill(j.st)
+  +'<div class="dev">'+esc((c.brand||'')+' '+(c.model||''))+(c.color?' · '+esc(c.color):'')+'</div>'
+  +'<div class="dim">'+esc(c.prob||'')+'</div>'
+  +(c.exp&&!tm.delivered?'<div class="dim" style="margin-top:6px">📅 Expected delivery • अनुमानित: <b style="color:var(--tx)">'+esc(c.exp)+'</b></div>':'')
+  +'<div style="margin-top:8px" class="live">LIVE TRACKING</div></div>'
+  +'<div class="card"><div class="steps">'
+  +steps.map(function(s,i){
+    var cls=s[2]?'done':(i===cur+1&&j.st!=='DELIVERED'?'cur':'');
+    if(j.st==='PARTS'&&i===2)cls='cur';
+    return '<div class="step '+cls+'"><div class="ic">'+s[0]+'</div><div><b>'+s[1]+'</b>'
+    +'<div class="tt">'+(s[2]?fmtDT(s[2]):(cls==='cur'?'happening now • अभी चल रहा है':'—'))+'</div></div></div>';}).join('')
+  +'</div>'
+  +(j.st==='PARTS'?'<div class="part">🧩 Waiting for a spare part • पार्ट आने का इंतज़ार है</div>':'')
+  +(parts.length?'<div class="dim" style="margin-top:10px">Parts • पार्ट्स:</div>'+parts.map(function(p){
+    return '<div class="part">'+(p.status==='INSTALLED'?'✅':'⏳')+' '+esc(p.name)+' ×'+(p.qty||1)+'</div>';}).join(''):'')
+  +'</div>'
+  +(j.st==='READY'?'<div class="card" style="border-color:var(--grn);text-align:center"><b style="color:var(--grn);font-size:16px">📦 आपका मोबाइल तैयार है — दुकान से ले जाएँ!</b></div>':'')
+  +(META.ph?'<a class="btn" href="tel:'+esc(META.ph)+'">📞 CALL SHOP • दुकान को कॉल करें</a>':'')
+  +'<div class="foot">'+esc(META.shop||'SHRI SAI MOBILE')+' · live repair tracking</div>';
+  document.getElementById('app').innerHTML=html;
+}
+</script>
+</body>
+</html>

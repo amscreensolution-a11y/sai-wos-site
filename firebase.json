@@ -1,0 +1,4 @@
+{"hosting":{"public":".","ignore":["firebase.json","_headers","**/.*","bridge-src/**"],
+ "headers":[{"source":"**","headers":[{"key":"Access-Control-Allow-Origin","value":"*"}]},
+  {"source":"@(index.html|versions.json|hosts.json|sw.js)","headers":[{"key":"Cache-Control","value":"no-cache"}]},
+  {"source":"/","headers":[{"key":"Cache-Control","value":"no-cache"}]}]}}
