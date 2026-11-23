@@ -1,4 +1,5 @@
-{"hosting":{"public":".","ignore":["firebase.json","_headers","**/.*","bridge-src/**"],
+{"hosting":{"public":".","ignore":["firebase.json","_headers","**/.*","bridge-src/**","**/*.apk"],
+ "redirects":[{"source":"/bridge/sai-print.apk","destination":"https://sai-workshop-os.pages.dev/bridge/sai-print.apk","type":302}],
  "headers":[{"source":"**","headers":[{"key":"Access-Control-Allow-Origin","value":"*"}]},
   {"source":"@(index.html|versions.json|hosts.json|sw.js)","headers":[{"key":"Cache-Control","value":"no-cache"}]},
   {"source":"/","headers":[{"key":"Cache-Control","value":"no-cache"}]}]}}
