@@ -5058,9 +5058,6 @@ function c128(txt){txt=(''+txt).replace(/[^\x20-\x7E]/g,'');var codes=[],i;
   var sum=codes[0];for(var k=1;k<codes.length;k++)sum+=codes[k]*k;codes.push(sum%103);codes.push(106);
   return codes.map(function(c){return C128P[c];}).join('');}
 function c128mods(w){var m=0;for(var i=0;i<w.length;i++)m+=+w[i];return m;}
-/* LUCKYSTAR cost code: 1=L 2=U 3=C 4=K 5=Y 6=S 7=T 8=A 9=R, 0 = D / Z / P in turn */
-function luckyCode(n){var z=['D','Z','P'],zi=0,m={1:'L',2:'U',3:'C',4:'K',5:'Y',6:'S',7:'T',8:'A',9:'R'};
-  return (''+Math.round(+n||0)).split('').map(function(d){return d==='0'?z[(zi++)%3]:(m[d]||d);}).join('');}
 function inWords(n){n=Math.round(Math.abs(+n||0));if(!n)return 'Zero';
   var a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'],
       b=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
@@ -5344,7 +5341,7 @@ function lblCanvas(p,L){var dpm=L.dpi/25.4,W=Math.max(40,Math.round(L.w*dpm)),H=
       for(var i=0;i<wd.length;i++){var ww=+wd[i]*mw;if(on)c.fillRect(x,y+Math.round(h*0.03),ww,bh);x+=ww;on=!on;}l.tight=bw>IW;}
     else if(l.k==='code'){c.textAlign='center';ft(fit(code,sz,0,IW),W/2,y+(h-sz)/2);}
     else if(l.k==='foot'){var a=[];if(L.cat&&p.cat)a.push(p.cat);if(L.date){var d=new Date();a.push(bilPad(d.getDate())+'/'+bilPad(d.getMonth()+1)+'/'+(''+d.getFullYear()).slice(2));}
-      c.textAlign='left';ft(fit(a.join(' · '),sz,0,IW*(L.cost?0.7:1)),pad,y+(h-sz)/2);if(L.cost&&p.buy){c.textAlign='right';c.font=(BOLD?'900 ':'bold ')+Math.round(sz)+'px '+FF;ft(luckyCode(p.buy),W-pad,y+(h-sz)/2);}}
+      c.textAlign='left';ft(fit(a.join(' · '),sz,0,IW*(L.cost?0.7:1)),pad,y+(h-sz)/2);if(false){c.textAlign='right';c.font=(BOLD?'900 ':'bold ')+Math.round(sz)+'px '+FF;}}
     y+=h;});
   c.textAlign='left';cv._tight=lines.some(function(l){return l.tight;});return cv;}
 function lblQueue(){var q=[];Object.keys(BIL.lb&&BIL.lb.sel||{}).forEach(function(pid){var n=+BIL.lb.sel[pid]||0,p=DB.prod[pid];if(p)for(var i=0;i<n;i++)q.push(p);});return q;}
@@ -5380,7 +5377,7 @@ function bilLabels(){var L=lblS(),lb=BIL.lb||(BIL.lb={sel:{},q:''}),q=(lb.q||'')
   +'<div class="lPrev">'+(pc?'<div class="lPrevBox"><img src="'+pc.toDataURL()+'" style="width:'+Math.min(300,L.w*6)+'px;aspect-ratio:'+L.w+'/'+L.h+'"></div><div class="lPrevT">'+L.w+' × '+L.h+' mm'+(L.cols>1?' · '+L.cols+' across':'')+(pc._tight?' · <b class="bRx">code too long for this width — make the label wider</b>':'')+'</div>':'<div class="bEmpty">Add an item to see the label</div>')+'</div>'
   +ipSec('Label size')+'<div class="lPre">'+LBL_PRESETS.map(function(x){var on=+L.w===x[0]&&+L.h===x[1]&&+L.cols===x[2];return '<button class="'+(on?'on':'')+'" onclick="lblSet(\'w\','+x[0]+');lblSet(\'h\','+x[1]+');lblSet(\'cols\','+x[2]+');bilKeepDraw()">'+x[0]+'×'+x[1]+(x[2]>1?' ×'+x[2]:'')+'</button>';}).join('')+'</div>'
   +'<div class="lGrid">'+[['Width mm','w'],['Height mm','h'],['Labels across','cols'],['Gap mm','gap'],['Side gap mm','hgap'],['Barcode height','barH']].map(function(x){return '<div class="bOut"><label>'+x[0]+'</label><input inputmode="decimal" value="'+esc(L[x[1]])+'" onchange="var v=parseFloat(this.value);if(v>0||(v===0&&/gap/.test(\''+x[1]+'\')))lblSet(\''+x[1]+'\',v);bilKeepDraw()"></div>';}).join('')+'</div>'
-  +ipSec('Print on the label')+'<div class="lChips">'+tg('shop','Shop name')+tg('name','Item name')+tg('price','Sale price')+tg('mrp','MRP')+tg('bar','Barcode')+tg('code','Code number')+tg('cat','Category')+tg('date','Date')+tg('cost','Cost code (LUCKYSTAR)')+tg('bold','Bold print')+'</div>'
+  +ipSec('Print on the label')+'<div class="lChips">'+tg('shop','Shop name')+tg('name','Item name')+tg('price','Sale price')+tg('mrp','MRP')+tg('bar','Barcode')+tg('code','Code number')+tg('cat','Category')+tg('date','Date')+tg('bold','Bold print')+'</div>'
   +'<div class="pRow"><span>Text size</span><select onchange="lblSet(\'fs\',this.value);bilKeepDraw()">'+[['s','Small'],['m','Medium'],['l','Large']].map(function(o){return '<option value="'+o[0]+'"'+(L.fs===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select></div>'
   +ipSec('Printer')+brStatusHtml()+'<div class="pRow"><span>Printer type</span><select onchange="lblSet(\'lang\',this.value);bilKeepDraw()"><option value="escpos"'+(L.lang==='escpos'?' selected':'')+'>Thermal / label printer (ESC/POS)</option><option value="tspl"'+(L.lang==='tspl'?' selected':'')+'>Xprinter label printer (TSPL)</option><option value="browser"'+(L.lang==='browser'?' selected':'')+'>Print dialog / PDF</option></select></div>'
   +(L.lang==='escpos'?'<div class="pRow"><span>Paper</span><select onchange="lblSet(\'paper\',this.value);bilKeepDraw()"><option value="gap"'+(L.paper==='gap'?' selected':'')+'>Sticker labels with gap</option><option value="roll"'+(L.paper==='roll'?' selected':'')+'>Continuous roll</option></select></div>':'')
