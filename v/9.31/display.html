@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05070c">
+<title>Shop Display — SAI WORKSHOP OS</title>
+<style>
+:root{--bg:#05070c;--pnl:#0b111c;--pnl2:#101a2a;--line:#1b2840;--txt:#e9eef7;--dim:#7d8aa3;--amb:#ffb020;--grn:#22d47a;--red:#ff4d5e;--cyn:#2ec5ff;--pur:#b17cff;--org:#ff8a3d;
+  --flap:#121a28;--mono:"Roboto Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono",monospace;}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans",sans-serif;overflow:hidden}
+body{display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:14px;padding:10px 18px;background:linear-gradient(180deg,#0c1424,#070b13);border-bottom:1px solid var(--line)}
+.logo{font-weight:800;letter-spacing:3px;color:var(--amb);font-size:clamp(14px,1.6vw,22px);white-space:nowrap}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--grn);letter-spacing:2px}
+.live i{width:9px;height:9px;border-radius:50%;background:var(--grn);box-shadow:0 0 10px var(--grn);animation:pulse 1.6s infinite}
+.live.off{color:var(--red)}.live.off i{background:var(--red);box-shadow:0 0 10px var(--red)}
+@keyframes pulse{50%{opacity:.25}}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav button,.ctl{background:var(--pnl2);color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:inherit;white-space:nowrap}
+nav button.on{color:#05070c;background:var(--amb);border-color:var(--amb);font-weight:700}
+.clock{font-family:var(--mono);font-size:clamp(18px,2.4vw,34px);color:var(--txt);letter-spacing:2px;text-align:right;line-height:1}
+.clock small{display:block;font-size:11px;color:var(--dim);letter-spacing:1px;margin-top:3px}
+main{flex:1;position:relative;overflow:hidden}
+.scr{position:absolute;inset:0;padding:14px 18px;display:none;flex-direction:column;gap:12px;overflow:hidden}
+.scr.on{display:flex;animation:fade .5s}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.st{flex:1 1 130px;background:var(--pnl);border:1px solid var(--line);border-radius:14px;padding:10px 14px}
+.st b{display:block;font-family:var(--mono);font-size:clamp(24px,3.2vw,46px);line-height:1}
+.st span{font-size:12px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
+/* ✈ departures */
+.board{flex:1;display:flex;flex-direction:column;background:var(--pnl);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.brow{display:grid;grid-template-columns:8.5em 1.6fr 1.4fr 1.1fr 1fr 11em 6.5em 10.5em;gap:8px;align-items:center;padding:0 14px;border-bottom:1px solid #0e1626;min-height:clamp(40px,5.6vh,64px)}
+.bhead{background:#0d1626;color:var(--amb);font-size:12px;letter-spacing:2px;text-transform:uppercase;min-height:38px}
+.cell{font-family:var(--mono);font-size:clamp(13px,1.45vw,22px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fl{display:inline-block;background:var(--flap);color:#f4f6fb;border-radius:3px;padding:0 2px;margin-right:1px;box-shadow:inset 0 -1px 0 #000,inset 0 1px 0 #1f2b40}
+.flip .fl{animation:flip .55s ease-out both}
+@keyframes flip{0%{transform:rotateX(90deg);filter:brightness(2)}60%{transform:rotateX(-14deg)}100%{transform:none}}
+.pill{display:inline-block;padding:4px 10px;border-radius:7px;font-family:var(--mono);font-weight:700;font-size:clamp(11px,1.15vw,17px);letter-spacing:1px}
+.sNEW{background:rgba(255,176,32,.14);color:var(--amb)}.sASSIGNED{background:rgba(46,197,255,.12);color:var(--cyn)}
+.sREPAIR{background:rgba(46,197,255,.2);color:var(--cyn)}.sPARTS{background:rgba(177,124,255,.18);color:var(--pur)}
+.sDONE{background:rgba(255,138,61,.16);color:var(--org)}.sREADY{background:rgba(34,212,122,.18);color:var(--grn);animation:glow 1.8s infinite}
+.sDELIVERED{background:#162033;color:var(--dim)}
+@keyframes glow{50%{box-shadow:0 0 18px rgba(34,212,122,.55)}}
+.late{color:var(--red)!important}.urg{color:var(--red);font-weight:800}
+.pager{display:flex;justify-content:space-between;color:var(--dim);font-size:12px;padding:6px 14px;letter-spacing:1px}
+/* ✈ FIDS — a real airport departures board */
+.fids{flex:1;display:flex;flex-direction:column;background:#020305;border:1px solid #1d2433;border-radius:16px;overflow:hidden;box-shadow:inset 0 0 60px rgba(0,0,0,.9)}
+.fhead{display:flex;align-items:center;gap:14px;padding:10px 16px;background:linear-gradient(180deg,#141a24,#07090e);border-bottom:2px solid #ffc400}
+.fhead .ttl{font:800 clamp(18px,2.4vw,38px)/1 var(--mono);letter-spacing:.32em;color:#ffc400;text-shadow:0 0 18px rgba(255,196,0,.35)}
+.fhead .sub{color:#8a93a6;font-size:clamp(10px,.9vw,13px);letter-spacing:3px}
+.fhead .plane{font-size:clamp(22px,2.6vw,40px);animation:fly 6s ease-in-out infinite}
+@keyframes fly{0%{transform:translate(-6px,3px) rotate(-8deg)}50%{transform:translate(6px,-3px) rotate(-14deg)}100%{transform:translate(-6px,3px) rotate(-8deg)}}
+.frow{font-size:clamp(15px,1.6vw,26px);display:grid;grid-template-columns:4.6em 4.9em minmax(0,1.6fr) minmax(0,1fr) minmax(0,1.05fr) minmax(0,1.1fr) minmax(7.5em,auto);gap:clamp(4px,.6vw,10px);align-items:center;padding:0 14px;min-height:clamp(42px,6vh,70px);border-bottom:1px solid #0d1119}
+.frow:nth-child(even){background:rgba(255,255,255,.012)}
+.fh{min-height:34px;background:#0a0e15;color:#ffc400}.fh>div{font:700 clamp(9px,.75vw,12px) var(--mono);letter-spacing:2px;white-space:nowrap;overflow:hidden}
+.sf{display:flex;gap:2px;overflow:hidden;white-space:nowrap}
+.sf b{position:relative;display:inline-block;width:.78em;text-align:center;font:700 1em/1.45 var(--mono);color:#f7f3e3;
+  background:linear-gradient(180deg,#22262e 0,#1a1d24 49%,#060708 50%,#15181e 51%,#1d2027 100%);border-radius:3px;box-shadow:0 2px 3px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.06)}
+.sf b::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.85)}
+.sf b.y{color:#ffc400}.sf b.g{color:#3dff9a}.sf b.c{color:#58d6ff}.sf b.r{color:#ff5a64}.sf b.p{color:#c39bff}.sf b.d{color:#8b93a3}
+.sf.flip b{animation:sflip .5s cubic-bezier(.3,1.4,.6,1) both}
+@keyframes sflip{0%{transform:perspective(300px) rotateX(-90deg);filter:brightness(2.2)}55%{transform:perspective(300px) rotateX(18deg)}100%{transform:none;filter:none}}
+.rm{display:inline-flex;align-items:center;gap:6px;font:800 .62em var(--mono);letter-spacing:2px;padding:5px 10px;border-radius:6px;white-space:nowrap}
+.rm.chk{color:#ffc400;background:rgba(255,196,0,.1)}.rm.brd{color:#58d6ff;background:rgba(88,214,255,.12);animation:blink 1.1s steps(2) infinite}
+.rm.fly{color:#58d6ff;background:rgba(88,214,255,.16)}.rm.dly{color:#ff5a64;background:rgba(255,90,100,.14);animation:blink 1.4s steps(2) infinite}
+.rm.prt{color:#c39bff;background:rgba(195,155,255,.14)}.rm.fin{color:#ff9d4d;background:rgba(255,157,77,.14)}
+.rm.lnd{color:#062012;background:#3dff9a;box-shadow:0 0 22px rgba(61,255,154,.55);animation:glow 1.6s infinite}
+@keyframes blink{50%{opacity:.35}}
+.route{position:relative;height:16px;margin-right:6px}
+.route i{position:absolute;left:0;right:0;top:7px;height:2px;background:repeating-linear-gradient(90deg,#2a3346 0 6px,transparent 6px 11px)}
+.route s{position:absolute;top:7px;left:0;height:2px;background:linear-gradient(90deg,#ffc400,#58d6ff);text-decoration:none;border-radius:2px;transition:width 1.2s}
+.route em{position:absolute;top:-6px;font-style:normal;font-size:clamp(14px,1.3vw,20px);transform:translateX(-50%) rotate(45deg);transition:left 1.2s;filter:drop-shadow(0 0 6px rgba(88,214,255,.7))}
+.route u{position:absolute;top:3px;width:9px;height:9px;border-radius:50%;background:#2a3346;text-decoration:none;transform:translateX(-50%)}
+.route u.on{background:#3dff9a;box-shadow:0 0 8px #3dff9a}
+.gates{display:flex;gap:8px;flex-wrap:wrap;padding:8px 14px;background:#06080d;border-top:1px solid #151b27}
+.gate{display:flex;align-items:center;gap:8px;background:#0c111a;border:1px solid #1b2232;border-radius:10px;padding:5px 10px;font:600 clamp(10px,.9vw,13px) var(--mono);color:#aeb6c6}
+.gate b{color:#05070c;background:#ffc400;border-radius:5px;padding:1px 6px;font-weight:800}
+.gate.gbusy{border-color:rgba(88,214,255,.5)}.gate.gbusy i{color:#58d6ff;font-style:normal}.gate.gfree i{color:#3dff9a;font-style:normal}
+/* 📢 announcement */
+.ann{position:fixed;inset:0;z-index:80;display:none;place-items:center;background:radial-gradient(circle at 50% 40%,rgba(10,40,24,.96),rgba(1,3,6,.97));padding:20px;text-align:center}
+.ann.on{display:grid;animation:fade .4s}
+.ann .bell{font-size:clamp(50px,8vw,120px);animation:ring 1s ease-in-out infinite}
+@keyframes ring{0%,100%{transform:rotate(0)}25%{transform:rotate(14deg)}75%{transform:rotate(-14deg)}}
+.ann h1{margin:6px 0;font:800 clamp(18px,2.6vw,42px) var(--mono);letter-spacing:.3em;color:#ffc400}
+.ann .tkt{font:800 clamp(60px,12vw,200px)/1 var(--mono);color:#3dff9a;text-shadow:0 0 40px rgba(61,255,154,.6);letter-spacing:.06em}
+.ann .who{font-size:clamp(20px,3.2vw,52px);font-weight:800;margin-top:10px}
+.ann .msg2{font-size:clamp(14px,1.8vw,28px);color:#cfd6e3;margin-top:10px}
+/* 📢 PA bar — the announcement being made right now */
+.paBar{position:fixed;left:0;right:0;bottom:44px;z-index:70;display:flex;align-items:center;gap:14px;padding:10px 18px;background:linear-gradient(90deg,#ffc400,#ffdb4d);color:#0a0c10;
+  font:800 clamp(14px,1.6vw,26px) var(--sans,system-ui);transform:translateY(140%);transition:transform .45s cubic-bezier(.2,1.2,.4,1);overflow:hidden;white-space:nowrap;box-shadow:0 -8px 30px rgba(255,196,0,.35)}
+.paBar.on{transform:none}.paBar .paMic{font-size:1.4em;animation:ring 1.2s ease-in-out infinite;flex:none;position:relative;z-index:2;background:#ffc400;padding-right:10px;box-shadow:14px 0 14px #ffc400}
+.paBar .paTx{display:inline-block}@keyframes paScroll{to{transform:translateX(var(--paX))}}
+.paWarn{position:fixed;left:50%;top:76px;transform:translateX(-50%);z-index:96;background:#b91c1c;color:#fff;font:700 clamp(13px,1.3vw,18px) system-ui;padding:10px 18px;border-radius:12px;max-width:92vw;text-align:center}
+.paTap{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:95;background:#ffc400;color:#05070c;font:800 clamp(16px,2vw,28px) system-ui;padding:18px 28px;border-radius:16px;box-shadow:0 0 0 9999px rgba(0,0,0,.55);cursor:pointer}
+/* 🔒 PIN gate (reception desk) */
+.gatepin{position:fixed;inset:0;z-index:90;background:#04060a;display:grid;place-items:center;text-align:center;padding:20px}
+.gatepin input{font:700 34px var(--mono);letter-spacing:.4em;text-align:center;width:240px;background:#0c111a;color:#fff;border:2px solid #ffc400;border-radius:12px;padding:10px;margin:14px 0;-webkit-text-security:disc}
+.gatepin button{background:#ffc400;color:#05070c;border:0;border-radius:10px;font:800 18px system-ui;padding:12px 30px;cursor:pointer}
+@media (max-width:820px){.frow{font-size:13px;grid-template-columns:4.6em 4.9em minmax(0,1.4fr) minmax(0,1fr) minmax(7em,auto);padding:0 8px}.frow .c5,.frow .c6{display:none}.gates{display:none}}
+/* 🔔 collection */
+.coll{flex:1;display:grid;grid-template-columns:1fr 1.25fr;gap:14px;min-height:0}
+.cbox{background:var(--pnl);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;min-height:0}
+.cbox h2{margin:0 0 10px;font-size:clamp(16px,2vw,30px);letter-spacing:3px}
+.tix{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;overflow:hidden}
+.tk{background:var(--pnl2);border:1px solid var(--line);border-radius:14px;padding:10px 14px;min-width:9em}
+.tk b{display:block;font-family:var(--mono);font-size:clamp(22px,3vw,48px);letter-spacing:2px}
+.tk span{font-size:clamp(11px,1.1vw,16px);color:var(--dim)}
+.tk.rd{border-color:var(--grn);background:linear-gradient(160deg,rgba(34,212,122,.18),rgba(34,212,122,.04))}
+.tk.rd b{color:var(--grn)}.tk.nw{animation:pop 1.2s ease-out 3}
+@keyframes pop{0%{transform:scale(1)}30%{transform:scale(1.12);box-shadow:0 0 40px rgba(34,212,122,.8)}100%{transform:scale(1)}}
+/* 🧑‍🔧 workbench */
+.bench{flex:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;align-content:start;overflow:hidden}
+.tech{background:var(--pnl);border:1px solid var(--line);border-radius:18px;padding:14px;position:relative;overflow:hidden}
+.tech .nm{display:flex;align-items:center;gap:10px;font-weight:800;font-size:clamp(15px,1.6vw,22px)}
+.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#05070c;font-size:18px;flex:none}
+.tech .state{margin-left:auto;font-size:12px;letter-spacing:2px}
+.job{margin-top:10px;background:var(--pnl2);border-radius:12px;padding:10px 12px}
+.job .ph{font-size:clamp(16px,1.8vw,26px);font-weight:700}
+.job .pb{color:var(--dim);font-size:clamp(12px,1.2vw,17px);margin:2px 0 6px}
+.timer{font-family:var(--mono);font-size:clamp(26px,3.4vw,52px);color:var(--cyn);letter-spacing:2px}
+.timer.paused{color:var(--amb)}
+.q{margin-top:8px;font-size:12px;color:var(--dim)}
+.q i{font-style:normal;display:inline-block;background:#0e1828;border:1px solid var(--line);border-radius:7px;padding:2px 7px;margin:2px 3px 0 0;font-family:var(--mono);color:var(--txt)}
+.steps{display:flex;gap:4px;margin-top:8px}.steps s{flex:1;height:6px;border-radius:3px;background:#1a2538;text-decoration:none}.steps s.d{background:var(--cyn)}.steps s.n{background:var(--amb);animation:pulse 1.4s infinite}
+.free{color:var(--grn);font-size:clamp(14px,1.5vw,20px);margin-top:14px;letter-spacing:2px}
+/* 📅 today */
+.tl{flex:1;background:var(--pnl);border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;min-height:0}
+.axis{position:relative;height:22px;margin-left:12em;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--dim)}
+.axis span{position:absolute;transform:translateX(-50%)}
+.rows{flex:1;overflow:hidden;position:relative}
+.tr{display:flex;align-items:center;height:clamp(20px,3.2vh,34px)}
+.tr .lb{width:12em;flex:none;font-family:var(--mono);font-size:clamp(11px,1vw,14px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--dim)}
+.tr .tk2{position:relative;flex:1;height:60%}
+.bar{position:absolute;top:0;bottom:0;border-radius:6px;min-width:4px}
+.bar.go{background:linear-gradient(90deg,rgba(46,197,255,.35),var(--cyn));}
+.bar.dn{background:linear-gradient(90deg,rgba(34,212,122,.35),var(--grn))}
+.bar.wt{background:repeating-linear-gradient(45deg,rgba(255,176,32,.5) 0 6px,rgba(255,176,32,.2) 6px 12px)}
+.nowl{position:absolute;top:0;bottom:0;width:2px;background:var(--red);box-shadow:0 0 10px var(--red)}
+/* 🧾 reception desk (staff link only) */
+.desk{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) minmax(240px,.95fr);gap:10px;min-height:0}
+.dcol{background:var(--pnl);border:1px solid var(--line);border-radius:16px;display:flex;flex-direction:column;min-height:0}
+.dcol h3{margin:0;padding:10px 12px;font-size:clamp(12px,1.1vw,16px);letter-spacing:2px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+.dlist{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:8px}
+.dc{background:var(--pnl2);border:1px solid var(--line);border-radius:12px;padding:8px;display:grid;grid-template-columns:54px 1fr;gap:8px;cursor:pointer;position:relative}
+.dc:hover{border-color:var(--amb)}.dc.nw{animation:pop 1.2s ease-out 2}
+.dc .im{width:54px;height:54px;border-radius:9px;background:#0b1424 center/cover no-repeat;display:grid;place-items:center;font-size:24px;border:1px solid var(--line)}
+.dc .l1{font-weight:800;font-size:clamp(12px,1.05vw,15px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dc .l1 i{font-style:normal;color:var(--amb);font-family:var(--mono);margin-right:5px}
+.dc .l2{color:var(--txt);font-size:clamp(11px,.95vw,14px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dc .l3{color:var(--dim);font-size:clamp(10px,.85vw,12px);line-height:1.45}
+.dc .l3 b{color:var(--txt);font-weight:600}
+.money{font-family:var(--mono);font-size:clamp(10px,.9vw,13px)}.money .du{color:var(--red);font-weight:700}.money .pd{color:var(--grn)}
+.feed{flex:1;overflow-y:auto;padding:8px 10px;font-size:clamp(11px,.95vw,14px)}
+.feed div{padding:6px 0;border-bottom:1px dashed #16233a}.feed em{font-style:normal;color:var(--amb);font-family:var(--mono);margin-right:6px}
+.feed b{color:var(--cyn);font-weight:700}
+.ov{position:fixed;inset:0;background:rgba(2,4,8,.86);display:none;place-items:center;z-index:50;padding:16px}
+.ov.on{display:grid}
+.ovc{background:var(--pnl);border:1px solid var(--amb);border-radius:18px;max-width:880px;width:100%;max-height:92vh;overflow:auto;padding:16px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.ovc img{width:100%;border-radius:12px;display:block;margin-bottom:8px;background:#0b1424}
+.ovc h2{margin:0 0 6px;color:var(--amb);font-size:22px}.ovc .row{padding:5px 0;border-bottom:1px solid #16233a;font-size:15px}.ovc .row span{color:var(--dim);display:inline-block;min-width:7.5em}
+.tline div{padding:4px 0;font-size:14px}.tline em{font-style:normal;color:var(--amb);font-family:var(--mono);margin-right:6px}
+.filebar{position:fixed;left:0;right:0;bottom:44px;z-index:60;background:#b91c1c;color:#fff;padding:10px;text-align:center;font-weight:700}
+.filebar a{color:#fff}
+@media (max-width:1100px){.desk{grid-template-columns:1fr 1fr;overflow-y:auto}.dcol{min-height:300px}}
+@media (max-width:640px){.desk{grid-template-columns:1fr}.ovc{grid-template-columns:1fr}}
+/* ticker */
+footer{border-top:1px solid var(--line);background:#070b13;height:44px;display:flex;align-items:center;overflow:hidden;white-space:nowrap}
+footer .tag{background:var(--amb);color:#05070c;font-weight:800;letter-spacing:2px;padding:0 14px;height:100%;display:flex;align-items:center;font-size:13px}
+#tick{display:inline-block;padding-left:100%;animation:tick 60s linear infinite;font-family:var(--mono);font-size:15px;color:var(--txt)}
+#tick em{font-style:normal;color:var(--amb);margin:0 6px 0 28px}
+@keyframes tick{to{transform:translateX(-100%)}}
+.msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:30px;color:var(--dim)}
+.msg b{display:block;color:var(--txt);font-size:22px;margin-bottom:10px}
+.foot2{font-size:11px;color:#3d4a62;font-family:var(--mono)}
+@media (max-width:820px){header{flex-wrap:wrap;padding:8px 12px;gap:8px}nav{order:3;width:100%;margin-left:0}.clock{margin-left:auto;font-size:18px}.st{flex:1 1 30%;padding:7px 9px}.st b{font-size:22px}.st span{font-size:10px}.scr{padding:10px}.brow{grid-template-columns:6.2em 1fr 8.2em;gap:6px;padding:0 8px}.brow .c3,.brow .c4,.brow .c5,.brow .c7,.brow .c8{display:none}.cell{font-size:13px}.fl{padding:0 1px}.coll{grid-template-columns:1fr}nav button{padding:6px 9px;font-size:12px}.axis{margin-left:7em}.tr .lb{width:7em}}
+</style>
+</head>
+<body>
+<header>
+  <div><div class="logo" id="shop">SAI WORKSHOP</div><div class="live" id="live"><i></i><span id="liveTx">CONNECTING</span></div></div>
+  <nav id="nav">
+    <button data-s="dep">✈ <span data-t="dep"></span></button>
+    <button data-s="col">🔔 <span data-t="col"></span></button>
+    <button data-s="tec">🧑‍🔧 <span data-t="tec"></span></button>
+    <button data-s="day">📅 <span data-t="day"></span></button>
+    <button data-s="desk" id="deskBtn" style="display:none">🧾 <span data-t="desk"></span></button>
+    <button class="ctl" id="auto">⟳ <span data-t="auto"></span></button>
+    <button class="ctl" id="snd">🔇</button><button class="ctl" id="paM" title="announcement language">EN+हि</button><button class="ctl" id="mus" title="terminal ambience">🎵</button><button class="ctl" id="paNow" title="announce the live status now">📢</button>
+    <button class="ctl" id="lang">EN/हि</button>
+    <button class="ctl" id="fs">⛶</button>
+  </nav>
+  <div class="clock" id="clock">--:--<small id="date"></small></div>
+</header>
+<main>
+  <section class="scr" id="s-dep">
+    <div class="stats" id="depStats"></div>
+    <div class="fids"><div class="fhead"><span class="plane">✈</span><div><div class="ttl" id="fTitle">DEPARTURES</div><div class="sub" id="fSub"></div></div><div style="margin-left:auto" class="sub" id="fNow"></div></div>
+      <div class="frow fh" id="depHead"></div><div id="depRows" style="flex:1;overflow:hidden"></div>
+      <div class="gates" id="gates"></div><div class="pager" id="depPager"></div></div>
+  </section>
+  <section class="scr" id="s-col"><div class="coll">
+    <div class="cbox"><h2 style="color:var(--cyn)" id="colWorkH"></h2><div class="tix" id="colWork"></div></div>
+    <div class="cbox" style="border-color:rgba(34,212,122,.45)"><h2 style="color:var(--grn)" id="colReadyH"></h2><div class="tix" id="colReady"></div></div>
+  </div></section>
+  <section class="scr" id="s-tec"><div class="stats" id="tecStats"></div><div class="bench" id="bench"></div></section>
+  <section class="scr" id="s-day"><div class="stats" id="dayStats"></div><div class="tl"><div style="font-size:12px;color:var(--dim);margin-bottom:6px;letter-spacing:1px" id="legend"></div><div class="axis" id="axis"></div><div class="rows" id="tlRows"></div></div></section>
+  <section class="scr" id="s-desk"><div class="stats" id="deskStats"></div><div class="desk">
+    <div class="dcol"><h3 style="color:var(--amb)" id="dh0"></h3><div class="dlist" id="dl0"></div></div>
+    <div class="dcol"><h3 style="color:var(--cyn)" id="dh1"></h3><div class="dlist" id="dl1"></div></div>
+    <div class="dcol"><h3 style="color:var(--pur)" id="dh2"></h3><div class="dlist" id="dl2"></div></div>
+    <div class="dcol"><h3 style="color:var(--grn)" id="dh3"></h3><div class="dlist" id="dl3"></div></div>
+    <div class="dcol"><h3 style="color:var(--txt)" id="dh4"></h3><div class="feed" id="feed"></div></div>
+  </div></section>
+  <div class="msg" id="msg" style="display:none"></div>
+</main>
+ <div class="paBar" id="paBar"></div>
+<div class="ann" id="ann" onclick="annHide()"><div><div class="bell">🔔</div><h1 id="annH"></h1><div class="tkt" id="annT"></div><div class="who" id="annW"></div><div class="msg2" id="annM"></div></div></div>
+<div class="ov" id="ov" onclick="if(event.target===this)this.classList.remove('on')"><div class="ovc" id="ovc"></div></div>
+<footer><div class="tag" id="tickTag">LIVE</div><div style="flex:1;overflow:hidden"><span id="tick"></span></div><div class="foot2" id="foot2" style="padding:0 10px"></div></footer>
+<script>
+/* SAI WORKSHOP OS — SHOP DISPLAY. Read-only. Shows phone, problem, first name, technician and times — never money or mobile numbers. */
+var FBV='10.12.2',L=localStorage,LANG=(function(){try{return L.getItem('SSM_DSP_LANG')||'en';}catch(e){return 'en';}})();
+var TX={en:{dep:'DEPARTURES',col:'COLLECTION',tec:'WORKBENCH',day:'TODAY',auto:'AUTO',
+  hd:['TICKET','PHONE','PROBLEM','CUSTOMER','TECHNICIAN','STATUS','IN SHOP','PROMISED'],
+  st:{NEW:'WAITING',ASSIGNED:'TAKEN',REPAIR:'REPAIRING',PARTS:'PART AWAITED',DONE:'QUALITY CHECK',READY:'READY ✓',DELIVERED:'DELIVERED'},
+  inShop:'phones in shop',waiting:'waiting',repairing:'repairing',parts:'awaiting parts',ready:'ready to collect',done:'delivered today',late:'late',
+  working:'NOW REPAIRING',readyH:'READY — PLEASE COLLECT',free:'FREE — ready for next job',paused:'PAUSED',busy:'WORKING',queue:'next',
+  today:'came in today',fin:'finished today',avg:'avg repair',fast:'fastest',page:'page',live:'LIVE',off:'RECONNECTING',delay:'DELAYED',due:'DUE',
+  in:'checked in',took:'taken by',start:'repair started',rdy:'is READY',dlv:'delivered',part:'waiting for a part',techs:'technicians',active:'busy',
+  setup:'Open this screen from the app',setup2:'In the app: 📺 LIVE → 🖥 SHOP DISPLAY. That link carries the shop\'s cloud address.',
+  desk:'RECEPTION',dTaken:'TAKEN · WAITING',dWork:'UNDER WORK',dPend:'PENDING',dDone:'COMPLETED TODAY',dFeed:'WHAT\'S HAPPENING',
+  bills:'bills today',billed:'billed today',recv:'received today',dueT:'balance due',takenBy:'taken by',tech:'Technician',doneBy:'completed by',gaveBy:'given back by',
+  rcpt:'RECEIPT',total:'Total',paid:'Paid',bal:'Balance',mob:'Mobile',cust:'Customer',phone:'Phone',prob:'Problem',when:'Timeline',noPh:'no photo',close:'close',
+  made:'made bill',fH:['CHECK-IN','FLIGHT','PHONE','PASSENGER','GATE','ROUTE','REMARKS'],fT:'DEPARTURES',fS:'REPAIR TERMINAL · LIVE',
+  rCHK:'CHECK-IN',rBRD:'BOARDING',rFLY:'IN FLIGHT',rPRT:'DELAYED · PART',rFIN:'FINAL CHECK',rLND:'LANDED · COLLECT',rDLY:'DELAYED',gate:'GATE',gFree:'open',
+  annH:'ATTENTION PLEASE',annF:'FINAL CALL',paTap:'Tap anywhere to start the terminal announcements',paNoV:'This screen cannot speak — its browser has no voice. Open this board in Google Chrome or Microsoft Edge (not inside the app). The words still run in the yellow bar.',annW:'your phone is READY',annM:'Please collect it from the counter',sayA:'Attention please. ',sayB:' — your ',sayC:' is ready. Please collect it from the counter.',
+  pinT:'Reception board is locked',pinS:'Enter the TV PIN or the owner PIN',pinB:'UNLOCK',pinX:'Wrong PIN',pinNo:'No TV PIN is set yet — the owner sets it in the app: Settings → TV & DISPLAY',fileOld:'This is a downloaded copy of the screen — it never updates and misses new work.',fileGo:'Open the live screen'},
+ hi:{dep:'प्रस्थान बोर्ड',col:'कलेक्शन',tec:'वर्कबेंच',day:'आज',auto:'ऑटो',
+  hd:['टिकट','फोन','खराबी','ग्राहक','टेक्नीशियन','स्थिति','दुकान में','वादा'],
+  st:{NEW:'इंतज़ार',ASSIGNED:'लिया गया',REPAIR:'रिपेयर चालू',PARTS:'पार्ट का इंतज़ार',DONE:'जाँच',READY:'तैयार ✓',DELIVERED:'दे दिया'},
+  inShop:'दुकान में फोन',waiting:'इंतज़ार',repairing:'रिपेयर',parts:'पार्ट बाकी',ready:'तैयार',done:'आज दिए',late:'लेट',
+  working:'अभी रिपेयर हो रहे',readyH:'तैयार — ले जाएँ',free:'खाली — अगला काम दें',paused:'रुका',busy:'काम पर',queue:'आगे',
+  today:'आज आए',fin:'आज पूरे',avg:'औसत समय',fast:'सबसे तेज़',page:'पेज',live:'लाइव',off:'जुड़ रहा',delay:'लेट',due:'देना',
+  in:'आया',took:'लिया',start:'रिपेयर शुरू',rdy:'तैयार',dlv:'दे दिया',part:'पार्ट का इंतज़ार',techs:'टेक्नीशियन',active:'व्यस्त',
+  setup:'यह स्क्रीन ऐप से खोलें',setup2:'ऐप में: 📺 LIVE → 🖥 SHOP DISPLAY',
+  desk:'रिसेप्शन',dTaken:'लिए गए · इंतज़ार',dWork:'काम चालू',dPend:'बाकी',dDone:'आज पूरे',dFeed:'अभी क्या हो रहा',
+  bills:'आज के बिल',billed:'आज का बिल',recv:'आज मिले',dueT:'बाकी पैसे',takenBy:'लिया',tech:'टेक्नीशियन',doneBy:'पूरा किया',gaveBy:'वापस दिया',
+  rcpt:'रसीद',total:'कुल',paid:'मिले',bal:'बाकी',mob:'मोबाइल',cust:'ग्राहक',phone:'फोन',prob:'खराबी',when:'समय',noPh:'फोटो नहीं',close:'बंद',
+  made:'बिल बनाया',fH:['आया','फ्लाइट','फोन','यात्री','गेट','रास्ता','स्थिति'],fT:'प्रस्थान',fS:'रिपेयर टर्मिनल · लाइव',
+  rCHK:'चेक-इन',rBRD:'बोर्डिंग',rFLY:'उड़ान में',rPRT:'लेट · पार्ट',rFIN:'आख़िरी जाँच',rLND:'लैंड · ले जाएँ',rDLY:'लेट',gate:'गेट',gFree:'खाली',
+  annH:'कृपया ध्यान दें',annF:'आख़िरी कॉल',paTap:'टर्मिनल की घोषणाएँ शुरू करने के लिए कहीं भी छुएँ',paNoV:'यह स्क्रीन बोल नहीं सकती — इसके ब्राउज़र में आवाज़ नहीं है। यह बोर्ड Google Chrome या Microsoft Edge में खोलें (ऐप के अंदर नहीं)। शब्द पीली पट्टी में चलते रहेंगे।',annW:'आपका फोन तैयार है',annM:'कृपया काउंटर से ले जाएँ',sayA:'कृपया ध्यान दें। ',sayB:' जी, आपका ',sayC:' तैयार है। कृपया काउंटर से ले जाएँ।',
+  pinT:'रिसेप्शन बोर्ड लॉक है',pinS:'TV PIN या मालिक का PIN डालें',pinB:'खोलें',pinX:'PIN गलत',pinNo:'अभी TV PIN नहीं लगा — मालिक ऐप में लगाएँ: सेटिंग्स → TV & DISPLAY',fileOld:'यह डाउनलोड की हुई पुरानी स्क्रीन है — यह अपडेट नहीं होती और नया काम नहीं दिखाती।',fileGo:'लाइव स्क्रीन खोलें'}};
+function t(k){return (TX[LANG]||TX.en)[k];}
+function $(i){return document.getElementById(i);}
+function esc(s){return (''+(s==null?'':s)).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function pad(n){return (n<10?'0':'')+n;}
+function hm(ms){var d=new Date(ms);return pad(d.getHours())+':'+pad(d.getMinutes());}
+function dur(ms){ms=Math.max(0,ms);var m=Math.floor(ms/6e4),h=Math.floor(m/60),d=Math.floor(h/24);return d?d+'d '+(h%24)+'h':h?h+'h '+pad(m%60)+'m':m+'m';}
+function durS(ms){ms=Math.max(0,ms);var s=Math.floor(ms/1000),h=Math.floor(s/3600);return (h?h+':':'')+pad(Math.floor(s/60)%60)+':'+pad(s%60);}
+function dayStart(){var d=new Date();d.setHours(0,0,0,0);return +d;}
+function first(n){n=(''+(n||'')).trim().split(/\s+/);return (n[0]||'')+(n[1]?' '+n[1][0]+'.':'');}
+/* ---- config: from the link (#k=...) or from the app on this same site ---- */
+/* the shop's cloud address is public (the app itself carries it) — so the permanent links /tv and /desk need no long link */
+var DEF_CFG={c:{apiKey:"AIzaSyA_aJKaE6CivRxU7shigB8HGoBteJfFMZ8",authDomain:"sai-workshop-os.firebaseapp.com",projectId:"sai-workshop-os",storageBucket:"sai-workshop-os.firebasestorage.app",messagingSenderId:"928193040623",appId:"1:928193040623:web:78e03432a7c9b7baf84b1a"},cid:'SHRISAI',shop:'Shri Sai Mobile'};
+var MODE=window.SAI_MODE||'';
+function cfgLoad(){if(MODE&&!/k=/.test(location.hash)){var o=JSON.parse(JSON.stringify(DEF_CFG));if(MODE==='desk')o.staff=1;return o;}
+  try{var h=location.hash.match(/k=([^&]+)/);if(h){var o=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(h[1])))));try{L.setItem('SSM_DSP_CFG',JSON.stringify(o));}catch(e){}return o;}}catch(e){}
+  try{var s=JSON.parse(L.getItem('SSM_DSP_CFG')||'null');if(s&&s.c)return s;}catch(e){}
+  try{var a=JSON.parse(L.getItem('SSM_WOS_FB')||'null');if(a&&a.config&&a.enabled){var c=JSON.parse(a.config);if(c.projectId)return {c:c,cid:a.cid||'main',shop:a.cname||''};}}catch(e){}
+  return null;}
+var CFG=cfgLoad(),JOBS={},STAFF={},SHOP='',SEEN={},READYSEEN=null,ONLINE=false,R=0,STAFFV=!!(CFG&&CFG.staff)&&MODE!=='tv',SETS={},UNLOCKED=!STAFFV;
+var SCR='dep',AUTO=true,SOUND=false,PAGE=0;
+try{SCR=L.getItem('SSM_DSP_SCR')||'dep';AUTO=L.getItem('SSM_DSP_AUTO')!=='0';}catch(e){}
+if(STAFFV&&!/[?&#]scr=/.test(location.href)){try{if(!L.getItem('SSM_DSP_SCR_STAFF')){SCR='desk';AUTO=false;L.setItem('SSM_DSP_SCR_STAFF','1');}}catch(e){}}
+function rKey(){var q;try{q=new Date().toLocaleDateString('en-CA',{timeZone:'America/Los_Angeles'});}catch(e){q='x';}return 'SSM_DSP_R_'+q;}
+try{R=+(L.getItem(rKey())||0);}catch(e){}
+function rAdd(n){R+=n;try{L.setItem(rKey(),''+R);}catch(e){}}
+/* ---- data ---- */
+function techName(id){var s=STAFF[id];return s?s.name:'';}
+function openJobs(){return Object.keys(JOBS).map(function(k){return JOBS[k];}).filter(function(j){return j&&j.st&&j.st!=='DELIVERED';});}
+function todayJobs(){var ds=dayStart();return Object.keys(JOBS).map(function(k){return JOBS[k];}).filter(function(j){return j&&((j.createdAt||0)>=ds||((j.tm||{}).delivered||0)>=ds);});}
+function workMs(j){var m=j.tm||{};return (m.work||0)+(m.run?Math.max(0,Date.now()-m.run):0);}
+function age(j){return Date.now()-(j.createdAt||(j.tm||{}).created||Date.now());}
+function isLate(j){var c=j.c||{};return age(j)>2*864e5||(c.expTs&&Date.now()>c.expTs&&j.st!=='READY');}
+function events(){var ev=[],ds=dayStart();Object.keys(JOBS).forEach(function(k){var j=JOBS[k],m=j.tm||{},c=j.c||{},ph=((c.brand||'')+' '+(c.model||'')).trim();
+  var add=function(ts,txt){if(ts&&ts>=ds)ev.push({ts:ts,txt:j.id+' · '+ph+' — '+txt});};
+  add(j.createdAt||m.created,t('in'));add(m.accepted,t('took')+' '+techName(j.tech));add(m.started,t('start'));add(m.ready||m.finished,t('rdy'));add(m.delivered,t('dlv'));});
+  return ev.sort(function(a,b){return b.ts-a.ts;}).slice(0,25);}
+/* ---- split-flap cell ---- */
+var PREV={};
+function flap(key,txt,cls){txt=''+(txt==null?'':txt);var ch=PREV[key]!==undefined&&PREV[key]!==txt;PREV[key]=txt;
+  return '<div class="cell'+(ch?' flip':'')+(cls?' '+cls:'')+'">'+txt.split('').map(function(c,i){return '<span class="fl" style="animation-delay:'+(i*18)+'ms">'+(c===' '?'&nbsp;':esc(c))+'</span>';}).join('')+'</div>';}
+/* ---- screens ---- */
+var ORDER={READY:0,REPAIR:1,ASSIGNED:2,DONE:3,PARTS:4,NEW:5};
+/* split-flap text: each letter is its own flap; a changed value cascades letter by letter like a real Solari board */
+function sf(key,txt,col,w){txt=(''+(txt==null?'':txt)).toUpperCase();if(w)txt=(txt+' '.repeat(w)).slice(0,w);
+  var ch=PREV[key]!==undefined&&PREV[key]!==txt;PREV[key]=txt;
+  return '<div class="sf'+(ch?' flip':'')+'">'+txt.split('').map(function(c,i){return '<b class="'+(col||'')+'" style="animation-delay:'+(i*35)+'ms">'+(c===' '?'&nbsp;':esc(c))+'</b>';}).join('')+'</div>';}
+function remark(j){var c=j.c||{},late=c.expTs&&Date.now()>c.expTs&&j.st!=='READY';
+  var m={NEW:['chk','🧳 '+t('rCHK')],ASSIGNED:['brd','🚶 '+t('rBRD')],REPAIR:['fly','✈ '+t('rFLY')],PARTS:['prt','⏳ '+t('rPRT')],DONE:['fin','🔎 '+t('rFIN')],READY:['lnd','🛬 '+t('rLND')]}[j.st]||['chk',j.st];
+  if(late)m=['dly',(j.st==='PARTS'?'⏳ '+t('rPRT'):'⚠ '+t('rDLY'))+' +'+dur(Date.now()-c.expTs)];
+  return '<span class="rm '+m[0]+'">'+esc(m[1])+'</span>';}
+var STEPS=['NEW','ASSIGNED','REPAIR','DONE','READY'];
+function route(j){var ix=STEPS.indexOf(j.st==='PARTS'?'REPAIR':j.st);if(ix<0)ix=0;var pc=Math.round(ix*100/(STEPS.length-1));
+  return '<div class="route"><i></i><s style="width:'+pc+'%"></s>'+STEPS.map(function(x,k){return '<u class="'+(k<=ix?'on':'')+'" style="left:'+(k*100/(STEPS.length-1))+'%"></u>';}).join('')
+    +'<em style="left:'+pc+'%">'+(j.st==='READY'?'🛬':'✈')+'</em></div>';}
+function gateOf(id){var ts=Object.keys(STAFF).filter(function(k){return STAFF[k].role==='tech'&&STAFF[k].active!==0&&STAFF[k].active!==false;});var i=ts.indexOf(id);return i>=0?i+1:0;}
+function rDep(){var a=openJobs().sort(function(x,y){var u=((y.urg&&y.urg.on)?1:0)-((x.urg&&x.urg.on)?1:0);return u||(ORDER[x.st]-ORDER[y.st])||(x.createdAt-y.createdAt);});
+  var cnt=function(s){return a.filter(function(j){return s.indexOf(j.st)>=0;}).length;};
+  var del=todayJobs().filter(function(j){return j.st==='DELIVERED';}).length,late=a.filter(isLate).length;
+  $('depStats').innerHTML=st(a.length,t('inShop'),'var(--cyn)')+st(cnt(['NEW']),t('waiting'),'var(--amb)')+st(cnt(['ASSIGNED','REPAIR']),t('repairing'),'var(--cyn)')
+    +st(cnt(['PARTS']),t('parts'),'var(--pur)')+st(cnt(['READY']),t('ready'),'var(--grn)')+st(del,t('done'),'var(--txt)')+st(late,t('late'),late?'var(--red)':'var(--dim)');
+  $('fTitle').textContent=t('fT');$('fSub').textContent=(SHOP||'').toUpperCase()+' · '+t('fS');
+  $('depHead').innerHTML=t('fH').map(function(h,i){return '<div class="c'+(i+1)+'">'+h+'</div>';}).join('');
+  var box=$('depRows'),rowH=Math.max(42,Math.min(70,innerHeight*0.06)),per=Math.max(4,Math.floor((box.clientHeight||innerHeight*0.55)/rowH));
+  var pages=Math.max(1,Math.ceil(a.length/per));if(PAGE>=pages)PAGE=0;
+  box.innerHTML=a.slice(PAGE*per,PAGE*per+per).map(function(j){var c=j.c||{},u=j.urg&&j.urg.on,g=gateOf(j.tech),tn=techName(j.tech);
+    var col=j.st==='READY'?'g':j.st==='REPAIR'||j.st==='ASSIGNED'?'c':j.st==='PARTS'?'p':'';
+    return '<div class="frow">'
+      +'<div class="c1">'+sf(j.id+'h',hm(j.createdAt||Date.now()),'y')+'</div>'
+      +'<div class="c2">'+sf(j.id+'i',(u?'!':'')+j.id.replace('-',''),u?'r':'y')+'</div>'
+      +'<div class="c3">'+sf(j.id+'p',((c.brand||'')+' '+(c.model||'')).trim().slice(0,16),col)+'</div>'
+      +'<div class="c4">'+sf(j.id+'c',first(c.name).slice(0,10),'')+'</div>'
+      +'<div class="c5">'+sf(j.id+'t',tn?('G'+(g||'·')+' '+tn).slice(0,11):'—','d')+'</div>'
+      +'<div class="c6">'+route(j)+'</div>'
+      +'<div class="c7">'+remark(j)+'</div></div>';}).join('')||'<div style="padding:30px;text-align:center;color:#8b93a3;font:700 20px var(--mono);letter-spacing:4px">✈ NO FLIGHTS · ALL CLEAR</div>';
+  var techs=Object.keys(STAFF).filter(function(k){return STAFF[k].role==='tech'&&STAFF[k].active!==0&&STAFF[k].active!==false;});
+  $('gates').innerHTML=techs.map(function(id,i){var cur=a.filter(function(j){return j.tech===id&&(j.st==='REPAIR'||j.st==='ASSIGNED');})[0];
+    return '<div class="gate '+(cur?'gbusy':'gfree')+'"><b>'+t('gate')+' '+(i+1)+'</b>'+esc(STAFF[id].name||id)+' <i>'+(cur?'✈ '+esc(cur.id):'● '+t('gFree'))+'</i></div>';}).join('');
+  $('depPager').innerHTML='<span>'+t('page')+' '+(PAGE+1)+' / '+pages+'</span><span>'+a.length+' '+t('inShop')+'</span>';}
+/* 📢 the full-screen card shown while a LANDED / FINAL CALL announcement is being made */
+function annShow(j,fin){var c=j.c||{},ph=((c.brand||'')+' '+(c.model||'')).trim();
+  $('annH').textContent=(fin?'📣 '+t('annF'):'📢 '+t('annH'));$('annT').textContent=j.id.replace(/^R-0*/,'#').replace(/^B-0*/,'B');
+  $('annW').textContent=(first(c.name)||'')+' — '+t('annW');$('annM').textContent=ph+' · '+t('annM');$('ann').classList.add('on');}
+function annHide2(){$('ann').classList.remove('on');}
+function annHide(){$('ann').classList.remove('on');}
+
+function st(n,l,col){return '<div class="st"><b style="color:'+col+'">'+n+'</b><span>'+esc(l)+'</span></div>';}
+function rCol(){var a=openJobs(),work=a.filter(function(j){return ['NEW','ASSIGNED','REPAIR','PARTS','DONE'].indexOf(j.st)>=0;}).sort(function(x,y){return x.createdAt-y.createdAt;});
+  var ready=a.filter(function(j){return j.st==='READY';}).sort(function(x,y){return ((y.tm||{}).ready||0)-((x.tm||{}).ready||0);});
+  $('colWorkH').textContent='🔧 '+t('working')+' · '+work.length;$('colReadyH').textContent='✅ '+t('readyH')+' · '+ready.length;
+  var tk=function(j,rd){var c=j.c||{};var nw=rd&&READYSEEN&&!READYSEEN[j.id];
+    return '<div class="tk'+(rd?' rd':'')+(nw?' nw':'')+'"><b>'+esc(j.id.replace(/^R-0*/,'#').replace(/^B-0*/,'B'))+'</b><span>'+esc(first(c.name))+' · '+esc(((c.brand||'')+' '+(c.model||'')).trim())+'</span></div>';};
+  $('colWork').innerHTML=work.slice(0,40).map(function(j){return tk(j,0);}).join('');
+  $('colReady').innerHTML=ready.slice(0,30).map(function(j){return tk(j,1);}).join('');}
+var COLORS=['#ffb020','#2ec5ff','#22d47a','#b17cff','#ff8a3d','#ff6fa8','#7cf2ff','#d7ff5a'];
+function rTec(){var ids=Object.keys(STAFF).filter(function(k){return STAFF[k].role==='tech'&&STAFF[k].active;}),a=openJobs(),ds=dayStart();
+  var busy=0,html=ids.map(function(id,i){var mine=a.filter(function(j){return j.tech===id&&['ASSIGNED','REPAIR','PARTS','DONE'].indexOf(j.st)>=0;})
+      .sort(function(x,y){return ((y.tm||{}).run?1:0)-((x.tm||{}).run?1:0)||(ORDER[x.st]-ORDER[y.st]);});
+    var cur=mine[0],doneT=Object.keys(JOBS).filter(function(k){var j=JOBS[k];return j.tech===id&&(((j.tm||{}).finished||0)>=ds);}).length;
+    if(cur)busy++;var nm=STAFF[id].name||id;
+    var ini=nm.split(/\s+/).map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+    var stp=['ASSIGNED','REPAIR','PARTS','DONE','READY'],ix=cur?stp.indexOf(cur.st):-1;
+    return '<div class="tech"><div class="nm"><div class="av" style="background:'+COLORS[i%COLORS.length]+'">'+esc(ini)+'</div>'+esc(nm)
+      +'<span class="state" style="color:'+(!cur?'var(--grn)':cur.tm&&cur.tm.run?'var(--cyn)':cur.st==='PARTS'?'var(--pur)':'var(--amb)')+'">'+(!cur?'○':cur.tm&&cur.tm.run?'● '+t('busy'):cur.st==='ASSIGNED'?'✋ '+t('st').ASSIGNED:cur.st==='PARTS'?'🧩 '+t('st').PARTS:cur.st==='DONE'?'✔ '+t('st').DONE:'⏸ '+t('paused'))+'</span></div>'
+      +(cur?'<div class="job"><div class="ph">'+esc(((cur.c.brand||'')+' '+(cur.c.model||'')).trim())+' <span style="color:var(--dim);font-size:.6em">'+esc(cur.id)+'</span></div>'
+        +'<div class="pb">'+esc((cur.c.prob||'').slice(0,40))+' · 👤 '+esc(first(cur.c.name))+'</div>'
+        +'<div class="timer'+(cur.tm&&cur.tm.run?'':' paused')+'" data-w="'+((cur.tm||{}).work||0)+'" data-r="'+((cur.tm||{}).run||0)+'">'+durS(workMs(cur))+'</div>'
+        +'<div class="steps">'+stp.map(function(s,k){return '<s class="'+(k<ix?'d':k===ix?'n':'')+'"></s>';}).join('')+'</div></div>'
+        +(mine.length>1?'<div class="q">'+t('queue')+': '+mine.slice(1,6).map(function(j){return '<i>'+esc(j.id)+' '+esc(j.c.model||'')+'</i>';}).join('')+'</div>':'')
+       :'<div class="free">✓ '+t('free')+'</div>')
+      +'<div class="q">✔ '+doneT+' '+t('fin')+'</div></div>';}).join('');
+  $('tecStats').innerHTML=st(ids.length,t('techs'),'var(--txt)')+st(busy,t('active'),'var(--cyn)')+st(ids.length-busy,'free','var(--grn)')
+    +st(a.filter(function(j){return j.st==='NEW';}).length,t('waiting'),'var(--amb)');
+  $('bench').innerHTML=html||'<div class="msg">—</div>';}
+function rDay(){var ds=dayStart(),now=Date.now(),js=todayJobs().sort(function(x,y){return (x.createdAt||0)-(y.createdAt||0);});
+  var open=Math.min(ds+9*36e5,js.length?Math.min.apply(null,js.map(function(j){return Math.max(ds,j.createdAt||ds);})):now),start=Math.min(open,now-36e5),end=Math.max(now,start+36e5);
+  var X=function(ts){return Math.max(0,Math.min(100,(ts-start)*100/(end-start)));};
+  var fin=js.filter(function(j){return ((j.tm||{}).finished||(j.tm||{}).ready||0)>=ds;});
+  var rt=fin.map(function(j){return workMs(j)||(((j.tm||{}).finished||0)-((j.tm||{}).started||j.createdAt));}).filter(function(x){return x>0;}).sort(function(a,b){return a-b;});
+  $('dayStats').innerHTML=st(js.filter(function(j){return (j.createdAt||0)>=ds;}).length,t('today'),'var(--amb)')+st(fin.length,t('fin'),'var(--grn)')
+    +st(js.filter(function(j){return j.st==='DELIVERED';}).length,t('done'),'var(--txt)')+st(rt.length?dur(rt.reduce(function(a,b){return a+b;},0)/rt.length):'—',t('avg'),'var(--cyn)')
+    +st(rt.length?dur(rt[0]):'—',t('fast'),'var(--pur)');
+  var ax='',h=new Date(start);h.setMinutes(0,0,0);for(var ts=+h+36e5;ts<end;ts+=36e5)ax+='<span style="left:'+X(ts)+'%">'+hm(ts)+'</span>';
+  $('legend').innerHTML='<span style="display:inline-block;width:26px;height:9px;border-radius:3px;background:repeating-linear-gradient(45deg,rgba(255,176,32,.6) 0 5px,rgba(255,176,32,.2) 5px 10px)"></span> '+t('waiting')+' &nbsp; <span style="display:inline-block;width:26px;height:9px;border-radius:3px;background:var(--cyn)"></span> '+t('repairing')+' &nbsp; <span style="display:inline-block;width:26px;height:9px;border-radius:3px;background:var(--grn)"></span> '+t('fin');
+  $('axis').innerHTML=ax+'<span style="left:'+X(now)+'%;color:var(--red)">'+hm(now)+'</span>';
+  var box=$('tlRows'),rh=Math.max(20,Math.min(34,innerHeight*0.032)),per=Math.max(5,Math.floor((box.clientHeight||300)/rh)),show=js.slice(-per);
+  box.innerHTML=show.map(function(j){var m=j.tm||{},c=j.c||{},s0=Math.max(start,j.createdAt||start),s1=m.started||m.accepted||0,e=m.finished||m.ready||m.delivered||0;
+    var w1=s1?X(s1)-X(s0):X(now)-X(s0),bars='<div class="bar wt" style="left:'+X(s0)+'%;width:'+Math.max(.4,w1)+'%"></div>';
+    if(s1)bars+='<div class="bar '+(e?'dn':'go')+'" style="left:'+X(s1)+'%;width:'+Math.max(.4,X(e||now)-X(s1))+'%"></div>';
+    return '<div class="tr"><div class="lb">'+esc(j.id)+' '+esc(((c.brand||'')+' '+(c.model||'')).trim())+'</div><div class="tk2">'+bars+'</div></div>';}).join('')
+    +'<div class="nowl" style="left:calc(12em + (100% - 12em) * '+(X(now)/100)+')"></div>';}
+function rTick(){var ev=events();$('tick').innerHTML=ev.length?ev.map(function(e){return '<em>'+hm(e.ts)+'</em>'+esc(e.txt);}).join(''):'—';
+  $('tick').style.animationDuration=Math.max(30,ev.length*7)+'s';}
+/* ================= 🧾 RECEPTION DESK — staff link only: who took it, who is on it, what is pending, who finished it,
+   the device photo, the customer and the receipt. Opened from the app with "RECEPTION BOARD"; never on the customer TV. ================= */
+var PHC={},PHQ={},DB_=null,NEWSEEN=null;
+function phId(r){r=''+(r||'');return r.indexOf('ph:')===0?r.slice(3):'';}
+function photoRefs(j){var a=[];if(j._s){if(j._s.photo)a.push(j._s.photo);}else (j.photos||[]).forEach(function(p){if(p&&p.d)a.push(p.d);});return a;}
+function phGet(ref,cb){if(!ref)return cb('');if(/^data:image/.test(ref))return cb(ref);var id=phId(ref);if(!id||!DB_)return cb('');
+  if(PHC[id]!==undefined)return cb(PHC[id]);(PHQ[id]=PHQ[id]||[]).push(cb);if(PHQ[id].length>1)return;
+  DB_.collection('c_'+(CFG.cid||'main')+'_ph').doc(id).get().then(function(d){rAdd(1);var x=d&&d.exists&&d.data();PHC[id]=(x&&x.d)||'';(PHQ[id]||[]).forEach(function(f){f(PHC[id]);});delete PHQ[id];},
+    function(){PHC[id]='';(PHQ[id]||[]).forEach(function(f){f('');});delete PHQ[id];});}
+function whoTo(j,st){var l=(j.log||[]).filter(function(e){return e&&e.t===st;});return l.length?l[l.length-1]:null;}
+function people(j){var s=j._s,o={};
+  if(s){var w=s.qwho||{},m=s.qtm||{};o.took={by:s.by,ts:s.ts};if(m.REPAIR)o.start={by:w.REPAIR||techName(s.qtech),ts:m.REPAIR};if(m.READY)o.done={by:w.READY||techName(s.qtech),ts:m.READY};if(m.OUT)o.gave={by:w.OUT||'',ts:m.OUT};}
+  else{var m2=j.tm||{},a=whoTo(j,'ASSIGNED'),r=whoTo(j,'REPAIR'),d=whoTo(j,'READY')||whoTo(j,'DONE'),g=whoTo(j,'DELIVERED');
+    o.took={by:j.by,ts:j.createdAt};if(a||r)o.start={by:(r||a).by,ts:(r||a).ts};if(d)o.done={by:d.by,ts:d.ts};else if(m2.ready||m2.finished)o.done={by:techName(j.tech),ts:m2.ready||m2.finished};
+    if(g)o.gave={by:g.by,ts:g.ts};}
+  return o;}
+function moneyOf(j){var s=j._s;if(s)return {tot:+s.total||0,paid:+s.paid||0,due:+s.due||0};var p=j.pay||{},c=j.c||{};var tot=+(p.amt||c.est||0),pd=+(p.paid||c.adv||0);return {tot:tot,paid:pd,due:Math.max(0,tot-pd)};}
+function rs(n){return '₹'+(Math.round(n)||0).toLocaleString('en-IN');}
+function deskCard(j,nw){var c=j.c||{},p=people(j),m=moneyOf(j),refs=photoRefs(j);
+  var ph=((c.brand||'')+' '+(c.model||'')).trim()||'—';
+  var h='<div class="dc'+(nw?' nw':'')+'" onclick="deskOpen(\''+esc(j.id)+'\')"><div class="im" data-ph="'+esc(refs[0]||'')+'">'+(refs.length?'':'📱')+'</div><div>'
+   +'<div class="l1"><i>'+esc(j.id)+'</i>'+esc(ph)+'</div><div class="l2">👤 '+esc(c.name||'—')+(c.prob?' · '+esc(c.prob):'')+'</div><div class="l3">'
+   +(p.took?'📥 '+t('takenBy')+' <b>'+esc(p.took.by||'—')+'</b> '+hm(p.took.ts)+'<br>':'')
+   +(j.tech||p.start?'🧑‍🔧 <b>'+esc(techName(j.tech)||(p.start&&p.start.by)||'—')+'</b>'+(p.start?' · '+hm(p.start.ts):'')+'<br>':'')
+   +(p.done?'✅ '+t('doneBy')+' <b>'+esc(p.done.by||'—')+'</b> '+hm(p.done.ts)+'<br>':'')
+   +(p.gave?'📦 '+t('gaveBy')+' <b>'+esc(p.gave.by||'—')+'</b> '+hm(p.gave.ts)+'<br>':'')
+   +'<span class="money">'+rs(m.tot)+(m.due?' · <span class="du">'+t('bal')+' '+rs(m.due)+'</span>':' · <span class="pd">'+t('paid')+'</span>')+'</span></div></div></div>';
+  return h;}
+function deskPhotos(){document.querySelectorAll('#s-desk .im[data-ph]').forEach(function(el){var r=el.getAttribute('data-ph');if(!r||el._d===r)return;el._d=r;
+  phGet(r,function(u){if(u){el.style.backgroundImage='url('+u+')';el.textContent='';}});});}
+function rDesk(){var ds=dayStart(),all=Object.keys(JOBS).map(function(k){return JOBS[k];}).filter(Boolean);
+  var col=[[],[],[],[]];all.forEach(function(j){var s=j.st,m=j.tm||{};
+    if(s==='NEW'||s==='ASSIGNED')col[0].push(j);else if(s==='REPAIR')col[1].push(j);else if(s==='PARTS'||s==='DONE')col[2].push(j);
+    else if(s==='READY'||(s==='DELIVERED'&&((m.delivered||0)>=ds)))col[3].push(j);});
+  col.forEach(function(c,i){c.sort(function(x,y){return i===3?((y.tm||{}).ready||(y.tm||{}).delivered||0)-((x.tm||{}).ready||(x.tm||{}).delivered||0):(y.createdAt||0)-(x.createdAt||0);});});
+  var hd=[t('dTaken'),t('dWork'),t('dPend'),t('dDone')],ns={};if(NEWSEEN)all.forEach(function(j){if(NEWSEEN[j.id]!==j.st)ns[j.id]=1;});
+  hd.forEach(function(h,i){$('dh'+i).innerHTML='<span>'+['📥','🔧','⏳','✅'][i]+' '+h+'</span><span>'+col[i].length+'</span>';
+    $('dl'+i).innerHTML=col[i].slice(0,60).map(function(j){return deskCard(j,ns[j.id]);}).join('')||'<div style="color:var(--dim);padding:10px">—</div>';});
+  NEWSEEN={};all.forEach(function(j){NEWSEEN[j.id]=j.st;});
+  var tdy=all.filter(function(j){return (j.createdAt||0)>=ds;}),bil=0,rcv=0,due=0;
+  tdy.forEach(function(j){var m=moneyOf(j);bil+=m.tot;rcv+=m.paid;});all.forEach(function(j){if(j.st!=='DELIVERED')due+=moneyOf(j).due;});
+  $('deskStats').innerHTML=st(tdy.length,t('bills'),'var(--amb)')+st(col[0].length,t('dTaken').toLowerCase(),'var(--amb)')+st(col[1].length,t('dWork').toLowerCase(),'var(--cyn)')
+    +st(col[2].length,t('dPend').toLowerCase(),'var(--pur)')+st(col[3].length,t('dDone').toLowerCase(),'var(--grn)')
+    +st(rs(bil),t('billed'),'var(--txt)')+st(rs(rcv),t('recv'),'var(--grn)')+st(rs(due),t('dueT'),due?'var(--red)':'var(--dim)');
+  $('dh4').innerHTML='<span>📡 '+t('dFeed')+'</span>';
+  $('feed').innerHTML=deskFeed().map(function(e){return '<div><em>'+hm(e.ts)+'</em><b>'+esc(e.by||'—')+'</b> '+esc(e.txt)+'</div>';}).join('')||'—';
+  deskPhotos();}
+function deskFeed(){var ev=[],ds=dayStart();Object.keys(JOBS).forEach(function(k){var j=JOBS[k],c=j.c||{},ph=((c.brand||'')+' '+(c.model||'')).trim(),lb=j.id+' '+ph+(c.name?' ('+c.name+')':'');
+  if(j._s){var s=j._s,m=s.qtm||{},w=s.qwho||{};if((s.ts||0)>=ds)ev.push({ts:s.ts,by:s.by,txt:'⚡ '+t('made')+' '+lb+' '+rs(s.total)});
+    [['REPAIR','🔧 '+t('start')],['READY','✅ '+t('rdy')],['OUT','📦 '+t('dlv')]].forEach(function(x){if((m[x[0]]||0)>=ds)ev.push({ts:m[x[0]],by:w[x[0]]||(x[0]==='REPAIR'?techName(s.qtech):''),txt:x[1]+' · '+lb});});}
+  else (j.log||[]).forEach(function(e){if(e&&e.ts>=ds&&e.a&&!/PRINTED/.test(e.a))ev.push({ts:e.ts,by:e.by,txt:e.a.replace(/\s+by\s+\S.*$/i,'').toLowerCase()+' · '+lb});});});
+  return ev.sort(function(a,b){return b.ts-a.ts;}).slice(0,80);}
+function deskOpen(id){var j=JOBS[id];if(!j)return;var c=j.c||{},p=people(j),m=moneyOf(j),s=j._s,refs=photoRefs(j);
+  var items=s?(s.items||[]).map(function(x){return esc(x.name)+' × '+(x.qty||1)+' — '+rs((x.rate||0)*(x.qty||1));}).join('<br>'):(j.parts||[]).map(function(x){return esc(x.name||'')+(x.price?' — '+rs(x.price):'');}).join('<br>');
+  var tl=[['📥',t('takenBy'),p.took],['🔧',t('start'),p.start],['✅',t('doneBy'),p.done],['📦',t('gaveBy'),p.gave]].filter(function(x){return x[2];})
+    .map(function(x){return '<div><em>'+hm(x[2].ts)+'</em>'+x[0]+' '+x[1]+' <b>'+esc(x[2].by||'—')+'</b></div>';}).join('');
+  $('ovc').innerHTML='<div id="ovPh">'+(refs.length?refs.slice(0,4).map(function(r,i){return '<img data-r="'+esc(r)+'" alt="">';}).join(''):'<div style="font-size:90px;text-align:center;padding:30px 0">📱<div style="font-size:14px;color:var(--dim)">'+t('noPh')+'</div></div>')+'</div>'
+   +'<div><h2>'+esc(j.id)+' · '+esc(((c.brand||'')+' '+(c.model||'')).trim())+'</h2>'
+   +'<span class="pill s'+j.st+'">'+esc(t('st')[j.st]||j.st)+'</span>'
+   +'<div class="row"><span>'+t('cust')+'</span>'+esc(c.name||'—')+'</div>'
+   +'<div class="row"><span>'+t('mob')+'</span>'+esc(c.mob||(s&&s.mob)||'—')+'</div>'
+   +'<div class="row"><span>'+t('prob')+'</span>'+esc(c.prob||'—')+'</div>'
+   +'<div class="row"><span>'+t('tech')+'</span>'+esc(techName(j.tech)||'—')+'</div>'
+   +'<h2 style="margin-top:12px;font-size:16px">🧾 '+t('rcpt')+'</h2>'+(items?'<div class="row" style="font-size:13px">'+items+'</div>':'')
+   +'<div class="row"><span>'+t('total')+'</span><b>'+rs(m.tot)+'</b></div><div class="row"><span>'+t('paid')+'</span><b style="color:var(--grn)">'+rs(m.paid)+'</b></div>'
+   +'<div class="row"><span>'+t('bal')+'</span><b style="color:'+(m.due?'var(--red)':'var(--dim)')+'">'+rs(m.due)+'</b></div>'
+   +'<h2 style="margin-top:12px;font-size:16px">🕘 '+t('when')+'</h2><div class="tline">'+tl+'</div>'
+   +'<button class="ctl" style="margin-top:12px" onclick="$(\'ov\').classList.remove(\'on\')">✕ '+t('close')+'</button></div>';
+  $('ov').classList.add('on');document.querySelectorAll('#ovPh img').forEach(function(im){phGet(im.getAttribute('data-r'),function(u){if(u)im.src=u;else im.style.display='none';});});}
+function pinHash(p){var h=0;p=''+p;for(var i=0;i<p.length;i++)h=(h*31+p.charCodeAt(i))|0;return 'p'+h;}
+function pinsOk(){var a=[];if(SETS.dspPin)a.push(''+SETS.dspPin);Object.keys(STAFF).forEach(function(k){if(STAFF[k].role==='owner'&&STAFF[k].pin)a.push(''+STAFF[k].pin);});return a;}
+function pinGate(){if(!STAFFV)return;var ps=pinsOk(),u='';try{u=L.getItem('SSM_DSP_UNLOCK')||'';}catch(e){}
+  UNLOCKED=ps.some(function(p){return pinHash(p)===u;})||(!ps.length&&/k=/.test(location.hash));var g=$('pinG');   /* opened from inside the app with no TV PIN set yet */
+  if(UNLOCKED){if(g)g.remove();return;}
+  if(!g){g=document.createElement('div');g.id='pinG';g.className='gatepin';document.body.appendChild(g);}
+  g.innerHTML='<div><div style="font-size:60px">🔒</div><h2 style="color:#ffc400;letter-spacing:3px">'+t('pinT')+'</h2><div style="color:#8b93a3">'+(ps.length?t('pinS'):t('pinNo'))+'</div>'
+    +(ps.length?'<input id="pinI" inputmode="numeric" autocomplete="off" onkeydown="if(event.key===\'Enter\')pinTry()"><br><button onclick="pinTry()">'+t('pinB')+'</button><div id="pinE" style="color:#ff5a64;margin-top:10px"></div>':'')+'</div>';
+  setTimeout(function(){var i=$('pinI');if(i)i.focus();},50);}
+function pinTry(){var v=($('pinI')||{}).value||'';if(pinsOk().indexOf(v)>=0){try{L.setItem('SSM_DSP_UNLOCK',pinHash(v));}catch(e){}pinGate();render();}else{$('pinE').textContent=t('pinX');$('pinI').value='';}}
+/* ================= 📢 TERMINAL PA — announcements like a real airport =================
+   Every change on a phone is announced: chime → English → Hindi (choose EN / हि / both). Phones that have landed get
+   repeated final calls until collected; between events the terminal makes regular announcements and a soft ambience plays.
+   With sound off (or on a TV that cannot speak) the same announcements still run on screen in the PA bar. */
+var PA={q:[],busy:false,prev:null,late:{},calls:{},amb:0,lastAmb:Date.now(),mode:'both',music:true,unlocked:false};
+try{PA.mode=L.getItem('SSM_DSP_PAMODE')||'both';PA.music=L.getItem('SSM_DSP_MUSIC')!=='0';var sv=L.getItem('SSM_DSP_SND');SOUND=sv===null?!STAFFV:sv==='1';}catch(e){SOUND=!STAFFV;}
+function paNum(j){var m=(''+j.id).match(/^([A-Z]+)-?0*(\d+)$/);return m?m[1]+' '+m[2]:j.id;}
+function paPhone(j){var c=j.c||{};return ((c.brand||'')+' '+(c.model||'')).trim()||'phone';}
+function paName(j){return ((j.c||{}).name||'').trim().split(/\s+/)[0]||'';}
+function paGate(j){var g=gateOf(j.tech);return g?''+g:'';}
+function paTech(j){return techName(j.tech)||'';}
+function paGreet(){var h=new Date().getHours();return h<12?['Good morning','सुप्रभात']:h<17?['Good afternoon','नमस्कार']:['Good evening','शुभ संध्या'];}
+function paShop(){return SHOP||'our shop';}
+/* ---- live facts for the announcements (only what is really in the records right now) ---- */
+function paT(ts){return ts?new Date(ts).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'}):'';}
+function paTh(ts){if(!ts)return '';var d=new Date(ts),h=d.getHours(),m=d.getMinutes(),p=h<12?'सुबह':h<16?'दोपहर':h<19?'शाम':'रात';return p+' '+(h%12||12)+' बजकर '+m+' मिनट';}
+function paDur(ms){var m=Math.max(1,Math.round(ms/60000));if(m<60)return m+' minute'+(m===1?'':'s');var h=Math.floor(m/60),r=m%60;if(h>=24){var d=Math.floor(h/24),rh=h%24;return d+' day'+(d===1?'':'s')+(rh?' '+rh+' hour'+(rh===1?'':'s'):'');}return h+' hour'+(h===1?'':'s')+(r?' '+r+' minutes':'');}
+function paDurH(ms){var m=Math.max(1,Math.round(ms/60000));if(m<60)return m+' मिनट';var h=Math.floor(m/60),r=m%60;if(h>=24){var dd=Math.floor(h/24),rh=h%24;return dd+' दिन'+(rh?' '+rh+' घंटे':'');}return h+' घंटे'+(r?' '+r+' मिनट':'');}
+function paPart(j){var w=(j.parts||[]).filter(function(p){return p&&(p.status==='WAITING'||p.status==='PENDING');}).map(function(p){return p.name;}).filter(Boolean);return w.join(', ');}
+function paSince(j,st){var l=(j.log||[]).filter(function(e){return e&&e.t===st;}).pop();var tm=j.tm||{};return l?l.ts:st==='READY'?(tm.ready||tm.finished):st==='REPAIR'?(tm.started||tm.run):st==='ASSIGNED'?tm.accepted:j.createdAt;}
+/* expected landing: the promised time, otherwise today's typical repair time for this kind of problem */
+function paEta(j){var c=j.c||{};if(c.expTs&&c.expTs>Date.now())return c.expTs;var key=(''+(c.prob||'')).toUpperCase().split(/[ ,]/)[0];
+  var done=Object.keys(JOBS).map(function(k){return JOBS[k];}).filter(function(x){var t=x.tm||{};return t.finished&&t.started&&t.finished>t.started;});
+  var same=done.filter(function(x){return (''+((x.c||{}).prob||'')).toUpperCase().indexOf(key)===0;}),pool=same.length>=2?same:done;if(!pool.length)return 0;
+  var a=pool.map(function(x){return x.tm.finished-x.tm.started;}).sort(function(p,q){return p-q;}),med=a[Math.floor(a.length/2)],st=paSince(j,'REPAIR')||Date.now();
+  return Math.max(Date.now()+5*60e3,st+med);}
+/* the airport lines, English and Hindi (Hindi in the railway style: "यात्रीगण कृपया ध्यान दें") */
+function paLines(kind,j){var n=paNum(j),ph=paPhone(j),nm=paName(j),g=paGate(j),tn=paTech(j),sh=paShop(),gr=paGreet(),c=j.c||{},tm=j.tm||{};
+  var en,hi,eta=paEta(j),pt=paPart(j);
+  switch(kind){
+   case 'checkin':en=gr[0]+', ladies and gentlemen. Flight '+n+', '+ph+(c.prob?', for '+c.prob:'')+', has checked in at '+sh+'.'+(nm?' Passenger '+nm+', thank you.':'')+(c.expTs?' Expected landing '+paT(c.expTs)+'.':' Your phone will board shortly.');
+     hi='यात्रीगण कृपया ध्यान दें। फ्लाइट नंबर '+n+', '+ph+(c.prob?', '+c.prob+' के लिए,':'')+' चेक-इन हो गई है।'+(nm?' '+nm+' जी, धन्यवाद।':'')+(c.expTs?' संभावित समय '+paTh(c.expTs)+'।':' आपका फोन जल्द ही बोर्ड होगा।');break;
+   case 'boarding':en='Flight '+n+', '+ph+', is now boarding'+(g?' at gate '+g:'')+'.'+(tn?' Technician '+tn+' has taken it.':'')+(eta?' Expected landing '+paT(eta)+'.':'');
+     hi='फ्लाइट नंबर '+n+', '+ph+', '+(g?'गेट नंबर '+g+' पर ':'')+'बोर्डिंग कर रही है।'+(tn?' टेक्नीशियन '+tn+' ने फोन ले लिया है।':'')+(eta?' संभावित समय '+paTh(eta)+'।':'');break;
+   case 'departed':en='Flight '+n+', '+ph+', has departed'+(g?' from gate '+g:'')+'. Repair is now in progress'+(tn?' with '+tn:'')+'.'+(eta?' Expected landing '+paT(eta)+'.':'');
+     hi='फ्लाइट नंबर '+n+', '+ph+', ने '+(g?'गेट '+g+' से ':'')+'उड़ान भर ली है। '+(tn?tn+' रिपेयर कर रहे हैं।':'रिपेयर चालू है।')+(eta?' संभावित समय '+paTh(eta)+'।':'');break;
+   case 'delayed':en='We regret to inform you that flight '+n+', '+ph+', is on hold, awaiting '+(pt?'a spare part: '+pt:'a spare part')+'. The inconvenience caused is deeply regretted.';
+     hi='यात्रीगण कृपया ध्यान दें। फ्लाइट नंबर '+n+', '+ph+', '+(pt?pt+' पार्ट':'पार्ट')+' के इंतज़ार में रुकी हुई है। असुविधा के लिए हमें खेद है।';break;
+   case 'approach':var rt=tm.finished&&tm.started?tm.finished-tm.started:(+tm.work||0);
+     en='Repair of flight '+n+', '+ph+', is complete'+(tn?', by '+tn:'')+(rt?', in '+paDur(rt):'')+'. The flight is on final approach — quality check in progress.';
+     hi='फ्लाइट नंबर '+n+', '+ph+', का रिपेयर पूरा हो गया है'+(tn?', '+tn+' ने किया':'')+(rt?', '+paDurH(rt)+' में':'')+'। आख़िरी जाँच चल रही है।';break;
+   case 'landed':en='Attention please. Flight '+n+', '+ph+', has landed.'+(tn?' Repaired by '+tn+'.':'')+(nm?' Passenger '+nm+', please proceed to the collection counter.':' Please proceed to the collection counter.');
+     hi='यात्रीगण कृपया ध्यान दें। फ्लाइट नंबर '+n+', '+ph+', लैंड कर चुकी है।'+(nm?' '+nm+' जी, कृपया कलेक्शन काउंटर पर आएँ।':' कृपया कलेक्शन काउंटर पर आएँ।');break;
+   case 'final':var wt=Date.now()-(paSince(j,'READY')||Date.now());
+     en='This is the final call for passenger '+(nm||'of flight '+n)+'. Flight '+n+', '+ph+', has been waiting at the collection counter for '+paDur(wt)+'.';
+     hi=(nm?nm+' जी':'फ्लाइट नंबर '+n+' के यात्री')+' के लिए आख़िरी कॉल। फ्लाइट नंबर '+n+', '+ph+', '+paDurH(wt)+' से कलेक्शन काउंटर पर आपका इंतज़ार कर रही है।';break;
+   case 'collected':en=(nm?'Passenger '+nm+' has collected flight '+n+', '+ph+'. ':'Flight '+n+', '+ph+', has been collected. ')+'Thank you for flying with '+sh+'. We wish you a pleasant journey.';
+     hi=(nm?nm+' जी ने फ्लाइट नंबर '+n+' ले ली है। ':'फ्लाइट नंबर '+n+' ले ली गई है। ')+sh+' के साथ यात्रा के लिए धन्यवाद। आपकी यात्रा शुभ हो।';break;
+   case 'late':var lt=Date.now()-(c.expTs||Date.now()),ne=paEta(j);
+     en='Flight '+n+', '+ph+', is running '+paDur(lt)+' late.'+(j.st==='PARTS'?' It is waiting for '+(pt||'a spare part')+'.':'')+(ne&&ne>Date.now()?' Revised expected time '+paT(ne)+'.':'')+' We regret the delay.';
+     hi='फ्लाइट नंबर '+n+', '+ph+', '+paDurH(lt)+' देरी से चल रही है।'+(j.st==='PARTS'?' '+(pt||'पार्ट')+' का इंतज़ार है।':'')+(ne&&ne>Date.now()?' नया संभावित समय '+paTh(ne)+'।':'')+' देरी के लिए खेद है।';break;
+  }
+  return {en:en,hi:hi};}
+/* the regular live roll call: the terminal's real status, then every flight one by one (biggest first), like a railway enquiry */
+var PA_RC=0;
+function paRollCall(){var a=openJobs(),now_=Date.now(),sh=paShop(),cnt=function(s){return a.filter(function(j){return s.indexOf(j.st)>=0;}).length;};
+  var rd=cnt(['READY']),fl=cnt(['ASSIGNED','REPAIR']),ho=cnt(['PARTS']),qc=cnt(['DONE']),wt=cnt(['NEW']),out=[];
+  var td=todayJobs(),inT=td.filter(function(j){return (j.createdAt||0)>=dayStart();}).length,dl=td.filter(function(j){return j.st==='DELIVERED';}).length;
+  out.push({en:'Live terminal status at '+paT(now_)+'. '+(a.length?a.length+' flight'+(a.length===1?'':'s')+' in the terminal: '+[fl?fl+' in flight':'',ho?ho+' on hold for parts':'',qc?qc+' in final check':'',wt?wt+' waiting at check-in':'',rd?rd+' landed for collection':''].filter(Boolean).join(', ')+'.':'No flights in the terminal right now.')+(inT?' Today '+inT+' flight'+(inT===1?' has':'s have')+' checked in, and '+dl+' collected.':''),
+           hi:'यात्रीगण कृपया ध्यान दें। '+paTh(now_)+' का टर्मिनल हाल। '+(a.length?'टर्मिनल में '+a.length+' फ्लाइट हैं: '+[fl?fl+' उड़ान में':'',ho?ho+' पार्ट के इंतज़ार में':'',qc?qc+' आख़िरी जाँच में':'',wt?wt+' चेक-इन पर इंतज़ार में':'',rd?rd+' लैंड होकर लेने के लिए तैयार':''].filter(Boolean).join(', ')+'।':'अभी टर्मिनल में कोई फ्लाइट नहीं है।')+(inT?' आज '+inT+' फ्लाइट आईं, '+dl+' ले जाई गईं।':''),kind:'status'});
+  var pri={READY:0,PARTS:1,REPAIR:2,ASSIGNED:3,DONE:4,NEW:5},list=a.slice().sort(function(x,y){return (pri[x.st]-pri[y.st])||((x.createdAt||0)-(y.createdAt||0));});
+  var per=6,start=list.length>per?(PA_RC*per)%list.length:0;PA_RC++;
+  for(var i=0;i<Math.min(per,list.length);i++){var j=list[(start+i)%list.length],n=paNum(j),ph=paPhone(j),nm=paName(j),g=paGate(j),tn=paTech(j),eta=paEta(j),pt=paPart(j),e,h;
+    var since=paSince(j,j.st)||j.createdAt||now_,d=now_-since,late=(j.c||{}).expTs&&now_>(j.c||{}).expTs;
+    if(j.st==='READY'){e='Flight '+n+', '+ph+', landed at '+paT(since)+(nm?' and is waiting for passenger '+nm:'')+' at the collection counter.';h='फ्लाइट नंबर '+n+', '+ph+', '+paTh(since)+' पर लैंड हुई'+(nm?', '+nm+' जी का':'')+' कलेक्शन काउंटर पर इंतज़ार है।';}
+    else if(j.st==='PARTS'){e='Flight '+n+', '+ph+', on hold for '+paDur(d)+', awaiting '+(pt||'a spare part')+'.';h='फ्लाइट नंबर '+n+', '+ph+', '+paDurH(d)+' से '+(pt||'पार्ट')+' के इंतज़ार में है।';}
+    else if(j.st==='REPAIR'){e='Flight '+n+', '+ph+', in flight'+(g?' at gate '+g:'')+(tn?' with '+tn:'')+' for '+paDur(d)+'.'+(eta?' Expected landing '+paT(eta)+'.':'')+(late?' Running late.':'');h='फ्लाइट नंबर '+n+', '+ph+', '+paDurH(d)+' से '+(g?'गेट '+g+' पर ':'')+(tn?tn+' के पास ':'')+'उड़ान में है।'+(eta?' संभावित समय '+paTh(eta)+'।':'');}
+    else if(j.st==='ASSIGNED'){e='Flight '+n+', '+ph+', boarding'+(g?' at gate '+g:'')+(tn?' with '+tn:'')+'.'+(eta?' Expected landing '+paT(eta)+'.':'');h='फ्लाइट नंबर '+n+', '+ph+', '+(g?'गेट '+g+' पर ':'')+'बोर्डिंग कर रही है।';}
+    else if(j.st==='DONE'){e='Flight '+n+', '+ph+', repair complete'+(tn?' by '+tn:'')+', in final check.';h='फ्लाइट नंबर '+n+', '+ph+', का रिपेयर पूरा, आख़िरी जाँच में है।';}
+    else{var free=Object.keys(STAFF).filter(function(k){return STAFF[k].role==='tech'&&STAFF[k].active!==0&&STAFF[k].active!==false&&!a.some(function(x){return x.tech===k&&(x.st==='REPAIR'||x.st==='ASSIGNED');});})[0];
+      e='Flight '+n+', '+ph+', waiting at check-in for '+paDur(d)+'.'+(free?' Next free gate: gate '+gateOf(free)+', '+STAFF[free].name+'.':'');h='फ्लाइट नंबर '+n+', '+ph+', '+paDurH(d)+' से चेक-इन पर इंतज़ार में है।'+(free?' अगला खाली गेट: गेट '+gateOf(free)+', '+STAFF[free].name+'।':'');}
+    out.push({en:e,hi:h,kind:'flight',j:j});}
+  if(list.length>per)out.push({en:'More flights are listed on the departures board.',hi:'बाकी फ्लाइट की जानकारी डिपार्चर बोर्ड पर है।',kind:'status'});
+  return out;}
+function paRoll(now){var L2=paRollCall();PA.q=PA.q.filter(function(x){return x.kind!=='roll';});
+  L2.forEach(function(x,i){PA.q.push({kind:'roll',sub:x.kind,j:x.j||null,en:x.en,hi:x.hi,first:i===0,last:i===L2.length-1});});paNext();}
+function paPush(kind,j,prio){if(!j)return;var ln=paLines(kind,j);if(!ln.en)return;
+  PA.q=PA.q.filter(function(x){return !(x.j&&x.j.id===j.id&&x.kind===kind);});
+  var it={kind:kind,j:j,en:ln.en,hi:ln.hi,prio:prio||0};if(prio)PA.q.unshift(it);else PA.q.push(it);if(PA.q.length>25)PA.q=PA.q.slice(0,25);paNext();}
+/* compare every phone with how it was a moment ago */
+var PA_KIND={NEW:'checkin',ASSIGNED:'boarding',REPAIR:'departed',PARTS:'delayed',DONE:'approach',READY:'landed',DELIVERED:'collected'};
+function paDiff(){if(FIRSTS<NSRC||STAFFV&&!UNLOCKED)return;var now_={};Object.keys(JOBS).forEach(function(id){now_[id]=JOBS[id].st;});
+  if(PA.prev===null){PA.prev=now_;return;}
+  Object.keys(now_).forEach(function(id){var a=PA.prev[id],b=now_[id];if(a===b)return;if(!a&&b!=='NEW'&&b!=='READY'&&b!=='DELIVERED')return;
+    var k=PA_KIND[b];if(k)paPush(k,JOBS[id],b==='READY'?1:0);if(b==='READY')PA.calls[id]={n:0,ts:Date.now()};if(b==='DELIVERED')delete PA.calls[id];});
+  PA.prev=now_;}
+/* final calls and running-late notices, every half minute */
+function paTimer(){var t0=Date.now();openJobs().forEach(function(j){
+    if(j.st==='READY'){var c=PA.calls[j.id];if(!c){PA.calls[j.id]=c={n:0,ts:((j.tm||{}).ready)||t0};}
+      var gap=c.n===0?20*60e3:30*60e3;if(c.n<4&&t0-c.ts>=gap){c.n++;c.ts=t0;paPush('final',j);}}
+    var e=(j.c||{}).expTs;if(e&&t0>e&&j.st!=='READY'&&!PA.late[j.id]){PA.late[j.id]=1;paPush('late',j);}});
+  var gapA=(+(SETS.paEvery)||4)*60e3;if(!PA.busy&&!PA.q.length&&t0-PA.lastAmb>=gapA&&FIRSTS>=NSRC){PA.lastAmb=t0;paRoll();}}
+/* ---- sound: airport chime, voices, ambience ---- */
+function paAC(){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();}catch(e){}return AC;}
+function paBell(f,at,vol,len){var a=paAC();if(!a)return;var g=a.createGain();g.connect(PA.out||a.destination);
+  [[1,1],[2.01,.35],[3.02,.12]].forEach(function(h){var o=a.createOscillator(),gg=a.createGain();o.type='sine';o.frequency.value=f*h[0];o.connect(gg);gg.connect(g);gg.gain.value=h[1];o.start(at);o.stop(at+len+.1);});
+  g.gain.setValueAtTime(0.0001,at);g.gain.exponentialRampToValueAtTime(vol,at+0.015);g.gain.exponentialRampToValueAtTime(0.0001,at+len);}
+/* the classic four-note terminal chime (up for an announcement, down for the closing tone) */
+function paChime(down,cb){if(!SOUND){if(cb)setTimeout(cb,10);return;}var a=paAC();if(!a){if(cb)cb();return;}var t=a.currentTime+0.05,N=[523.25,659.25,783.99,1046.5];if(down)N=N.slice().reverse();
+  N.forEach(function(f,i){paBell(f,t+i*0.42,0.22,1.6);});if(cb)setTimeout(cb,down?1500:2000);}
+function paVoice(lang){var vs=[];try{vs=speechSynthesis.getVoices()||[];}catch(e){}
+  var pick=function(re){return vs.filter(function(v){return re.test(v.lang||'');});};
+  var c=lang==='hi'?pick(/^hi/i):pick(/^en[-_]IN/i).concat(pick(/^en[-_]GB/i)).concat(pick(/^en/i));
+  return c.filter(function(v){return /female|heera|neerja|swara|kalpana|google/i.test(v.name);})[0]||c[0]||null;}
+function paSay(txt,lang,cb){var done=false,fin=function(){if(done)return;done=true;paDuck(false);cb&&cb();};
+  if(!SOUND||!window.speechSynthesis||!txt){setTimeout(fin,SOUND?50:Math.max(5000,txt.length*65));return;}
+  var v=paVoice(lang);if(lang==='hi'&&!v){setTimeout(fin,30);return;}
+  try{var u=new SpeechSynthesisUtterance(txt);u.lang=lang==='hi'?'hi-IN':(v&&v.lang)||'en-IN';if(v)u.voice=v;u.rate=lang==='hi'?0.9:0.88;u.pitch=1;u.volume=1;
+    u.onend=fin;u.onerror=fin;paDuck(true);speechSynthesis.speak(u);setTimeout(fin,Math.max(5000,txt.length*85));}catch(e){fin();}}
+function paNext(){if(PA.busy||!PA.q.length)return;var it=PA.q.shift();PA.busy=true;
+  var big=it.kind==='landed'||it.kind==='final';if(big&&it.j&&SCR!=='desk')annShow(it.j,it.kind==='final');var roll=it.kind==='roll';
+  paBar(it);
+  var langs=PA.mode==='en'?['en']:PA.mode==='hi'?['hi']:['en','hi'];
+  var step=function(i){if(i>=langs.length){var end=function(){PA.busy=false;if(!(roll&&!it.last))paBar(null);if(big)annHide2();setTimeout(paNext,roll&&!it.last?350:1200);};
+      if(big||it.kind==='collected'||(roll&&it.last))paChime(true,end);else end();return;}
+    paBar(it,langs[i]);paSay(langs[i]==='hi'?it.hi:it.en,langs[i],function(){setTimeout(function(){step(i+1);},450);});};
+  if(roll&&!it.first)setTimeout(function(){step(0);},300);else paChime(false,function(){step(0);});}
+function paBar(it,lang){var b=$('paBar');if(!b)return;if(!it){b.classList.remove('on');return;}
+  var ic={checkin:'🧳',boarding:'🚶',departed:'🛫',delayed:'⏳',approach:'✅',landed:'🛬',final:'📣',collected:'🙏',late:'⚠',roll:it.sub==='flight'?'✈':'📡'}[it.kind]||'📢';
+  b.innerHTML='<span class="paMic">'+ic+'</span><span class="paTx">'+esc(lang==='hi'?it.hi:it.en)+'</span>';b.classList.add('on');
+  var tx=b.querySelector('.paTx');if(tx){tx.style.animation='none';void tx.offsetWidth;var over=tx.scrollWidth-b.clientWidth+120;if(over>0){tx.style.setProperty('--paX',-over+'px');tx.style.animation='paScroll '+Math.max(6,over/45)+'s linear 1.2s forwards';}}}
+/* soft terminal ambience: a slow, quiet pad that dips while someone is speaking */
+function paMusic(on){var a=paAC();if(!a)return;
+  if(!PA.out){PA.out=a.createGain();PA.out.gain.value=1;PA.out.connect(a.destination);}
+  if(on&&!PA.mg&&SOUND){var g=a.createGain();g.gain.value=0.0001;var lp=a.createBiquadFilter();lp.type='lowpass';lp.frequency.value=900;lp.connect(g);g.connect(a.destination);
+    var oscs=[];[[174.6,0],[220,4],[261.6,-3],[329.6,6]].forEach(function(x,i){var o=a.createOscillator();o.type=i%2?'triangle':'sine';o.frequency.value=x[0];o.detune.value=x[1];
+      var lfo=a.createOscillator(),lg=a.createGain();lfo.frequency.value=0.05+i*0.02;lg.gain.value=0.35;lfo.connect(lg);var vg=a.createGain();vg.gain.value=0.5;lg.connect(vg.gain);
+      o.connect(vg);vg.connect(lp);o.start();lfo.start();oscs.push(o,lfo);});
+    PA.mg=g;PA.mo=oscs;g.gain.exponentialRampToValueAtTime(0.022,a.currentTime+4);}
+  if((!on||!SOUND)&&PA.mg){var g2=PA.mg,os=PA.mo;PA.mg=null;PA.mo=null;try{g2.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+1.5);setTimeout(function(){os.forEach(function(o){try{o.stop();}catch(e){}});},1800);}catch(e){}}}
+function paDuck(d){if(!PA.mg||!AC)return;try{PA.mg.gain.cancelScheduledValues(AC.currentTime);PA.mg.gain.setTargetAtTime(d?0.005:0.022,AC.currentTime,0.4);}catch(e){}}
+/* browsers allow sound only after a tap: one tap anywhere starts the terminal sound */
+function paUnlock(){if(PA.unlocked)return;PA.unlocked=true;paAC();try{speechSynthesis.getVoices();var u=new SpeechSynthesisUtterance(' ');u.volume=0;speechSynthesis.speak(u);}catch(e){}
+  var tb=$('paTap');if(tb)tb.remove();if(SOUND&&PA.music)paMusic(true);
+  if(SOUND){setTimeout(function(){if(!PA.busy){PA.lastAmb=Date.now();paRoll();}},600);setTimeout(paVoiceCheck,2500);}}
+function paVoiceCheck(){var ok_=false;try{ok_=!!(window.speechSynthesis&&window.SpeechSynthesisUtterance&&(speechSynthesis.getVoices()||[]).length);}catch(e){}
+  var w=$('paWarn');if(ok_){if(w)w.remove();return;}if(!w){w=document.createElement('div');w.id='paWarn';w.className='paWarn';document.body.appendChild(w);}w.innerHTML='🔇 '+t('paNoV');}
+function paTapBanner(){if(PA.unlocked||!SOUND||$('paTap'))return;var b=document.createElement('div');b.id='paTap';b.className='paTap';b.innerHTML='🔊 '+t('paTap');document.body.appendChild(b);}
+document.addEventListener('pointerdown',paUnlock,true);document.addEventListener('keydown',paUnlock,true);
+try{if(window.speechSynthesis)speechSynthesis.onvoiceschanged=function(){};}catch(e){}
+setInterval(paTimer,30000);
+function render(){$('shop').textContent=(SHOP||'SAI WORKSHOP').toUpperCase();
+  document.querySelectorAll('[data-t]').forEach(function(e){e.textContent=t(e.getAttribute('data-t'));});
+  document.querySelectorAll('#nav button[data-s]').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-s')===SCR);});
+  document.querySelectorAll('.scr').forEach(function(s){s.classList.toggle('on',s.id==='s-'+SCR);});
+  $('auto').style.color=AUTO?'var(--amb)':'var(--dim)';$('snd').textContent=SOUND?'🔊':'🔇';$('paM').textContent=PA.mode==='both'?'EN+हि':PA.mode==='en'?'EN':'हि';$('mus').style.opacity=PA.music&&SOUND?1:.4;
+  $('deskBtn').style.display=STAFFV?'':'none';if(SCR==='desk'&&!STAFFV)SCR='dep';
+  if(STAFFV&&!UNLOCKED){$('deskStats').innerHTML='';[0,1,2,3].forEach(function(i){$('dl'+i).innerHTML='';});$('feed').innerHTML='';}
+  try{if(SCR!=='desk'||UNLOCKED)({dep:rDep,col:rCol,tec:rTec,day:rDay,desk:rDesk})[SCR]();}catch(e){console.log(e);}rTick();
+  $('foot2').textContent='reads today '+R;}
+function tickClock(){var d=new Date();$('clock').firstChild.nodeValue=pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+  $('date').textContent=d.toLocaleDateString(LANG==='hi'?'hi-IN':'en-IN',{weekday:'long',day:'numeric',month:'short'});
+  document.querySelectorAll('.timer').forEach(function(el){var w=+el.getAttribute('data-w'),r=+el.getAttribute('data-r');el.textContent=durS(w+(r?Date.now()-r:0));});}
+/* ---- sound: a soft chime when a phone becomes READY ---- */
+var AC=null;function chime(){if(!SOUND)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();[880,1175,1568].forEach(function(f,i){var o=AC.createOscillator(),g=AC.createGain();
+  o.frequency.value=f;o.connect(g);g.connect(AC.destination);var s=AC.currentTime+i*0.18;g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(0.25,s+0.02);g.gain.exponentialRampToValueAtTime(0.0001,s+0.6);o.start(s);o.stop(s+0.65);});}catch(e){}}
+var FIRSTS=0;
+function checkReady(){if(FIRSTS<NSRC)return;   /* wait for both lists, so phones already ready at start-up do not chime */
+  var r={},nw=0;openJobs().forEach(function(j){if(j.st==='READY'){r[j.id]=1;if(READYSEEN&&!READYSEEN[j.id])nw++;}});
+  var first=READYSEEN===null;setTimeout(function(){READYSEEN=r;},first?0:4000);if(first)READYSEEN=r;}
+/* ---- cloud ---- */
+var SRC={open:{},today:{},qo:{},qd:{},qt:{}},NSRC=5;
+/* a quick bill left for repair (🎫 ticket) shown exactly like a repair job — first name and phone only, never money */
+/* a bill made on a phone still on an old app version has no stage yet: an unpaid one from the last 20 days is a phone still in the shop */
+function fromSale(d){if(!d||!d.quick||d.ret||d.qx||d.arch===2)return null;
+  var qs=d.qst||((+d.due>0)&&(d.ts||0)>=Date.now()-20*864e5?'NEW':'');if(!qs)return null;
+  var m=d.qtm||{},it=(d.items||[]).map(function(c){return c.name;});
+  return {id:d.id,_q:1,_s:STAFFV?d:null,up:d.up,st:{NEW:'NEW',REPAIR:'REPAIR',READY:'READY',OUT:'DELIVERED'}[qs]||'NEW',createdAt:d.ts,tech:d.qtech||null,urg:null,
+    c:{name:d.cust||'',brand:'',model:(d.model||it[0]||''),prob:d.note||(it.length>1?it.slice(1).join(', '):''),expTs:0},
+    tm:{created:d.ts,accepted:m.REPAIR||0,started:m.REPAIR||0,run:d.qst==='REPAIR'?(m.REPAIR||0):0,ready:m.READY||0,finished:m.READY||0,delivered:m.OUT||0}};}
+function rebuild(){JOBS={};['open','today','qo','qd','qt'].forEach(function(k){Object.keys(SRC[k]).forEach(function(id){var d=SRC[k][id],o=JOBS[id];if(!o||(+d.up||0)>=(+o.up||0))JOBS[id]=d;});});}
+var GOT={};
+function apply(src,snap){if(!GOT[src]){GOT[src]=1;FIRSTS++;}var isQ=src.charAt(0)==='q';var ch=snap.docChanges?snap.docChanges():[];if(!(snap.metadata&&snap.metadata.fromCache))rAdd(Math.max(1,ch.length));
+  ch.forEach(function(x){var d=x.doc.data();var id=(d&&d.id)||x.doc.id;if(!id)return;
+    if(isQ)d=fromSale(d);
+    if(x.type==='removed'||!d||d.arch===2)delete SRC[src][id];else SRC[src][id]=d;});   /* a phone that left this list (delivered / archived) */
+  rebuild();ONLINE=true;$('live').className='live';$('liveTx').textContent=t('live');checkReady();try{paDiff();}catch(e){console.log(e);}render();}
+function start(){if(!CFG||!CFG.c){$('msg').style.display='grid';$('msg').innerHTML='<div><b>📺 '+t('setup')+'</b>'+t('setup2')+'</div>';return;}
+  SHOP=CFG.shop||'';
+  try{if(!firebase.apps.length)firebase.initializeApp(CFG.c);}catch(e){}
+  var db=firebase.firestore();DB_=db;var pre='c_'+(CFG.cid||'main')+'_',jobs=db.collection(pre+'jobs');
+  var err=function(){ONLINE=false;$('live').className='live off';$('liveTx').textContent=t('off');};
+  jobs.where('st','in',['NEW','ASSIGNED','REPAIR','PARTS','DONE','READY']).onSnapshot(function(s){apply('open',s);},err);
+  jobs.where('tm.delivered','>=',dayStart()).onSnapshot(function(s){apply('today',s);},err);
+  var sale=db.collection(pre+'sale');   /* ⚡ quick-bill tickets */
+  sale.where('qopen','==',1).onSnapshot(function(s){apply('qo',s);},err);
+  sale.where('qtm.OUT','>=',dayStart()).onSnapshot(function(s){apply('qd',s);},err);
+  sale.where('ts','>=',dayStart()).onSnapshot(function(s){apply('qt',s);},err);
+  var nx=new Date();nx.setHours(24,3,0,0);setTimeout(function(){location.reload();},+nx-Date.now());   /* a fresh day at midnight */
+  db.collection(pre+'meta').doc('main').onSnapshot(function(d){rAdd(1);var x=d&&d.data&&d.data();if(!x)return;
+    STAFF={};(x.staff||[]).forEach(function(s){STAFF[s.id]=s;});SETS=x.settings||{};if(SETS.shop)SHOP=SETS.shop;pinGate();render();},err);}
+function loadFb(cb){if(window.firebase&&firebase.firestore)return cb();var n=0,s=['app','firestore'];s.forEach(function(k){var e=document.createElement('script');
+  e.src='https://www.gstatic.com/firebasejs/'+FBV+'/firebase-'+k+'-compat.js';e.onload=function(){if(++n===1){var e2=document.createElement('script');e2.src='https://www.gstatic.com/firebasejs/'+FBV+'/firebase-firestore-compat.js';e2.onload=cb;document.head.appendChild(e2);}};
+  if(k==='app')document.head.appendChild(e);});}
+/* ---- controls ---- */
+document.querySelectorAll('#nav button[data-s]').forEach(function(b){b.onclick=function(){SCR=b.getAttribute('data-s');PAGE=0;try{L.setItem('SSM_DSP_SCR',SCR);}catch(e){}render();};});
+$('auto').onclick=function(){AUTO=!AUTO;try{L.setItem('SSM_DSP_AUTO',AUTO?'1':'0');}catch(e){}render();};
+$('snd').onclick=function(){SOUND=!SOUND;try{L.setItem('SSM_DSP_SND',SOUND?'1':'0');}catch(e){}
+  if(SOUND){paUnlock();paMusic(PA.music);paChime(false);}else{try{speechSynthesis.cancel();}catch(e){}paMusic(false);}render();};
+$('paM').onclick=function(){PA.mode=PA.mode==='both'?'en':PA.mode==='en'?'hi':'both';try{L.setItem('SSM_DSP_PAMODE',PA.mode);}catch(e){}render();};
+$('paNow').onclick=function(){paUnlock();if(!SOUND){SOUND=true;try{L.setItem('SSM_DSP_SND','1');}catch(e){}paMusic(PA.music);}PA.lastAmb=Date.now();paRoll();setTimeout(paVoiceCheck,2500);render();};
+$('mus').onclick=function(){PA.music=!PA.music;try{L.setItem('SSM_DSP_MUSIC',PA.music?'1':'0');}catch(e){}paMusic(PA.music);render();};
+$('lang').onclick=function(){LANG=LANG==='hi'?'en':'hi';try{L.setItem('SSM_DSP_LANG',LANG);}catch(e){}render();};
+$('fs').onclick=function(){try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}catch(e){}};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')$('ov').classList.remove('on');var m={'1':'dep','2':'col','3':'tec','4':'day','5':'desk'};if(m[e.key]){SCR=m[e.key];PAGE=0;render();}if(e.key==='f')$('fs').click();});
+var ROT=['dep','col','tec','day'],rotT=0;
+setInterval(tickClock,1000);tickClock();
+setInterval(function(){if(SCR==='dep'){PAGE++;rDep();}},9000);
+setInterval(function(){if(!AUTO)return;rotT++;if(SCR==='dep'&&PAGE!==0)return;if(rotT>=2){rotT=0;SCR=ROT[(ROT.indexOf(SCR)+1)%ROT.length];PAGE=0;render();}},12000);
+setInterval(function(){render();},30000);
+window.addEventListener('resize',render);
+window.addEventListener('hashchange',function(){if(/k=/.test(location.hash))location.reload();});   /* a new link pasted into an open screen */
+if(location.protocol==='file:'){var fb=document.createElement('div');fb.className='filebar';var lu=(CFG&&CFG.u)||'https://unique-chaja-2fb526.netlify.app/';
+  fb.innerHTML='⚠ '+t('fileOld')+' <a href="'+esc(lu)+'display.html'+location.hash+'">'+t('fileGo')+' →</a>';document.body.appendChild(fb);}
+render();loadFb(start);setTimeout(paTapBanner,1500);
+</script>
+</body>
+</html>

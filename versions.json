@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.31",
+  "date": "2026-11-24",
+  "notes": "New RATES tab: rate card with price, cost, margin and time for every model and repair, prices learned from your own bills, quote to the customer on WhatsApp, start a bill in one tap. Best technician for each new phone (similar jobs, speed, comebacks, work in hand) with one-tap assign. Promise time in one tap with WhatsApp to the customer. 'Usually takes' and 'taking longer than usual' for technicians. Warning when the same phone is already open. Google review request after hand-over (TODAY tab).",
+  "hi": "नया RATES टैब: हर मॉडल और काम का रेट, लागत, मुनाफ़ा और समय, आपके बिलों से सीखे रेट, ग्राहक को WhatsApp पर रेट, एक टैप में बिल। हर नए फोन के लिए सबसे सही टेक्नीशियन, एक टैप में दें। एक टैप में तैयार होने का समय + ग्राहक को WhatsApp। टेक्नीशियन को 'आम तौर पर इतना समय'। वही फोन पहले से खुला हो तो चेतावनी। फोन देने के बाद Google रिव्यू माँगें।"
+ },
+ {
   "v": "9.30",
   "date": "2026-11-24",
   "notes": "New TODAY tab: everything that needs doing now with one tap each (ask customer, phones going back, receive from technicians, keep, tell customer, ready 2+ days, late, no technician 30+ min, parts to buy with supplier WhatsApp, old udhaar, cash closing) + owner watch list. Quality check (12 points) before COMPLETE, problems go to reception. Shop tips per phone model. Comeback alert when the same phone returns within 30 days. Customer history in jobs and in the Biller as the mobile is typed. Technician incentive in Analytics.",
