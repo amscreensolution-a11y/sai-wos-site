@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.30",
+  "date": "2026-11-24",
+  "notes": "New TODAY tab: everything that needs doing now with one tap each (ask customer, phones going back, receive from technicians, keep, tell customer, ready 2+ days, late, no technician 30+ min, parts to buy with supplier WhatsApp, old udhaar, cash closing) + owner watch list. Quality check (12 points) before COMPLETE, problems go to reception. Shop tips per phone model. Comeback alert when the same phone returns within 30 days. Customer history in jobs and in the Biller as the mobile is typed. Technician incentive in Analytics.",
+  "hi": "नया TODAY टैब: अभी क्या करना है, हर काम एक टैप में (ग्राहक से पूछें, वापसी, टेक्नीशियन से लें, रखें, ग्राहक को बताएँ, 2+ दिन से तैयार, लेट, 30+ मिनट से कोई टेक्नीशियन नहीं, पार्ट ख़रीद सूची सप्लायर WhatsApp के साथ, पुराना उधार, कैश मिलान) + मालिक की नज़र। COMPLETE से पहले 12 चीज़ों की जाँच। मॉडल वार दुकान की टिप्स। 30 दिन में वही फोन वापस आए तो अलर्ट। ग्राहक का इतिहास, बिलर में मोबाइल लिखते ही। एनालिटिक्स में टेक्नीशियन इंसेंटिव।"
+ },
+ {
   "v": "9.29",
   "date": "2026-11-24",
   "notes": "Admin controls the top of the technician screen from the TEAM tab: pinned notice, priority jobs in his order (always first on the board), which blocks show and in what order, default work order. Customer quick return (no repair): reason, check charge, bill cancelled with refund worked out, technician told to bring the phone back. Customer OK: technician asks, reception calls or WhatsApps, YES continues, NO goes to quick return. Analytics shows returns without repair and why. Cleaner screens: max 2 pop-ups, tidier spacing.",

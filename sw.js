@@ -1,4 +1,4 @@
-var C='saiwos-v929';
+var C='saiwos-v930';
 /* the app lives on several free hosts; this page keeps its own address but takes files from whichever host
    is up and has the newest version (so a host that is down, out of free credit or one update behind never stops the shop) */
 var HOSTS=['https://sai-workshop-os.pages.dev/','https://sai-workshop-os.web.app/','https://amscreensolution-a11y.github.io/sai-wos-site/','https://unique-chaja-2fb526.netlify.app/'];
