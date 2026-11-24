@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.27';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.28';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -750,6 +750,47 @@ body.kbOpen .twDock{display:none}@media print{.twDock{display:none!important}}
 .anCl{display:flex;flex-direction:column;gap:6px;margin:10px 0}.anCl>div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;background:var(--panel2);border-radius:10px;font-size:14px}
 .anCl>div.tot{border:2px solid var(--amb);font-weight:900;font-size:16px}.anCl input{width:140px;font-size:17px;text-align:right}
 @media print{.anPer,.anSec,.anAct,.anCus{display:none!important}}
+
+/* ===== v9.29 ===== */
+.pPrio{background:rgba(250,204,21,.18);color:#eab308;border:1px solid #eab308}
+.twT.prio,.twPT.prio{border-color:#eab308;box-shadow:0 0 0 3px rgba(234,179,8,.22)}
+.twNotice{border:2px solid #eab308;background:rgba(250,204,21,.12);border-radius:14px;padding:12px 14px;margin:0 0 12px}
+.twNotice b{display:block;color:#ca8a04;font-size:13px;letter-spacing:.05em}.twNotice div{font-size:18px;font-weight:800;margin:4px 0}.twNotice small{color:var(--dim)}
+.twPrio{border-color:#eab308}.twPrio h2{color:#ca8a04}.twPrioL{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.twBack{border:2px solid var(--red);background:rgba(239,68,68,.08)}.twBack h2{color:var(--red)}
+.twAppr .twApR{padding:8px 10px;border-radius:10px;margin:6px 0;cursor:pointer;font-weight:700;background:var(--panel2);border-left:4px solid var(--amb)}
+.twApR.OK{border-left-color:var(--grn)}.twApR.NO{border-left-color:var(--red)}
+.jsBan{margin-top:6px;padding:6px 10px;border-radius:10px;font-size:13px;font-weight:800}
+.jsBan.r{background:rgba(239,68,68,.12);color:var(--red)}.jsBan.a{background:rgba(255,179,0,.14);color:var(--amb)}.jsBan.g{background:rgba(16,185,129,.12);color:var(--grn)}
+.jsTools{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line2)}
+.jsT{border:1.5px solid var(--line2);background:var(--panel);color:var(--txt);border-radius:10px;padding:9px 12px;font-size:13px;font-weight:800;cursor:pointer}
+.jsT.on{border-color:#eab308;color:#ca8a04;background:rgba(250,204,21,.12)}.jsT.r{border-color:var(--red);color:var(--red)}.jsT.a{border-color:var(--amb);color:var(--amb)}
+.jsFull.jsRet{border-color:var(--red);background:rgba(239,68,68,.08)}.jsRet b{color:var(--red);display:block}.jsRet div{font-weight:800;margin:4px 0}.jsRet small{color:var(--dim)}
+.jsMini.ret .jsMt{color:var(--red)}
+.rtWhy{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.rtWhy button{border:1.5px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:18px;padding:8px 12px;font-size:14px;font-weight:700;cursor:pointer}
+.rtWhy button.on{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.1)}
+.rtCard input#rtWhyT{width:100%;font-size:16px;margin-bottom:6px}
+.rtMoney{margin:8px 0;padding:10px;border-radius:12px;background:var(--panel2);font-size:14px;line-height:1.6}
+.rtRef{color:var(--red);font-size:17px;font-weight:900}.rtCol{color:var(--amb);font-size:16px;font-weight:900}.rtOk{color:var(--grn);font-weight:800}
+#rtGo:disabled{opacity:.45}
+.rqBar{margin:0 0 12px}.rqBar .mmBig{width:100%}.rqA{border-color:var(--amb)}.rqR{border-color:var(--red)}
+details.twAdm>summary{cursor:pointer;list-style:none}details.twAdm>summary::-webkit-details-marker{display:none}details.twAdm>summary h2{display:inline;margin:0}
+details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]>summary::after{content:' ▴'}
+.twAdmS{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}.twAdmS>b{display:block;margin-bottom:8px}.twAdmS textarea{width:100%;font-size:16px}
+.twAdmR{display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--line)}.twAdmR.off{opacity:.5}
+.twAdmN{font-weight:900;color:#ca8a04;min-width:28px}.twAdmT{flex:1;min-width:0;font-size:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.twAdmT input{width:20px;height:20px}
+.twAdmB{display:flex;gap:4px}.twAdmB button{border:1.5px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:8px;width:38px;height:36px;font-size:15px;cursor:pointer}
+.twAdmB button.star{width:auto;padding:0 12px;border-color:#eab308}.twAdmB button:disabled{opacity:.3}
+.twAdmL{max-height:300px;overflow:auto;margin-top:6px}
+/* tidy: one rhythm for spacing, aligned rows */
+#toasts{left:auto;max-width:min(360px,calc(100vw - 24px));pointer-events:none}.toast{pointer-events:auto;font-size:13px}
+@media(max-width:600px){#toasts{left:12px;right:12px;top:auto;bottom:96px;max-width:none}}
+.panel>h2:first-child{margin-top:0}.panel h2{line-height:1.3}
+.kpis{align-items:stretch}.tmBar,.mmActs,.grid2,.grid3{gap:10px}
+.bigBtn+.bigBtn{margin-top:8px}.popCard .bigBtn{width:100%}
+.twMain>.twBoard,.twSide>.panel{margin-bottom:14px}
+.tkSearch{width:100%;box-sizing:border-box}
+#view{max-width:1500px;margin-left:auto;margin-right:auto}
 </style>
 </head>
 <body>
@@ -757,7 +798,7 @@ body.kbOpen .twDock{display:none}@media print{.twDock{display:none!important}}
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.28</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.29</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -849,7 +890,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.28';
+var APP_VER='9.29';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -8948,9 +8989,9 @@ function twWho(j){var hi=LANG==='hi';if(!j.tech)return '<span class="twWho free"
 function twNote(j){var n=(j.notes||[]).filter(function(x){return x.team==='rec';}).pop();return n?'<div class="twNote">📢 '+esc(n.txt)+'</div>':'';}
 function twAge(j){var a=now()-(j.createdAt||now());return '<span class="twAge '+(a<36e5?'g':a<4*36e5?'a':'r')+'">⏱ '+dur(a)+'</span>';}
 function twTile(j){var c=j.c||{},ps=photosOf(j),hi=LANG==='hi',mine=j.tech===me().id;
-  return '<div class="twT st'+j.st+(mine?' mine':'')+(urgOn(j)?' tkUrg':'')+(FLASH[j.id]?' newFlash':'')+'" onclick="openJob(\''+j.id+'\')">'
+  return '<div class="twT st'+j.st+(mine?' mine':'')+(prioOn(j)?' prio':'')+(urgOn(j)?' tkUrg':'')+(FLASH[j.id]?' newFlash':'')+'" onclick="openJob(\''+j.id+'\')">'
     +'<div class="twTph">'+twPh(j,ps)+'<b class="twTid">'+esc(j.id)+'</b>'+twAge(j)+(urgOn(j)?'<i class="twTu">🚨</i>':'')+'</div>'
-    +'<div class="twTb"><div><span class="pill p'+j.st+'">'+stName(j.st)+'</span> '+techDue(j)+'</div><div class="twTm">'+esc(((c.brand||'')+' '+(c.model||'')).trim()||'—')+'</div>'
+    +'<div class="twTb"><div><span class="pill p'+j.st+'">'+stName(j.st)+'</span>'+prioBadge(j)+' '+techDue(j)+'</div><div class="twTm">'+esc(((c.brand||'')+' '+(c.model||'')).trim()||'—')+'</div>'
     +'<div class="twTp">🔧 '+esc(c.prob||'—')+'</div>'+twNote(j)+twWho(j)+(twWaitP(j)?'<div class="twPw">🧩 '+(hi?'पार्ट का इंतज़ार':'waiting for a part')+'</div>':'')
     +jobStepsHtml(j,'mini')+'<div class="twTbtn">'+twBtns(j)+'</div></div></div>';}
 function twRow(j){var c=j.c||{},ps=photosOf(j);
@@ -8975,11 +9016,7 @@ function vTech0(v){var a=jobsArr(),mine=me().id,hi=LANG==='hi',ds=dayStart(),ct=
   var waitParts=myAll.filter(twWaitP).length,nx=cur?null:twNext();
   var seg=function(k,ic,lbl,n){return '<button class="'+(TW.seg===k?'on':'')+'" onclick="TW.seg=\''+k+'\';render(1)">'+ic+' '+lbl+' <b>'+n+'</b></button>';};
   v.innerHTML=(soundReady()?'':'<button class="bigBtn" style="background:var(--red);border-color:var(--red);color:#fff;margin:0 0 12px" onclick="acUnlock();siren();setTimeout(render,400)">🔔 '+(hi?'अलार्म की आवाज़ चालू करने के लिए यहाँ दबाएँ':'TAP ONCE to switch on the alarm sound')+'</button>')
-    +'<div class="kpis twK"><span class="w">🔔 <b>'+newN+'</b> '+(hi?'नए':'new')+'</span><span>🫵 <b>'+myAll.length+'</b> '+(hi?'मेरे':'mine')+'</span><span class="r">🧩 <b>'+waitParts+'</b> '+(hi?'पार्ट':'parts')+'</span><span class="g">✔ <b>'+dnToday.length+'</b> '+(hi?'आज पूरे':'done today')+'</span><span>⏱ <b>'+durS(workToday)+'</b></span></div>'
-    +cleanStrip()+twSteps(cur)
-    +'<div class="tmBar"><button class="tmBig" onclick="msgCompose(\'rec\')">💬 '+(hi?'रिसेप्शन को संदेश':'MESSAGE RECEPTION')+'</button><button class="tmBig part" onclick="techAskPart()">🧩 '+(hi?'पार्ट माँगें':'ASK FOR A PART')+'</button></div>'
-    +twAlertRow()+'<div class="mmSrch"><input id="techQ" class="tkSearch" autocomplete="off" placeholder="🔎 '+(hi?'R-नंबर, मॉडल, खराबी, नाम...':'R-no, model, problem, name...')+'" value="'+esc(TECHQ)+'" oninput="TECHQ=this.value;clearTimeout(window._tq);window._tq=setTimeout(function(){render(1)},120)"><button class="mmScanB" onclick="techScan()">📷</button></div>'+twSearchHtml()
-    +'<div class="twSeg">'+seg('today','🛠',hi?'काम':'Work',(cur?1:0)+twBoard().n.all)+seg('pend','⏳',hi?'पेंडिंग':'Pending',pend.length)+seg('prev','✔',hi?'पूरे हुए':'Done',prev.length)+'</div>'
+    +twTopArrange({kpis:'<div class="kpis twK"><span class="w">🔔 <b>'+newN+'</b> '+(hi?'नए':'new')+'</span><span>🫵 <b>'+myAll.length+'</b> '+(hi?'मेरे':'mine')+'</span><span class="r">🧩 <b>'+waitParts+'</b> '+(hi?'पार्ट':'parts')+'</span><span class="g">✔ <b>'+dnToday.length+'</b> '+(hi?'आज पूरे':'done today')+'</span><span>⏱ <b>'+durS(workToday)+'</b></span></div>'+cleanStrip(),steps:twSteps(cur),bar:'<div class="tmBar"><button class="tmBig" onclick="msgCompose(\'rec\')">💬 '+(hi?'रिसेप्शन को संदेश':'MESSAGE RECEPTION')+'</button><button class="tmBig part" onclick="techAskPart()">🧩 '+(hi?'पार्ट माँगें':'ASK FOR A PART')+'</button></div>',alerts:twAlertRow(),search:'<div class="mmSrch"><input id="techQ" class="tkSearch" autocomplete="off" placeholder="🔎 '+(hi?'R-नंबर, मॉडल, खराबी, नाम...':'R-no, model, problem, name...')+'" value="'+esc(TECHQ)+'" oninput="TECHQ=this.value;clearTimeout(window._tq);window._tq=setTimeout(function(){render(1)},120)"><button class="mmScanB" onclick="techScan()">📷</button></div>'+twSearchHtml(),seg:'<div class="twSeg">'+seg('today','🛠',hi?'काम':'Work',(cur?1:0)+twBoard().n.all)+seg('pend','⏳',hi?'पेंडिंग':'Pending',pend.length)+seg('prev','✔',hi?'पूरे हुए':'Done',prev.length)+'</div>'},cur)
     +'<div class="twGrid seg-'+TW.seg+'"><div class="twMain">'
       +(cur?twNowCard(cur):'<div class="twIdle">▶ '+(hi?'अभी कोई काम नहीं चल रहा':'Nothing running now')
         +(nx?'<div class="twNextH">'+(hi?'अगला काम यह लें':'Take this one next')+':</div>'+twTile(nx):' — '+(hi?'नीचे से काम चुनें':'pick a job below'))+'</div>')
@@ -9303,19 +9340,6 @@ var TW_TF={all:function(){return true;},
   yday:function(j){var d=dayStart();return (j.createdAt||0)>=dayStart(d-1)&&(j.createdAt||0)<d;},
   '2d':function(j){var d=dayStart(),y=dayStart(d-1);return (j.createdAt||0)>=dayStart(dayStart(y-1)-1)&&(j.createdAt||0)<y;},
   old:function(j){var d=dayStart(),y=dayStart(d-1);return (j.createdAt||0)<dayStart(dayStart(y-1)-1);}};
-function twBoard(){var mine=me().id,ds=dayStart(),all=accFeat('techAll',true),ct=clearTs(),open=['NEW','ASSIGNED','REPAIR','PARTS'];
-  var A=jobsArr().filter(function(j){if(open.indexOf(j.st)<0||!techMatch(j))return false;if(urgOn(j)&&j.st==='NEW'&&j.urg.to&&j.urg.to!==mine)return false;
-    if(!(all||j.st==='NEW'||j.tech===mine))return false;return !ct||(j.createdAt||0)>=ct||j.tech===mine||urgOn(j);});
-  var F={all:function(){return true;},today:function(j){return (j.createdAt||0)>=ds;},old:function(j){return (j.createdAt||0)<ds;},new:function(j){return j.st==='NEW';},mine:function(j){return j.tech===mine;},
-    others:function(j){return j.tech&&j.tech!==mine;},parts:twWaitP,urgent:urgOn,late:function(j){return !!(j.c&&j.c.expTs&&j.c.expTs<now());}};
-  if(!F[TW.f])TW.f='all';if(!TW_TF[TW.tf])TW.tf='all';
-  var At=A.filter(TW_TF[TW.tf]),n={},t={};Object.keys(F).forEach(function(k){n[k]=At.filter(F[k]).length;});
-  var Af=A.filter(F[TW.f]);Object.keys(TW_TF).forEach(function(k){t[k]=Af.filter(TW_TF[k]).length;});
-  var la={},us={};At.forEach(function(j){la[j.id]=jobLastAct(j);us[j.id]=twUrgScore(j);});
-  var L=At.filter(F[TW.f]).sort(TW.sort==='old'?function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||((x.createdAt||0)-(y.createdAt||0));}
-    :TW.sort==='urg'?function(x,y){return us[y.id]-us[x.id];}
-    :function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(la[y.id]-la[x.id]);});
-  return {L:L,n:n,t:t,total:A.length};}
 function twBoardHtml(){var hi=LANG==='hi',B=twBoard(),fl=[['all','📋',hi?'सब काम':'All work'],['new','🔔',hi?'नए':'New'],['mine','🫵',hi?'मेरे':'Mine'],['others','🧑‍🔧',hi?'दूसरों के':'Others'],['parts','🧩',hi?'पार्ट':'Parts'],['urgent','🚨',hi?'अर्जेंट':'Urgent'],['late','⏰',hi?'लेट':'Late']];
   if(!accFeat('techAll',true))fl=fl.filter(function(f){return f[0]!=='others';});
   var views=[['tray','▦',hi?'ट्रे':'Tray'],['photo','🖼',hi?'बड़ी फोटो':'Big photos'],['list','☰',hi?'सूची':'List'],['cards','🃏',hi?'बड़े कार्ड':'Big cards']];
@@ -9338,7 +9362,7 @@ function twAddPhoto(id){askPhoto(id,'DEVICE PHOTO');}
 function twPh(j,ps){var hi=LANG==='hi';if(!ps.length)return '<button class="twAddPh" onclick="event.stopPropagation();twAddPhoto(\''+j.id+'\')">📸<span>'+(hi?'फोटो लें':'ADD PHOTO')+'</span></button>';
   return '<img src="'+imgSrc(ps[0].d)+'" alt="" onclick="event.stopPropagation();bigView(\''+j.id+'\')">'+(ps.length>1?'<i class="twPc">📷 '+ps.length+'</i>':'');}
 function twPhotoTile(j){var c=j.c||{},ps=photosOf(j),hi=LANG==='hi',mine=j.tech===me().id;
-  return '<div class="twPT st'+j.st+(mine?' mine':'')+(urgOn(j)?' tkUrg':'')+'" onclick="bigView(\''+j.id+'\')">'
+  return '<div class="twPT st'+j.st+(mine?' mine':'')+(prioOn(j)?' prio':'')+(urgOn(j)?' tkUrg':'')+'" onclick="bigView(\''+j.id+'\')">'
     +'<div class="twPTi">'+(ps.length?'<img src="'+imgSrc(ps[0].d)+'" alt="">'+(ps.length>1?'<i class="twPc">📷 '+ps.length+'</i>':''):'<button class="twAddPh" onclick="event.stopPropagation();twAddPhoto(\''+j.id+'\')">📸<span>'+(hi?'फोटो लें':'ADD PHOTO')+'</span></button>')
       +'<b class="twTid">'+esc(j.id)+'</b>'+twAge(j)
       +'<div class="twPTo"><div class="twPTm">'+esc(((c.brand||'')+' '+(c.model||'')).trim()||'—')+'</div><div class="twPTp">🔧 '+esc(c.prob||'—')+'</div></div></div>'
@@ -9636,6 +9660,235 @@ function anCsv(){var R=anRange(AN.p),C=anCalc(R),rows=[['Day','Bills','Repairs',
   rows.push([]);rows.push(['Time','Type','No','Who','Details','Amount','Paid','Due','Mode','By']);
   C.events.forEach(function(e){rows.push([fmtDT(e.ts),e.k,e.id||'',e.who||'',e.txt||'',e.amt==null?'':e.amt,e.paid==null?'':Math.round(e.paid),e.due||'',e.amt==null?'':e.mode||'',e.by||'']);});
   csvDL('analytics_'+AN.p,rows);}
+
+
+/* ======================================================================================
+   v9.29 — admin decides the top of the technician screen (notice, ⭐ priority jobs, which blocks, their order, default order) ·
+   ↩ customer quick return (no repair): reason, check charge, bill cancelled + refund worked out, technician brings the phone back ·
+   🙋 customer OK: technician asks, reception calls / WhatsApps, YES continues, NO goes to quick return ·
+   cleaner screens: max 2 pop-up toasts, tidy spacing
+   ====================================================================================== */
+MSGK.prio=['⭐','Priority job from admin','एडमिन का ज़रूरी काम'];MSGK.rtn=['↩','Customer taking the phone back','ग्राहक फोन वापस ले रहा'];MSGK.appr=['🙋','Customer OK needed','ग्राहक की मंज़ूरी चाहिए'];MSGK.approk=['✅','Customer answered','ग्राहक का जवाब'];MSGK.notice=['📌','Notice from admin','एडमिन का संदेश'];
+var TW_BLOCKS=[['notice','📌','Admin notice','एडमिन का संदेश'],['prio','⭐','Priority jobs (set by admin)','ज़रूरी काम (एडमिन)'],['appr','🙋','Waiting for customer OK','ग्राहक की मंज़ूरी'],
+  ['kpis','📊','Counters (new, mine, parts, done)','गिनती (नए, मेरे, पार्ट, पूरे)'],['steps','🪜','4-step guide','4 स्टेप गाइड'],['bar','💬','Message + Ask part buttons','संदेश + पार्ट बटन'],
+  ['alerts','📣','One-tap alerts','एक टैप अलर्ट'],['search','🔎','Search','खोज'],['seg','🗂','Work / Pending / Done buttons','काम / पेंडिंग / पूरे बटन']];
+function twCfg(){var c=(DB.settings&&DB.settings.twTop)||{},ks=TW_BLOCKS.map(function(b){return b[0];}),o=(c.order||[]).filter(function(k){return ks.indexOf(k)>=0;});
+  ks.forEach(function(k){if(o.indexOf(k)<0)o.push(k);});return {notice:c.notice||'',noticeTs:c.noticeTs||0,noticeBy:c.noticeBy||'',order:o,off:c.off||{steps:1},sort:c.sort||'new'};}
+function twCfgPut(c){DB.settings.twTop={notice:c.notice,noticeTs:c.noticeTs,noticeBy:c.noticeBy,order:c.order,off:c.off,sort:c.sort};metaSave();render(1);}
+function twCfgMove(k,d){var c=twCfg(),i=c.order.indexOf(k),j=i+d;if(i<0||j<0||j>=c.order.length)return;c.order.splice(i,1);c.order.splice(j,0,k);twCfgPut(c);}
+function twCfgToggle(k){var c=twCfg();c.off=Object.assign({},c.off);if(c.off[k])delete c.off[k];else c.off[k]=1;twCfgPut(c);}
+function twCfgSort(s){var c=twCfg();c.sort=s;twCfgPut(c);}
+function twNoticeSave(){var c=twCfg(),t=(gv('twNt')||'').trim();c.notice=t;c.noticeTs=now();c.noticeBy=me().name;twCfgPut(c);
+  if(t)try{msgSend({to:'tech:*',kind:'notice',jid:'',text:t});}catch(e){}toast('📌 '+(LANG==='hi'?'टेक्नीशियन स्क्रीन पर लगा':'pinned on technician screens'));}
+function twNoticeClear(){var c=twCfg();c.notice='';c.noticeTs=now();twCfgPut(c);}
+(function(){try{TW._userSort=!!localStorage.getItem('SSM_WOS_TWSORT');}catch(e){}})();
+var _twSetSort928=twSetSort;twSetSort=function(k){TW._userSort=1;_twSetSort928(k);};
+/* ⭐ priority */
+function prioOn(j){return !!(j&&j.prio&&j.prio.on&&['NEW','ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0);}
+function prioList(){return jobsArr().filter(prioOn).sort(function(a,b){return (a.prio.rank||0)-(b.prio.rank||0);});}
+function prioBadge(j){if(!prioOn(j))return '';var L=prioList(),n=L.indexOf(j)+1;return ' <span class="pill pPrio">⭐ '+(LANG==='hi'?'ज़रूरी':'PRIORITY')+(n?' #'+n:'')+'</span>';}
+function prioToggle(id){var j=DB.jobs[id];if(!j)return;var hi=LANG==='hi';
+  if(prioOn(j)){j.prio={on:0,ts:now(),by:me().name};logA(j,'⭐ PRIORITY REMOVED by '+me().name,'','');}
+  else{var mx=0;prioList().forEach(function(x){if((x.prio.rank||0)>mx)mx=x.prio.rank;});j.prio={on:1,ts:now(),by:me().name,rank:mx+1};logA(j,'⭐ MADE PRIORITY #'+prioList().length+' by '+me().name,'','');
+    try{msgSend({to:j.tech?'tech:'+j.tech:'tech:*',kind:'prio',jid:id,text:hi?'यह काम पहले करें':'Do this job first'});}catch(e){}}
+  save([id]);toast('⭐ '+esc(id));render(1);}
+function prioMove(id,d){var L=prioList(),i=L.findIndex(function(x){return x.id===id;}),k=i+d;if(i<0||k<0||k>=L.length)return;
+  var a=L[i],b=L[k],r=a.prio.rank;a.prio.rank=b.prio.rank;b.prio.rank=r;if(a.prio.rank===b.prio.rank)a.prio.rank+=d;save([a.id,b.id]);render(1);}
+var _urgBadge928=urgBadge;urgBadge=function(j){return _urgBadge928(j)+prioBadge(j);};
+
+/* ---------- 🛠 technician screen: blocks in the admin's order ---------- */
+function twTopArrange(B,cur){var hi=LANG==='hi',c=twCfg(),mine=me().id,h='';
+  if(!TW._userSort&&c.sort)TW.sort=c.sort;
+  B.notice=c.notice?'<div class="twNotice"><b>📌 '+(hi?'एडमिन का संदेश':'FROM ADMIN')+'</b><div>'+esc(c.notice).replace(/\n/g,'<br>')+'</div><small>'+esc(c.noticeBy)+' · '+fmtDT(c.noticeTs)+'</small></div>':'';
+  var P=prioList().filter(function(j){return techMatch(j)&&(!j.tech||j.tech===mine||accFeat('techAll',true));});
+  B.prio=P.length?'<div class="panel twPrio"><h2>⭐ '+(hi?'पहले ये करें — एडमिन ने चुने':'DO THESE FIRST — chosen by admin')+' ('+P.length+')</h2><div class="twPrioL">'+P.map(twTile).join('')+'</div></div>':'';
+  var A=jobsArr().filter(function(j){return j.tech===mine&&j.appr&&!j.noRep&&['ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0&&(j.appr.st==='ASK'||(j.appr.st!=='ASK'&&now()-(j.appr.at||0)<3*36e5));});
+  B.appr=A.length?'<div class="panel twAppr"><h2>🙋 '+(hi?'ग्राहक की मंज़ूरी':'CUSTOMER OK')+'</h2>'+A.map(function(j){var a=j.appr,c2=j.c||{};return '<div class="twApR '+a.st+'" onclick="openJob(\''+j.id+'\')"><b class="jid">'+esc(j.id)+'</b> '+esc(((c2.brand||'')+' '+(c2.model||'')).trim())+' — '
+    +(a.st==='ASK'?'⏳ '+(hi?'रिसेप्शन ग्राहक से पूछ रहा है':'reception is asking the customer'):a.st==='OK'?'✅ '+(hi?'ग्राहक ने हाँ कहा — काम करें':'customer said YES — go ahead'):'❌ '+(hi?'ग्राहक ने मना किया — फोन काउंटर पर दें':'customer said NO — take the phone to the counter'))+'</div>';}).join('')+'</div>':'';
+  var R=jobsArr().filter(function(j){return j.tech===mine&&j.rtn&&j.rtn.ask&&!j.rtn.back&&!j.noRep;}),back=R.length?'<div class="panel twBack"><h2>↩ '+(hi?'ग्राहक फोन वापस ले रहा — काम रोकें और फोन काउंटर पर दें':'CUSTOMER WANTS THE PHONE BACK — stop and take it to the counter')+'</h2>'
+    +R.map(function(j){var c2=j.c||{},ps=photosOf(j);return '<div class="twR stPARTS">'+(ps.length?'<img src="'+imgSrc(ps[0].d)+'" alt="">':'<span class="twNoP">📵</span>')+'<div class="twRt"><b class="jid">'+esc(j.id)+'</b> '+esc(((c2.brand||'')+' '+(c2.model||'')).trim())+'<div class="twMp">'+esc(j.rtn.reason||'')+'</div></div><div class="twRb"><button class="tkB done" onclick="event.stopPropagation();rtnBack(\''+j.id+'\')">📤 '+(hi?'काउंटर पर दे दिया':'GIVEN TO COUNTER')+'</button></div></div>';}).join('')+'</div>':'';
+  h+=back;c.order.forEach(function(k){if(c.off[k]&&k!=='seg')return;h+=B[k]||'';});return h;}
+var _twBtns928=twBtns;twBtns=function(j,big){var hi=LANG==='hi';
+  if(j.rtn&&j.rtn.ask&&!j.noRep){if(j.rtn.back)return '<span class="twPw">↩ '+(hi?'काउंटर पर वापस':'back at counter')+'</span>';if(j.tech===me().id)return '<button class="tkB done" onclick="event.stopPropagation();rtnBack(\''+j.id+'\')">📤 '+(hi?'काउंटर पर दिया':'GIVEN TO COUNTER')+'</button>';return '<span class="twPw">↩ '+(hi?'ग्राहक वापस ले रहा':'customer taking back')+'</span>';}
+  if(j.appr&&j.appr.st==='ASK'&&j.tech===me().id)return '<span class="twPw">🙋 '+(hi?'ग्राहक से पूछ रहे':'asking customer')+'</span>';
+  return _twBtns928(j,big);};
+var _takeJob928=takeJob;takeJob=function(id){var j=DB.jobs[id];if(j&&j.rtn&&j.rtn.ask&&!j.noRep){toast('↩ '+(LANG==='hi'?'ग्राहक यह फोन वापस ले रहा है':'customer is taking this phone back'));return;}return _takeJob928(id);};
+/* board: admin priority first, then the chosen order */
+function twBoard(){var mine=me().id,ds=dayStart(),all=accFeat('techAll',true),ct=clearTs(),open=['NEW','ASSIGNED','REPAIR','PARTS'];
+  var A=jobsArr().filter(function(j){if(open.indexOf(j.st)<0||!techMatch(j)||j.noRep)return false;if(urgOn(j)&&j.st==='NEW'&&j.urg.to&&j.urg.to!==mine)return false;
+    if(!(all||j.st==='NEW'||j.tech===mine))return false;return !ct||(j.createdAt||0)>=ct||j.tech===mine||urgOn(j)||prioOn(j);});
+  var F={all:function(){return true;},today:function(j){return (j.createdAt||0)>=ds;},old:function(j){return (j.createdAt||0)<ds;},new:function(j){return j.st==='NEW';},mine:function(j){return j.tech===mine;},
+    others:function(j){return j.tech&&j.tech!==mine;},parts:twWaitP,urgent:urgOn,late:function(j){return !!(j.c&&j.c.expTs&&j.c.expTs<now());},prio:prioOn};
+  if(!F[TW.f])TW.f='all';if(!TW_TF[TW.tf])TW.tf='all';
+  var At=A.filter(TW_TF[TW.tf]),n={},t={};Object.keys(F).forEach(function(k){n[k]=At.filter(F[k]).length;});
+  var Af=A.filter(F[TW.f]);Object.keys(TW_TF).forEach(function(k){t[k]=Af.filter(TW_TF[k]).length;});
+  var la={},us={},pr={};At.forEach(function(j){la[j.id]=jobLastAct(j);us[j.id]=twUrgScore(j);pr[j.id]=prioOn(j)?(j.prio.rank||0):9e15;});
+  var base=TW.sort==='old'?function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||((x.createdAt||0)-(y.createdAt||0));}
+    :TW.sort==='urg'?function(x,y){return us[y.id]-us[x.id];}
+    :function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(la[y.id]-la[x.id]);};
+  var L=At.filter(F[TW.f]).sort(function(x,y){return (pr[x.id]-pr[y.id])||base(x,y);});
+  return {L:L,n:n,t:t,total:A.length};}
+
+/* ---------- ↩ customer quick return (no repair) ---------- */
+var RT={id:'',why:''};
+var RT_WHY=[['💸','Budget / too costly','बजट / महँगा'],['⏳','No time — will come later','अभी समय नहीं — बाद में'],['🧩','Part not available','पार्ट नहीं मिला'],['🏪','Going to another shop','दूसरी दुकान'],['📱','Bought a new phone','नया फोन ले लिया'],['🙅','Changed mind','मन बदल गया']];
+function rtnWith(j){return ['ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0&&j.tech&&!(j.rtn&&j.rtn.back);}
+function rtnPick(){var hi=LANG==='hi',o=document.getElementById('popArea');if(!o)return;
+  o.innerHTML='<div class="popCard" style="border-color:var(--red);max-height:86vh;overflow:auto"><h3 style="color:var(--red)">↩ '+(hi?'कौन सा फोन वापस?':'WHICH PHONE GOES BACK?')+'</h3>'
+    +'<div class="mmSrch"><input id="rtQ" autocomplete="off" placeholder="'+(hi?'R-नं, बिल नं, नाम, मोबाइल, मॉडल…':'R-no, bill no, name, mobile, model…')+'" oninput="rtnList(this.value)" style="font-size:17px"><button class="mmScanB" onclick="scanCam(function(t){var r=scanFind(t);if(r&&r.j){rtnSheet(r.j.id);return \'\';}return \'⚠ \'+t;})">📷</button></div><div id="rtList"></div>'
+    +'<button class="bigBtn bGhost" style="opacity:.6" onclick="document.getElementById(\'popArea\').innerHTML=\'\'">✕</button></div>';rtnList('');}
+function rtnList(q){var e=document.getElementById('rtList');if(!e)return;var ql=(''+q).trim().toLowerCase();
+  var L=jobsArr().filter(function(j){return j.st!=='DELIVERED';}).filter(function(j){if(!ql)return true;var c=j.c||{};return [j.id,j.billed,j.vyapar,c.name,c.mob,c.brand,c.model,c.prob].join(' ').toLowerCase().indexOf(ql)>=0;}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0);}).slice(0,20);
+  e.innerHTML=L.length?L.map(function(j){return mmCard(j,'<button class="bigBtn" style="background:var(--red);border-color:var(--red);color:#fff" onclick="rtnSheet(\''+j.id+'\')">↩ '+(LANG==='hi'?'यह फोन वापस':'THIS ONE GOES BACK')+'</button>');}).join(''):'<div class="twEmpty">—</div>';}
+function rtnSheet(id){var j=DB.jobs[id];if(!j)return;var hi=LANG==='hi',o=document.getElementById('popArea');if(!o)return;closeOvl();var bo=document.getElementById('bigOvl');if(bo)bo.remove();
+  RT={id:id,why:(j.rtn&&j.rtn.reason)||((j.appr&&j.appr.st==='NO')?(hi?'ग्राहक ने मंज़ूरी नहीं दी':'Customer did not approve'):'')};window._rtPh=null;
+  var withT=rtnWith(j);
+  o.innerHTML='<div class="popCard rtCard" style="border-color:var(--red);max-height:92vh;overflow:auto"><h3 style="color:var(--red)">↩ '+(hi?'ग्राहक बिना रिपेयर फोन वापस ले रहा':'CUSTOMER TAKING THE PHONE BACK — NO REPAIR')+'</h3>'+mmCard(j,'')
+    +'<div class="kpStep"><b>1</b> '+(hi?'क्यों?':'Why?')+'</div><div class="rtWhy">'+RT_WHY.map(function(w,i){return '<button id="rtW'+i+'" onclick="rtnWhy('+i+')">'+w[0]+' '+(hi?w[2]:w[1])+'</button>';}).join('')+'</div>'
+    +'<input id="rtWhyT" autocomplete="off" placeholder="'+(hi?'या अपना कारण लिखें':'or type the reason')+'" value="'+esc(RT.why)+'" oninput="RT.why=this.value;rtnUpd()">'
+    +(withT?'<div class="urgInfo" style="border-color:var(--amb)">🧑‍🔧 '+(hi?'फोन अभी ':'The phone is with ')+'<b>'+esc(techName(j.tech))+'</b>'+(hi?' के पास है':'')+(j.rtn&&j.rtn.ask?' — '+(hi?'उन्हें बता दिया, ला रहे हैं':'they have been told and are bringing it'):'')+'</div>':'')
+    +'<div class="kpStep"><b>2</b> '+(hi?'जाँच / सर्विस चार्ज (अगर लेना है)':'Check / service charge (if any)')+'</div>'
+    +'<div class="grid2"><div class="field"><label>₹</label><input id="rtC" inputmode="numeric" value="0" oninput="rtnUpd()"></div><div class="field"><label>'+(hi?'कैसे':'Mode')+'</label><select id="rtM" onchange="rtnUpd()"><option>CASH</option><option>UPI</option><option>UDHAAR</option></select></div></div>'
+    +'<div id="rtMoney" class="rtMoney"></div>'
+    +'<div class="kpStep"><b>3</b> '+(hi?'देते समय फोटो (अच्छा रहेगा)':'Photo while handing back (recommended)')+'</div>'+phField('_rtPh',hi?'फोटो लें':'TAKE PHOTO','rtnUpd')
+    +'<button id="rtGo" class="bigBtn" style="background:var(--red);border-color:var(--red);color:#fff" onclick="rtnDone(\''+id+'\')">🤝 '+(hi?'ग्राहक को वापस दे दिया':'HANDED BACK TO THE CUSTOMER')+'</button>'
+    +(withT&&!(j.rtn&&j.rtn.ask)?'<button class="bigBtn bGhost" onclick="rtnAsk(\''+id+'\')">📣 '+(hi?'टेक्नीशियन से फोन मँगवाएँ':'ASK THE TECHNICIAN TO BRING IT')+'</button>':'')
+    +'<button class="bigBtn bGhost" style="opacity:.6" onclick="document.getElementById(\'popArea\').innerHTML=\'\'">✕</button></div>';
+  rtnUpd();}
+function rtnWhy(i){var w=RT_WHY[i];if(!w)return;RT.why=LANG==='hi'?w[2]:w[1];var e=document.getElementById('rtWhyT');if(e)e.value=RT.why;RT_WHY.forEach(function(_,k){var b=document.getElementById('rtW'+k);if(b)b.classList.toggle('on',k===i);});rtnUpd();}
+function rtnCalc(j,C,mode){var sl=j.billed&&DB.sale[j.billed],c=j.c||{};
+  if(sl&&!sl.ret){var T=+sl.total||0,Pd=+sl.paid||0;C=Math.min(C,T);return {bill:sl.id,T:T,Pd:Pd,C:C,cancel:Math.max(0,T-C),refund:Math.max(0,Pd-C),owe:Math.max(0,C-Pd)};}
+  var adv=+c.adv||0;return {bill:'',T:0,Pd:adv,C:C,cancel:0,refund:Math.max(0,adv-C),owe:mode==='UDHAAR'?Math.max(0,C-adv):0,collect:mode==='UDHAAR'?0:Math.max(0,C-adv)};}
+function rtnUpd(){var j=DB.jobs[RT.id],e=document.getElementById('rtMoney'),g=document.getElementById('rtGo');if(!j||!e)return;var hi=LANG==='hi',C=Math.max(0,+gv('rtC')||0),M=rtnCalc(j,C,gv('rtM'));
+  e.innerHTML=(M.bill?'🧾 '+(hi?'बिल':'Bill')+' <b>'+esc(M.bill)+'</b> '+money(M.T)+' ('+(hi?'मिला':'paid')+' '+money(M.Pd)+') → '+(hi?'रद्द':'cancelled')+' '+money(M.cancel):(M.Pd?'💵 '+(hi?'एडवांस':'Advance')+' '+money(M.Pd):''))
+    +(M.refund?'<div class="rtRef">↩ '+(hi?'ग्राहक को वापस दें':'GIVE BACK TO CUSTOMER')+': <b>'+money(M.refund)+'</b></div>':'')
+    +(M.collect?'<div class="rtCol">💵 '+(hi?'ग्राहक से लें':'COLLECT FROM CUSTOMER')+': <b>'+money(M.collect)+'</b></div>':'')
+    +(M.owe&&M.bill?'<div class="rtCol">🧾 '+(hi?'ग्राहक पर बाकी रहेगा':'customer will still owe')+': <b>'+money(M.owe)+'</b></div>':'')
+    +(M.owe&&!M.bill?'<div class="rtCol">🧾 '+(hi?'उधार':'udhaar')+': <b>'+money(M.owe)+'</b></div>':'')
+    +(!M.refund&&!M.collect&&!M.owe?'<div class="rtOk">✔ '+(hi?'कोई लेन-देन नहीं':'nothing to pay or give back')+'</div>':'');
+  if(g)g.disabled=!(''+(RT.why||'')).trim();}
+function rtnAsk(id){var j=DB.jobs[id];if(!j)return;var hi=LANG==='hi',why=(''+(RT.why||gv('rtWhyT')||'')).trim();
+  j.rtn=Object.assign({},j.rtn||{},{ask:now(),by:me().name,reason:why});if(j.tm&&j.tm.run)wkStop(j);logA(j,'↩ CUSTOMER TAKING PHONE BACK — '+(why||'no reason')+' — technician asked to bring it ('+me().name+')','','');save([id]);
+  try{if(j.tech)msgSend({to:'tech:'+j.tech,kind:'rtn',jid:id,text:(hi?'ग्राहक फोन वापस ले रहा है — काम रोकें, फोन काउंटर पर दें':'Customer is taking this phone back — stop work and bring it to the counter')+(why?' ('+why+')':'')});}catch(e){}
+  toast('📣 '+esc(techName(j.tech||'')));rtnSheet(id);}
+function rtnBack(id){var j=DB.jobs[id];if(!j)return;j.rtn=Object.assign({},j.rtn||{},{back:{ts:now(),by:me().name}});if(j.tm&&j.tm.run)wkStop(j);
+  logA(j,'📤 PHONE BROUGHT BACK TO COUNTER (customer taking it back) by '+me().name,'','');save([id]);
+  try{msgSend({to:'rec',kind:'rtn',jid:id,text:LANG==='hi'?'फोन काउंटर पर वापस — ग्राहक को दें':'Phone is back at the counter — hand it to the customer'});}catch(e){}
+  toast('📤 '+esc(id)+' → '+(LANG==='hi'?'काउंटर':'counter'));render(1);}
+function rtnDone(id){var j=DB.jobs[id];if(!j)return;var hi=LANG==='hi',why=(''+(RT.why||'')).trim();if(!why){toast('⚠ '+(hi?'कारण चुनें':'choose the reason'));return;}
+  var C=Math.max(0,+gv('rtC')||0),mode=gv('rtM')||'CASH',M=rtnCalc(j,C,mode),ids=[];
+  if(j.tm&&j.tm.run)wkStop(j);
+  if(M.bill){var sl=DB.sale[M.bill];
+    if(M.cancel>0){var m=0;saleArr().forEach(function(x){if(x.n>m)m=x.n;});var pids=[];
+      (sl.items||[]).forEach(function(c){if(c.pid&&DB.prod[c.pid]&&+c.qty>0){var p=DB.prod[c.pid];p.qty+=(+c.qty);prodMove(p,'IN',+c.qty,'no repair '+sl.id,sl.id);pids.push(p.id);}});
+      var rb={id:'B-'+pad(m+1,4),n:m+1,ts:now(),by:me().name,cust:sl.cust||'',mob:sl.mob||'',party:sl.party||'',
+        items:[{pid:'',name:'RETURN — NO REPAIR ('+(sl.items||[]).map(function(c){return c.name;}).join(', ').slice(0,60)+')',qty:1,rate:-M.cancel,ci:0}],
+        total:-M.cancel,paid:-M.refund,due:0,mode:sl.mode==='UDHAAR'?'CASH':sl.mode,ret:1,of:sl.id,noRep:j.id,up:now()};
+      DB.sale[rb.id]=rb;sl.retOf=(sl.retOf||0)+M.cancel;sl.due=M.owe;if(!sl.due&&sl.mode==='UDHAAR')sl.mode='CASH';sl.up=now();ids=[rb.id,sl.id];
+      if(pids.length)saveColl('prod',pids);
+      DB.audit.push({ts:now(),by:me().name,jid:rb.id,a:'↩ BILL CANCELLED (no repair) '+money(M.cancel)+' of '+sl.id+(M.refund?' — refund '+money(M.refund):''),f:'',t:''});}
+    j.pay={amt:0,paid:0,due:0,mode:'BILL',status:'PAID',bill:sl.id};}
+  else{var paid=mode==='UDHAAR'?Math.min(M.Pd,C):C;j.pay={amt:C,paid:paid,due:Math.max(0,C-paid),mode:mode,status:paid>=C?'PAID':(paid>0?'PARTIAL':'PENDING')};}
+  j.noRep={ts:now(),by:me().name,reason:why,charge:C,refund:M.refund};j.rtn=Object.assign({},j.rtn||{},{done:now()});
+  j.chk=j.chk||{};j.chk.hand={ts:now(),by:me().name,via:'quick return'};j.mm=j.mm||{};j.mm.out={ts:now(),by:me().name,rack:j.tray||''};
+  var f=j.st;j.st='DELIVERED';j.tm.delivered=now();j.tray='';if(j.prio)j.prio.on=0;
+  logA(j,'↩ RETURNED TO CUSTOMER WITHOUT REPAIR — '+why+(C?' — charge '+money(C):'')+(M.refund?' — refund '+money(M.refund):''),f,'DELIVERED');
+  save([id]);if(ids.length)saveColl('sale',ids);
+  if(window._rtPh){addPhoto(id,'RETURNED TO CUSTOMER (NO REPAIR)',window._rtPh);window._rtPh=null;}
+  try{if(j.tech)msgSend({to:'tech:'+j.tech,kind:'msg',jid:id,text:hi?'ग्राहक बिना रिपेयर फोन ले गया':'Customer took the phone back without repair',lite:1});}catch(e){}
+  document.getElementById('popArea').innerHTML='';
+  toast('↩ '+esc(id)+' — '+(M.refund?(hi?'वापस दें ':'give back ')+money(M.refund):(hi?'वापस दिया':'returned')));render(1);}
+
+/* ---------- 🙋 customer OK (technician asks, reception answers) ---------- */
+var AP_WHY=[['🧩','Extra part needed','और पार्ट लगेगा'],['💰','Costs more than told','बताए से ज़्यादा खर्च'],['💾','Data may be lost','डेटा जा सकता है'],['🔬','Board / IC work needed','बोर्ड / IC का काम'],['⚠','Risky repair','रिस्की रिपेयर']];
+function apprAsk(id){var j=DB.jobs[id];if(!j)return;var hi=LANG==='hi',o=document.getElementById('popArea');if(!o)return;closeOvl();window._apW='';
+  o.innerHTML='<div class="popCard" style="border-color:var(--amb);max-height:88vh;overflow:auto"><h3 style="color:var(--amb)">🙋 '+(hi?'ग्राहक से पूछना है':'ASK THE CUSTOMER FIRST')+' — '+esc(id)+'</h3>'
+    +'<div class="rtWhy">'+AP_WHY.map(function(w,i){return '<button id="apW'+i+'" onclick="window._apW=\''+(hi?w[2]:w[1]).replace(/'/g,'')+'\';[].forEach.call(document.querySelectorAll(\'[id^=apW]\'),function(b){b.classList.remove(\'on\')});this.classList.add(\'on\')">'+w[0]+' '+(hi?w[2]:w[1])+'</button>';}).join('')+'</div>'
+    +'<div class="field"><label>'+(hi?'क्या बताना है (रिसेप्शन को)':'Details for reception')+'</label><input id="apT" autocomplete="off" placeholder="'+(hi?'जैसे: डिस्प्ले के साथ फ्रेम भी बदलना होगा':'e.g. frame also needs changing with the display')+'"></div>'
+    +'<button class="bigBtn bAccept" onclick="apprSend(\''+id+'\')">📣 '+(hi?'रिसेप्शन को भेजें':'SEND TO RECEPTION')+'</button><button class="bigBtn bGhost" style="opacity:.6" onclick="document.getElementById(\'popArea\').innerHTML=\'\'">✕</button></div>';}
+function apprSend(id){var j=DB.jobs[id];if(!j)return;var hi=LANG==='hi',t=[window._apW,(gv('apT')||'').trim()].filter(Boolean).join(' — ');if(!t){toast('⚠ '+(hi?'कारण चुनें':'choose a reason'));return;}
+  j.appr={st:'ASK',ts:now(),by:me().name,txt:t};if(j.tm&&j.tm.run)wkStop(j);logA(j,'🙋 CUSTOMER OK NEEDED — '+t+' ('+me().name+')','','');save([id]);
+  try{msgSend({to:'rec',kind:'appr',jid:id,text:t});}catch(e){}document.getElementById('popArea').innerHTML='';toast('🙋 '+(hi?'रिसेप्शन को भेजा':'sent to reception'));render(1);}
+function apprSheet(id){var j=DB.jobs[id];if(!j||!j.appr)return;var hi=LANG==='hi',c=j.c||{},o=document.getElementById('popArea');if(!o)return;closeOvl();var bo=document.getElementById('bigOvl');if(bo)bo.remove();
+  o.innerHTML='<div class="popCard" style="border-color:var(--amb);max-height:90vh;overflow:auto"><h3 style="color:var(--amb)">🙋 '+(hi?'ग्राहक से पूछें':'ASK THE CUSTOMER')+' — '+esc(id)+'</h3>'+mmCard(j,'')
+    +'<div class="urgInfo" style="border-color:var(--amb)">🧑‍🔧 <b>'+esc(j.appr.by||'')+'</b>: '+esc(j.appr.txt||'')+' <small>'+fmtT(j.appr.ts)+'</small></div>'
+    +'<div class="field"><label>'+(hi?'ग्राहक को बताने वाली रकम ₹ (अगर बदल रही है)':'Amount to tell the customer ₹ (if it changes)')+'</label><input id="apA" inputmode="numeric" placeholder="₹"></div>'
+    +'<div class="grid2">'+(c.mob?'<a class="bigBtn bGhost" style="text-align:center;text-decoration:none" href="tel:'+esc((''+c.mob).replace(/\D/g,''))+'">📞 '+(hi?'कॉल':'CALL')+'</a>':'<span></span>')
+    +'<button class="bigBtn bGhost" onclick="apprWa(\''+id+'\')">💬 WhatsApp</button></div>'
+    +'<div class="grid2"><button class="bigBtn bAccept" onclick="apprAns(\''+id+'\',\'OK\')">✅ '+(hi?'ग्राहक ने हाँ कहा':'CUSTOMER SAID YES')+'</button><button class="bigBtn" style="background:var(--red);border-color:var(--red);color:#fff" onclick="apprAns(\''+id+'\',\'NO\')">❌ '+(hi?'ग्राहक ने मना किया':'CUSTOMER SAID NO')+'</button></div>'
+    +'<button class="bigBtn bGhost" style="opacity:.6" onclick="document.getElementById(\'popArea\').innerHTML=\'\'">✕</button></div>';}
+function apprWa(id){var j=DB.jobs[id];if(!j)return;var c=j.c||{},a=+gv('apA')||0;anWaTo(c.wa||c.mob,'Namaste '+((c.name||'').split(' ')[0])+' ji 🙏\n'+(DB.settings.shop||'')+'\n📱 '+j.id+' — '+((c.brand||'')+' '+(c.model||'')).trim()+'\n'+(j.appr.txt||'')+(a?'\n💰 Rs.'+a:'')+'\nKya hum kaam aage badhayein? Please reply YES / NO.\nक्या काम आगे करें? हाँ / ना बताएँ।');}
+function apprAns(id,st){var j=DB.jobs[id];if(!j||!j.appr)return;var hi=LANG==='hi',a=+gv('apA')||0;j.appr.st=st;j.appr.at=now();j.appr.ans=me().name;if(a)j.appr.amt=a;
+  if(st==='OK'&&a&&!j.billed){j.c.est=a;}
+  logA(j,(st==='OK'?'✅ CUSTOMER SAID YES':'❌ CUSTOMER SAID NO')+(a?' — Rs.'+a:'')+' ('+me().name+')','','');save([id]);
+  try{if(j.tech)msgSend({to:'tech:'+j.tech,kind:'approk',jid:id,text:st==='OK'?(hi?'ग्राहक ने हाँ कहा — काम करें ✅':'Customer said YES — go ahead ✅'):(hi?'ग्राहक ने मना किया — फोन काउंटर पर दें ❌':'Customer said NO — bring the phone to the counter ❌')});}catch(e){}
+  document.getElementById('popArea').innerHTML='';
+  if(st==='NO'){j.rtn=Object.assign({},j.rtn||{},{ask:now(),by:me().name,reason:hi?'ग्राहक ने मंज़ूरी नहीं दी':'Customer did not approve'});save([id]);rtnSheet(id);}else{toast('✅ '+esc(id));render(1);}}
+
+/* ---------- steps + next step know about returns and customer OK ---------- */
+var _jobStepsHtml927=jobStepsHtml;jobStepsHtml=function(j,mode,noNext){var hi=LANG==='hi';
+  if(j.noRep){var r=j.noRep,tech=role()==='tech';
+    if(mode==='mini')return '<div class="jsMini ret"><span class="jsMt">↩ '+(hi?'बिना रिपेयर वापस':'returned — no repair')+' · '+esc(r.reason||'')+'</span></div>';
+    return '<div class="jsFull jsRet"><b>↩ '+(hi?'ग्राहक बिना रिपेयर फोन ले गया':'RETURNED TO THE CUSTOMER WITHOUT REPAIR')+'</b><div>'+esc(r.reason||'')+'</div><small>'+fmtDT(r.ts)+' · '+esc(r.by||'')+(!tech&&r.charge?' · '+(hi?'चार्ज ':'charge ')+money(r.charge):'')+(!tech&&r.refund?' · '+(hi?'वापस ':'refund ')+money(r.refund):'')+'</small></div>';}
+  var h=_jobStepsHtml927(j,mode,noNext),ban='';
+  if(j.rtn&&j.rtn.ask)ban='<div class="jsBan r">↩ '+(j.rtn.back?(hi?'फोन काउंटर पर — ग्राहक को वापस देना है':'phone back at the counter — hand it to the customer'):(hi?'ग्राहक फोन वापस ले रहा — टेक्नीशियन ला रहे':'customer taking it back — technician bringing it'))+(j.rtn.reason?' · '+esc(j.rtn.reason):'')+'</div>';
+  else if(j.appr&&j.appr.st==='ASK')ban='<div class="jsBan a">🙋 '+(hi?'ग्राहक की मंज़ूरी का इंतज़ार':'waiting for the customer\'s OK')+' · '+esc(j.appr.txt||'')+'</div>';
+  else if(j.appr&&j.appr.st==='OK'&&['ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0)ban='<div class="jsBan g">✅ '+(hi?'ग्राहक ने हाँ कहा':'customer said YES')+'</div>';
+  if(mode!=='mini'&&!noNext)ban+=jobToolsHtml(j);
+  return !ban?h:(mode==='mini'?h+ban:h.replace(/<\/div>$/,ban+'</div>'));};
+function jobToolsHtml(j){var hi=LANG==='hi',r=role(),b='',id=j.id,open=['NEW','ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0;
+  if(r==='owner'&&open)b+='<button class="jsT'+(prioOn(j)?' on':'')+'" onclick="event.stopPropagation();prioToggle(\''+id+'\')">⭐ '+(prioOn(j)?(hi?'ज़रूरी हटाएँ':'REMOVE PRIORITY'):(hi?'पहले कराएँ (ज़रूरी)':'MAKE PRIORITY'))+'</button>';
+  if(r!=='tech'&&j.st!=='DELIVERED')b+='<button class="jsT r" onclick="event.stopPropagation();rtnSheet(\''+id+'\')">↩ '+(hi?'ग्राहक वापस ले रहा (बिना रिपेयर)':'CUSTOMER TAKING IT BACK')+'</button>';
+  if(r!=='tech'&&j.appr&&j.appr.st==='ASK')b+='<button class="jsT a" onclick="event.stopPropagation();apprSheet(\''+id+'\')">🙋 '+(hi?'ग्राहक से पूछें':'ASK CUSTOMER')+'</button>';
+  if((r==='tech'&&j.tech===me().id||r==='owner')&&['ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0&&!(j.appr&&j.appr.st==='ASK')&&!(j.rtn&&j.rtn.ask))b+='<button class="jsT a" onclick="event.stopPropagation();apprAsk(\''+id+'\')">🙋 '+(hi?'ग्राहक से पूछना है':'NEED CUSTOMER OK')+'</button>';
+  return b?'<div class="jsTools">'+b+'</div>':'';}
+var _jobNext927=jobNext;jobNext=function(j){var hi=LANG==='hi',tech=role()==='tech';
+  if(j.noRep)return null;
+  if(j.rtn&&j.rtn.ask){var o={k:'rtn',i:-1,ic:'↩',lbl:hi?'फोन ग्राहक को वापस दें':'Give the phone back to the customer',sub:'',a:'',btn:'',wait:'',alt:null};
+    if(tech){if(j.tech===me().id&&!j.rtn.back){o.a='rtnback';o.btn='📤 '+(hi?'काउंटर पर दिया':'GIVEN TO COUNTER');}else o.wait='⏳ '+(hi?'रिसेप्शन देगा':'reception will hand it back');}
+    else{o.a='rtn';o.btn='🤝 '+(hi?'ग्राहक को वापस दें':'HAND BACK TO CUSTOMER');}return o;}
+  if(j.appr&&j.appr.st==='ASK'){var p={k:'appr',i:-1,ic:'🙋',lbl:hi?'ग्राहक की मंज़ूरी':'Customer OK',sub:esc(j.appr.txt||''),a:'',btn:'',wait:'',alt:null};
+    if(tech)p.wait='⏳ '+(hi?'रिसेप्शन ग्राहक से पूछ रहा':'reception is asking the customer');else{p.a='appr';p.btn='🙋 '+(hi?'ग्राहक से पूछें':'ASK CUSTOMER');}return p;}
+  return _jobNext927(j);};
+var _jobGo927=jobGo;jobGo=function(id,a){if(a==='rtn'){rtnSheet(id);return;}if(a==='rtnback'){var bo=document.getElementById('bigOvl');if(bo)bo.remove();rtnBack(id);return;}if(a==='appr'){apprSheet(id);return;}return _jobGo927(id,a);};
+
+/* ---------- reception: requests panel on the phones tab ---------- */
+function rqPanel(){var hi=LANG==='hi',J=jobsArr(),A=J.filter(function(j){return j.appr&&j.appr.st==='ASK'&&!j.noRep&&j.st!=='DELIVERED';}),R=J.filter(function(j){return j.rtn&&j.rtn.ask&&!j.noRep&&j.st!=='DELIVERED';});
+  return '<div class="rqBar"><button class="mmBig" style="background:var(--red);border-color:var(--red);color:#fff" onclick="rtnPick()">↩ '+(hi?'ग्राहक फोन वापस ले रहा (बिना रिपेयर)':'CUSTOMER TAKING A PHONE BACK (NO REPAIR)')+'</button></div>'
+    +(A.length?'<div class="panel rqA"><h2>🙋 '+(hi?'ग्राहक से पूछना है':'ASK THE CUSTOMER')+' ('+A.length+')</h2>'+A.map(function(j){return mmCard(j,'<button class="bigBtn bStart" onclick="apprSheet(\''+j.id+'\')">🙋 '+esc(j.appr.txt||'')+'</button>');}).join('')+'</div>':'')
+    +(R.length?'<div class="panel rqR"><h2>↩ '+(hi?'वापस देने वाले फोन':'PHONES GOING BACK')+' ('+R.length+')</h2>'+R.map(function(j){return mmCard(j,'<button class="bigBtn" style="background:var(--red);border-color:var(--red);color:#fff" onclick="rtnSheet(\''+j.id+'\')">🤝 '+(j.rtn.back?(hi?'काउंटर पर — ग्राहक को दें':'AT COUNTER — HAND BACK'):(hi?'टेक्नीशियन ला रहे — या अभी दें':'technician bringing it — or hand back now'))+'</button>');}).join('')+'</div>':'');}
+var _vMobiles928=vMobiles;vMobiles=function(v){_vMobiles928(v);try{var m=v.querySelector('#mmV');if(m){var a=m.querySelector('.mmActs');if(a)a.insertAdjacentHTML('afterend',rqPanel());else m.insertAdjacentHTML('afterbegin',rqPanel());}}catch(e){}};
+
+/* ---------- admin: what the technicians see first (TEAM tab) ---------- */
+function twAdminPanel(){var hi=LANG==='hi',c=twCfg(),P=prioList(),open=jobsArr().filter(function(j){return ['NEW','ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0&&!prioOn(j)&&!j.noRep;}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0);}),q=(window._twAq||'').trim().toLowerCase();
+  if(q)open=open.filter(function(j){var x=j.c||{};return [j.id,j.billed,x.name,x.brand,x.model,x.prob].join(' ').toLowerCase().indexOf(q)>=0;});
+  var sorts=[['new','🆕',hi?'नया पहले':'Newest first'],['old','⏳',hi?'पुराना पहले':'Oldest first'],['urg','🚨',hi?'सबसे ज़रूरी पहले':'Most urgent first']];
+  return '<details class="panel twAdm"'+(window._twAdmOpen?' open':'')+' ontoggle="window._twAdmOpen=this.open"><summary><h2>🛠 '+(hi?'टेक्नीशियन स्क्रीन — वे सबसे पहले क्या देखें':'TECHNICIAN SCREEN — what they see first')+'</h2></summary>'
+    +'<div class="twAdmS"><b>📌 '+(hi?'संदेश (सबसे ऊपर दिखेगा)':'Notice (shows at the very top)')+'</b><textarea id="twNt" rows="2" placeholder="'+(hi?'जैसे: आज पहले सारे डिस्प्ले वाले काम':'e.g. Today finish all display jobs first')+'">'+esc(c.notice)+'</textarea>'
+      +'<div class="grid2"><button class="bigBtn bAccept" onclick="twNoticeSave()">📌 '+(hi?'लगाएँ':'PIN IT')+'</button><button class="bigBtn bGhost" onclick="twNoticeClear()">✕ '+(hi?'हटाएँ':'REMOVE')+'</button></div></div>'
+    +'<div class="twAdmS"><b>⭐ '+(hi?'ज़रूरी काम — इसी क्रम में सबसे ऊपर':'Priority jobs — on top, in this order')+' ('+P.length+')</b>'
+      +(P.length?P.map(function(j,i){var x=j.c||{};return '<div class="twAdmR"><span class="twAdmN">#'+(i+1)+'</span><span class="twAdmT"><b class="jid">'+esc(j.id)+'</b> '+esc(((x.brand||'')+' '+(x.model||'')).trim())+' · '+esc(x.prob||'')+' <small>'+(j.tech?'🧑‍🔧 '+esc(techName(j.tech)):'✋ '+(hi?'खाली':'free'))+'</small></span><span class="twAdmB"><button onclick="prioMove(\''+j.id+'\',-1)">▲</button><button onclick="prioMove(\''+j.id+'\',1)">▼</button><button onclick="prioToggle(\''+j.id+'\')">✕</button></span></div>';}).join(''):'<div class="anDim">'+(hi?'अभी कोई नहीं':'none yet')+'</div>')
+      +'<input id="twAq" class="tkSearch" autocomplete="off" placeholder="🔎 '+(hi?'काम खोजें और ⭐ दबाएँ':'find a job and tap ⭐')+'" value="'+esc(window._twAq||'')+'" oninput="window._twAq=this.value;clearTimeout(window._twAqT);window._twAqT=setTimeout(function(){render(1)},150)">'
+      +'<div class="twAdmL">'+open.slice(0,12).map(function(j){var x=j.c||{};return '<div class="twAdmR"><span class="twAdmT"><b class="jid">'+esc(j.id)+'</b> '+esc(((x.brand||'')+' '+(x.model||'')).trim())+' · '+esc(x.prob||'')+' <small>'+stName(j.st)+'</small></span><span class="twAdmB"><button class="star" onclick="prioToggle(\''+j.id+'\')">⭐</button></span></div>';}).join('')+'</div></div>'
+    +'<div class="twAdmS"><b>🧱 '+(hi?'ऊपर क्या दिखे और किस क्रम में':'What shows at the top, and in which order')+'</b>'
+      +c.order.map(function(k,i){var d=TW_BLOCKS.filter(function(b){return b[0]===k;})[0],on=!c.off[k]||k==='seg';return '<div class="twAdmR'+(on?'':' off')+'"><label class="twAdmT"><input type="checkbox" '+(on?'checked':'')+(k==='seg'?' disabled':'')+' onchange="twCfgToggle(\''+k+'\')"> '+d[1]+' '+(hi?d[3]:d[2])+'</label><span class="twAdmB"><button onclick="twCfgMove(\''+k+'\',-1)"'+(i?'':' disabled')+'>▲</button><button onclick="twCfgMove(\''+k+'\',1)"'+(i<c.order.length-1?'':' disabled')+'>▼</button></span></div>';}).join('')
+      +'<div class="anDim">↩ '+(hi?'"ग्राहक वापस ले रहा" वाले फोन हमेशा सबसे ऊपर दिखेंगे':'Phones a customer is taking back always show first')+'</div></div>'
+    +'<div class="twAdmS"><b>↕ '+(hi?'काम का क्रम (टेक्नीशियन बदल भी सकते हैं)':'Default order of the work board (technicians can still change it)')+'</b><div class="twOrd">'+sorts.map(function(s){return '<button class="'+(c.sort===s[0]?'on':'')+'" onclick="twCfgSort(\''+s[0]+'\')">'+s[1]+' '+s[2]+'</button>';}).join('')+'</div></div></details>';}
+var _vTeam928=vTeam;vTeam=function(v){_vTeam928(v);try{if(role()==='owner')v.insertAdjacentHTML('afterbegin',twAdminPanel());}catch(e){}};
+
+/* ---------- analytics: returns without repair ---------- */
+var _anCalc928=anCalc;anCalc=function(R){var C=_anCalc928(R),n=0,why={};
+  jobsArr().forEach(function(j){if(j.noRep&&j.tm&&j.tm.delivered>=R[0]&&j.tm.delivered<R[1]){n++;var w=j.noRep.reason||'—';why[w]=(why[w]||0)+1;}});C.T.noRep=n;C.noRepWhy=why;
+  var ap=0,apOk=0;jobsArr().forEach(function(j){if(j.appr&&j.appr.ts>=R[0]&&j.appr.ts<R[1]){ap++;if(j.appr.st==='OK')apOk++;}});C.T.appr=ap;C.T.apprOk=apOk;return C;};
+var _anOver928=anOver;anOver=function(C,Cp,N,R,P){var hi=LANG==='hi',h=_anOver928(C,Cp,N,R,P),T=C.T;
+  var x='<div class="anKs4">'+anK(hi?'बिना रिपेयर वापस':'Returned without repair',T.noRep||0,(T.jin?Math.round((T.noRep||0)*100/T.jin)+'% '+(hi?'आए फोन का':'of phones in'):''),anTr(T.noRep||0,Cp.T.noRep||0,1),(T.noRep?'r':''))
+    +anK(hi?'ग्राहक से पूछा':'Customer OK asked',T.appr||0,(T.appr?T.apprOk+' '+(hi?'ने हाँ कहा':'said yes'):''))+'</div>';
+  var w=Object.keys(C.noRepWhy||{}).map(function(k){return {n:k,v:C.noRepWhy[k]};}).sort(function(a,b){return b.v-a.v;});
+  if(w.length)x+='<div class="panel"><h2>↩ '+(hi?'ग्राहक फोन वापस क्यों ले गए':'Why customers took phones back')+'</h2>'+anHB(w,function(y){return y.v;},function(y){return esc(y.n);},'var(--red)')+'</div>';
+  var i=h.indexOf('<div class="panel anSay">');if(i<0)i=h.indexOf('<div class="panel">');return i<0?h+x:h.slice(0,i)+x+h.slice(i);};
+
+/* ---------- cleaner screen: at most 2 pop-up messages at a time ---------- */
+var _toast928=toast;toast=function(m){try{var b=document.getElementById('toasts');if(b)while(b.children.length>=2)b.removeChild(b.firstChild);}catch(e){}return _toast928(m);};
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>

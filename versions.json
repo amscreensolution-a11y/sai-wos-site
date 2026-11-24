@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.29",
+  "date": "2026-11-24",
+  "notes": "Admin controls the top of the technician screen from the TEAM tab: pinned notice, priority jobs in his order (always first on the board), which blocks show and in what order, default work order. Customer quick return (no repair): reason, check charge, bill cancelled with refund worked out, technician told to bring the phone back. Customer OK: technician asks, reception calls or WhatsApps, YES continues, NO goes to quick return. Analytics shows returns without repair and why. Cleaner screens: max 2 pop-ups, tidier spacing.",
+  "hi": "एडमिन TEAM टैब से टेक्नीशियन स्क्रीन का ऊपर का हिस्सा तय करे: संदेश, ज़रूरी काम उसके क्रम में (बोर्ड पर हमेशा पहले), कौन से ब्लॉक दिखें और किस क्रम में, काम का क्रम। ग्राहक बिना रिपेयर फोन वापस: कारण, जाँच चार्ज, बिल रद्द और वापसी की रकम, टेक्नीशियन को फोन लाने का संदेश। ग्राहक की मंज़ूरी: टेक्नीशियन पूछे, रिसेप्शन कॉल/WhatsApp करे, हाँ तो काम आगे, ना तो वापसी। एनालिटिक्स में बिना रिपेयर वापसी और कारण। साफ़ स्क्रीन।"
+ },
+ {
   "v": "9.28",
   "date": "2026-11-24",
   "notes": "Technician board: time filter (last hour, today, pending 1-2+ days, yesterday, 2-3 days, 3+ days), order (newest / oldest / most urgent), Late filter, Big photos view, photo count + tap to open gallery, ADD PHOTO on phones without one. New ANALYTICS tab for the owner: real numbers day by day with comparison, full day book of every entry, 12 weeks + 12 months, technician scorecard, who made bills, items with profit, models and problems, customers and udhaar by age with WhatsApp reminders, ready phones not collected, cash closing (expected vs counted), daily target, WhatsApp report, CSV.",
