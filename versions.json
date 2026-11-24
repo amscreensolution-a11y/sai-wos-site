@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.27",
+  "date": "2026-11-24",
+  "notes": "Every phone now follows 9 clear steps everywhere: received → taken → repairing → repair done → sent to counter → at counter → kept → customer told → handed over, with one NEXT STEP button. Technician board shows newest on top; finished work moves right, day by day, with search.",
+  "hi": "हर फोन अब 9 साफ़ स्टेप में चलता है: आया → लिया → रिपेयर → पूरा → काउंटर भेजा → काउंटर पर मिला → रखा → ग्राहक को बताया → दिया, एक 'अगला स्टेप' बटन के साथ। टेक्नीशियन बोर्ड में नया ऊपर; पूरा काम दाईं ओर दिन के हिसाब से, खोज के साथ।"
+ },
+ {
   "v": "9.26",
   "date": "2026-11-23",
   "notes": "Every bill is a repair job unless marked Selling bill (Biller, Quick Billing, Quick, Shop); phone model read from the items; missed bills become jobs automatically; Day Book with the day's mobiles, photos, search and date; big-photo search; technician: Today / Pending 1-2+ days, ask part for any phone or bill no, one-tap alerts to reception + admin, admin-only messages, bottom action bar with Next job",
