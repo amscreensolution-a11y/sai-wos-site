@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.32",
+  "date": "2026-11-24",
+  "notes": "Warranty desk: check any customer's warranty by mobile, R-no or IMEI and start a free warranty job that goes as priority to the technician who did the first repair. Technician status (available / break / out) seen by reception and used for assigning; technician end-of-day report to admin. Customer happiness at hand-over: happy customers get the review link, unhappy ones alert the owner, analytics per technician. Udhaar promise dates show on the day. Biller fills the customer name from a known mobile.",
+  "hi": "वारंटी डेस्क: मोबाइल, R-नं या IMEI से वारंटी देखें, फ्री वारंटी काम उसी टेक्नीशियन को ज़रूरी बनाकर। टेक्नीशियन की स्थिति (उपलब्ध / ब्रेक / बाहर) रिसेप्शन को दिखे; दिन ख़त्म की रिपोर्ट एडमिन को। फोन देते समय ग्राहक की ख़ुशी: ख़ुश को रिव्यू लिंक, नाराज़ हो तो मालिक को अलर्ट, टेक्नीशियन वार। उधार देने का वादा उसी दिन दिखे। बिलर में मोबाइल से नाम अपने आप।"
+ },
+ {
   "v": "9.31",
   "date": "2026-11-24",
   "notes": "New RATES tab: rate card with price, cost, margin and time for every model and repair, prices learned from your own bills, quote to the customer on WhatsApp, start a bill in one tap. Best technician for each new phone (similar jobs, speed, comebacks, work in hand) with one-tap assign. Promise time in one tap with WhatsApp to the customer. 'Usually takes' and 'taking longer than usual' for technicians. Warning when the same phone is already open. Google review request after hand-over (TODAY tab).",

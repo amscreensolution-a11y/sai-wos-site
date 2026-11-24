@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.30';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.31';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -828,6 +828,20 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 .btW{margin-top:8px;padding:10px;border-radius:12px;background:rgba(34,211,238,.08);border:1.5px solid var(--cyn)}.btW>b{display:block;color:var(--cyn);margin-bottom:6px;font-size:13px}
 .btR{display:flex;align-items:center;gap:8px;padding:5px 0}.btR span{flex:1;min-width:0}.btR small{display:block;color:var(--dim);font-size:12px}
 .rtWhy button small{font-weight:600;color:var(--dim)}
+
+/* ===== v9.32 ===== */
+.tstBar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 12px;padding:8px 10px;border-radius:12px;background:var(--panel);border:1px solid var(--line2);font-size:13px;font-weight:800}
+.tstBar>span{color:var(--dim)}.tstBar button{border:1.5px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:16px;padding:6px 11px;font-size:13px;font-weight:800;cursor:pointer}
+.tstBar button.on.on{border-color:var(--grn);color:var(--grn);background:rgba(16,185,129,.12)}.tstBar button.on.brk{border-color:var(--amb);color:var(--amb);background:rgba(255,179,0,.12)}.tstBar button.on.out{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.1)}
+.tstBar small{color:var(--dim)}.tstBar .eodB{margin-left:auto;border-color:var(--cyn);color:var(--cyn)}
+.tstChips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.tstChips span{border:1.5px solid var(--grn);border-radius:16px;padding:5px 11px;font-size:13px;color:var(--grn);background:rgba(16,185,129,.08)}
+.tstChips span.brk{border-color:var(--amb);color:var(--amb);background:rgba(255,179,0,.1)}.tstChips span.out{border-color:var(--line2);color:var(--dim);background:var(--panel2)}
+.eodR{padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}.eodR small{color:var(--dim)}
+.fbG{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0}.fbG button{border:2px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:14px;padding:10px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:800}
+.fbG button b{font-size:32px}.fbG button:hover{border-color:var(--cyn)}
+.wR{display:flex;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line)}.wR>div{flex:1;min-width:0}.wS{font-size:13px;font-weight:800;margin-top:3px}
+.wR.ok .wS,.wS:not(.no){color:var(--grn)}.wR.no .wS{color:var(--dim)}
+.rqBar{display:grid;gap:8px}
 </style>
 </head>
 <body>
@@ -835,7 +849,7 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.31</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.32</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -927,7 +941,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.31';
+var APP_VER='9.32';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -10192,6 +10206,128 @@ var _vToday930=vToday;vToday=function(v){_vToday930(v);try{var hi=LANG==='hi',ds
     var w=box.querySelector('#td_watch');if(w)w.insertAdjacentHTML('beforebegin',h);else box.insertAdjacentHTML('beforeend',h);}
   box.querySelectorAll('#td_wait .tdR').forEach(function(row){var m=(row.getAttribute('onclick')||'').match(/openJob\('([^']+)'\)/);if(!m)return;var j=DB.jobs[m[1]],t=j&&bestTechs(j)[0];if(!t)return;
     row.querySelector('.tdB').insertAdjacentHTML('afterbegin','<button class="tkB go" onclick="jobAssign(\''+j.id+'\',\''+t.id+'\')">🧠 '+esc(t.n)+'</button>');});}catch(e){}};
+
+
+/* ======================================================================================
+   v9.32 — 🛡 warranty desk (check any customer's warranty, start a free warranty job for the same technician) ·
+   🟢 technician status (available / break / out) seen by reception, used for assigning · 🏁 technician end-of-day report ·
+   😊 customer happiness at hand-over (happy → review, unhappy → owner alert, analytics per technician) ·
+   📅 udhaar promise dates (shows on the day it is due) · 🧾 biller fills the customer name from the mobile
+   ====================================================================================== */
+MSGK.eod=['🏁','End of day report','दिन की रिपोर्ट'];MSGK.unhappy=['😡','Unhappy customer','नाराज़ ग्राहक'];MSGK.warr=['🛡','Warranty job','वारंटी काम'];
+
+/* ---------- 🟢 technician status ---------- */
+var TST_L={on:['🟢','Available','उपलब्ध'],brk:['☕','On break','ब्रेक पर'],out:['🚪','Out / left','बाहर / गए']};
+function tstOf(id){var S=(DB.settings&&DB.settings.tst)||{};return S[id]||{s:'on',ts:0};}
+function tstSet(s){var id=me().id;DB.settings.tst=Object.assign({},DB.settings.tst||{});DB.settings.tst[id]={s:s,ts:now()};metaSave();
+  DB.audit.push({ts:now(),by:me().name,jid:'—',a:TST_L[s][0]+' '+me().name+' — '+TST_L[s][1],f:'',t:''});persist([]);toast(TST_L[s][0]+' '+(LANG==='hi'?TST_L[s][2]:TST_L[s][1]));render(1);}
+function tstBar(){var hi=LANG==='hi',c=tstOf(me().id);return '<div class="tstBar"><span>'+(hi?'आपकी स्थिति':'Your status')+':</span>'+Object.keys(TST_L).map(function(k){var l=TST_L[k];return '<button class="'+(c.s===k?'on '+k:'')+'" onclick="tstSet(\''+k+'\')">'+l[0]+' '+(hi?l[2]:l[1])+'</button>';}).join('')
+  +(c.s!=='on'&&c.ts?'<small>'+insH(now()-c.ts)+'</small>':'')+'<button class="eodB" onclick="eodSheet()">🏁 '+(hi?'दिन ख़त्म':'END OF DAY')+'</button></div>';}
+function tstChips(){var hi=LANG==='hi',T=(DB.staff||[]).filter(function(s){return s.role==='tech'&&s.active!==false;});if(!T.length)return '';
+  return '<div class="tstChips">'+T.map(function(s){var c=tstOf(s.id),l=TST_L[c.s]||TST_L.on,busy=jobsArr().filter(function(j){return j.tech===s.id&&j.st==='REPAIR'&&j.tm&&j.tm.run;})[0];
+    return '<span class="'+c.s+'">'+l[0]+' <b>'+esc(s.name)+'</b>'+(c.s!=='on'&&c.ts?' · '+insH(now()-c.ts):(busy?' · 🔧 '+esc(busy.id):''))+'</span>';}).join('')+'</div>';}
+var _twTopArrange931=twTopArrange;twTopArrange=function(B,cur){return tstBar()+_twTopArrange931(B,cur);};
+var _bestTechs931=bestTechs;bestTechs=function(j){var L=_bestTechs931(j);L.forEach(function(t){t.st=tstOf(t.id).s;if(t.st!=='on')t.score-=1000;});return L.sort(function(a,b){return b.score-a.score;});};
+var _bestHtml931=bestHtml;bestHtml=function(j){var h=_bestHtml931(j),hi=LANG==='hi';bestTechs(j).forEach(function(t){if(t.st!=='on')h=h.replace('<b>'+esc(t.n)+'</b><small>','<b>'+esc(t.n)+'</b> '+TST_L[t.st][0]+'<small>'+(hi?TST_L[t.st][2]:TST_L[t.st][1])+' · ');});return h;};
+var _jobAssign931=jobAssign;jobAssign=function(id,tid){var s=tstOf(tid).s;_jobAssign931(id,tid);if(s!=='on')toast(TST_L[s][0]+' '+esc(techName(tid))+' — '+(LANG==='hi'?TST_L[s][2]:TST_L[s][1]));};
+
+/* ---------- 🏁 technician end-of-day ---------- */
+function eodData(){var id=me().id,ds=dayStart(),J=jobsArr();return {done:J.filter(function(j){return j.tech===id&&(j.tm||{}).finished>=ds&&['DONE','READY','DELIVERED'].indexOf(j.st)>=0;}),
+  open:J.filter(function(j){return j.tech===id&&['ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0&&!j.noRep;})};}
+function eodSheet(){var hi=LANG==='hi',D=eodData(),o=document.getElementById('popArea');if(!o)return;var tot=D.done.reduce(function(a,j){return a+((j.tm||{}).work||0);},0);
+  var li=function(j){var c=j.c||{};return '<div class="eodR"><b class="jid">'+esc(j.id)+'</b> '+esc(((c.brand||'')+' '+(c.model||'')).trim())+' · '+esc(c.prob||'')+' <small>'+stName(j.st)+'</small></div>';};
+  o.innerHTML='<div class="popCard" style="border-color:var(--cyn);max-height:90vh;overflow:auto"><h3 style="color:var(--cyn)">🏁 '+(hi?'आज की रिपोर्ट':'MY DAY')+' — '+esc(me().name)+'</h3>'
+    +'<div class="chK"><div><b>'+D.done.length+'</b><span>'+(hi?'पूरे':'done')+'</span></div><div><b>'+D.open.length+'</b><span>'+(hi?'बाकी':'left')+'</span></div><div><b>'+insH(tot)+'</b><span>'+(hi?'काम का समय':'work time')+'</span></div><div><b>'+insH(D.done.length?tot/D.done.length:0)+'</b><span>'+(hi?'औसत':'avg')+'</span></div></div>'
+    +'<h4>✔ '+(hi?'आज पूरे':'Done today')+'</h4>'+(D.done.length?D.done.map(li).join(''):'<div class="anDim">—</div>')
+    +'<h4>⏳ '+(hi?'मेरे पास बाकी':'Still with me')+'</h4>'+(D.open.length?D.open.map(li).join(''):'<div class="anDim">—</div>')
+    +'<div class="field"><label>📝 '+(hi?'कल के लिए नोट / ज़रूरी बात':'Note for tomorrow / anything important')+'</label><textarea id="eodN" rows="2"></textarea></div>'
+    +'<label class="accF"><input type="checkbox" id="eodOut" checked> 🚪 '+(hi?'मुझे "बाहर" कर दें':'Mark me as out')+'</label>'
+    +'<button class="bigBtn bAccept" onclick="eodSend()">📤 '+(hi?'एडमिन को भेजें':'SEND TO ADMIN')+'</button><button class="bigBtn bGhost" style="opacity:.6" onclick="document.getElementById(\'popArea\').innerHTML=\'\'">✕</button></div>';}
+function eodSend(){var D=eodData(),n=(gv('eodN')||'').trim(),out=document.getElementById('eodOut')&&document.getElementById('eodOut').checked;
+  var t='🏁 '+me().name+' — '+fmtD(now())+'\n✔ Done '+D.done.length+': '+D.done.map(function(j){return j.id;}).join(', ')+'\n⏳ Left '+D.open.length+': '+D.open.map(function(j){return j.id+' ('+stName(j.st)+')';}).join(', ')+(n?'\n📝 '+n:'');
+  try{msgSend({to:'owner',kind:'eod',jid:'',text:t});}catch(e){}document.getElementById('popArea').innerHTML='';if(out)tstSet('out');else render(1);toast('🏁 ✔');}
+
+/* ---------- 😊 customer happiness at hand-over ---------- */
+var FB_L=[['😡','Angry','नाराज़'],['😕','Not happy','ख़ुश नहीं'],['😐','OK','ठीक'],['🙂','Happy','ख़ुश'],['😍','Very happy','बहुत ख़ुश']];
+var _deliverJob931=deliverJob;deliverJob=function(id){var j0=DB.jobs[id],was=j0&&j0.st;var r=_deliverJob931(id);var j=DB.jobs[id];
+  if(j&&was!=='DELIVERED'&&j.st==='DELIVERED'&&!j.noRep&&!(DB.settings&&DB.settings.fbOff))setTimeout(function(){try{fbPop(id);}catch(e){}},80);return r;};
+function fbPop(id){var j=DB.jobs[id];if(!j||j.fb)return;var hi=LANG==='hi',c=j.c||{};
+  jsPop('<h3>😊 '+(hi?'ग्राहक कितना ख़ुश है?':'HOW HAPPY IS THE CUSTOMER?')+'</h3><div class="pdim">'+esc(j.id)+' · '+esc((c.name||'').split(' ')[0])+' · '+esc(((c.brand||'')+' '+(c.model||'')).trim())+'</div>'
+    +'<div class="fbG">'+FB_L.map(function(f,i){return '<button onclick="fbSet(\''+id+'\','+(i+1)+')"><b>'+f[0]+'</b><span>'+(hi?f[2]:f[1])+'</span></button>';}).join('')+'</div>'
+    +'<button class="bigBtn bGhost" onclick="jsPopClose()">'+(hi?'छोड़ें':'SKIP')+'</button>','var(--cyn)');}
+function fbSet(id,r){var j=DB.jobs[id];if(!j)return;var hi=LANG==='hi';j.fb={r:r,ts:now(),by:me().name};logA(j,'😊 CUSTOMER FEEDBACK '+r+'/5 '+FB_L[r-1][0],'','');save([id]);jsPopClose();
+  if(r<=2){try{msgSend({to:'owner',kind:'unhappy',jid:id,text:FB_L[r-1][0]+' '+((j.c||{}).name||'')+' — '+((j.c||{}).prob||'')+(j.tech?' · '+techName(j.tech):'')});}catch(e){}toast('😡 '+(hi?'मालिक को बताया':'owner informed'));}
+  else if(r>=4&&tdMob((j.c||{}).mob).length===10&&!j.rev){jsPop('<h3>⭐ '+(hi?'ख़ुश ग्राहक — रिव्यू माँगें?':'HAPPY CUSTOMER — ASK FOR A REVIEW?')+'</h3><button class="bigBtn bAccept" onclick="jsPopClose();revAsk(\''+id+'\')">⭐ '+(hi?'WhatsApp पर रिव्यू लिंक भेजें':'SEND REVIEW LINK ON WHATSAPP')+'</button><button class="bigBtn bGhost" onclick="jsPopClose()">'+(hi?'अभी नहीं':'NOT NOW')+'</button>','#eab308');}
+  render(1);}
+
+/* ---------- 🛡 warranty desk ---------- */
+function warrDef(){return +((DB.settings||{}).warrDef)||0;}
+function warrInfo(j){var hi=LANG==='hi',t=now(),dl=(j.tm||{}).delivered||0;if(j.warr&&j.warr.till)return j.warr.till>t?{ok:1,till:j.warr.till,txt:'🛡 '+(hi?'वारंटी ':'Warranty till ')+fmtD(j.warr.till)}:{ok:0,till:j.warr.till,txt:'⛔ '+(hi?'वारंटी ख़त्म ':'Warranty ended ')+fmtD(j.warr.till)};
+  var d=warrDef();if(d&&dl&&dl+d*864e5>t)return {ok:1,till:dl+d*864e5,txt:'🛡 '+(hi?'दुकान वारंटी ':'Shop warranty ')+d+(hi?' दिन — ':' days — till ')+fmtD(dl+d*864e5)};
+  return {ok:0,till:0,txt:'— '+(hi?'वारंटी नहीं लिखी':'no warranty recorded')};}
+function warrPick(){var hi=LANG==='hi',o=document.getElementById('popArea');if(!o)return;
+  o.innerHTML='<div class="popCard" style="border-color:var(--cyn);max-height:90vh;overflow:auto"><h3 style="color:var(--cyn)">🛡 '+(hi?'वारंटी जाँच':'WARRANTY CHECK')+'</h3>'
+    +'<div class="mmSrch"><input id="wq" autocomplete="off" placeholder="'+(hi?'मोबाइल, R-नं, नाम, IMEI…':'Mobile, R-no, name, IMEI…')+'" oninput="warrList(this.value)" style="font-size:17px"></div><div id="wList"></div>'
+    +(role()==='owner'?'<div class="mmSrch" style="margin-top:10px"><input id="wDef" inputmode="numeric" placeholder="'+(hi?'जब वारंटी न लिखी हो तो दुकान की वारंटी (दिन)':'Shop warranty when none recorded (days)')+'" value="'+(warrDef()||'')+'"><button class="mmScanB" onclick="DB.settings.warrDef=+gv(\'wDef\')||0;metaSave();toast(\'🛡 ✔\');warrList(gv(\'wq\'))">✔</button></div>':'')
+    +'<button class="bigBtn bGhost" style="opacity:.6" onclick="document.getElementById(\'popArea\').innerHTML=\'\'">✕</button></div>';warrList('');}
+function warrList(q){var e=document.getElementById('wList');if(!e)return;var ql=(''+(q||'')).trim().toLowerCase(),hi=LANG==='hi';
+  var L=jobsArr().filter(function(j){return j.st==='DELIVERED'&&!j.noRep;}).filter(function(j){if(!ql)return (j.tm.delivered||0)>now()-30*864e5;var c=j.c||{};return [j.id,j.billed,c.name,c.mob,c.imei,c.brand,c.model].join(' ').toLowerCase().indexOf(ql)>=0;})
+    .sort(function(a,b){return (b.tm.delivered||0)-(a.tm.delivered||0);}).slice(0,15);
+  e.innerHTML=L.length?L.map(function(j){var w=warrInfo(j),c=j.c||{};return '<div class="wR '+(w.ok?'ok':'no')+'"><div><b class="jid">'+esc(j.id)+'</b> '+esc(((c.brand||'')+' '+(c.model||'')).trim())+' · '+esc(c.prob||'')+'<div class="tdS">👤 '+esc(c.name||'')+' · 🤝 '+fmtD(j.tm.delivered)+(j.tech?' · 🧑‍🔧 '+esc(techName(j.tech)):'')+'</div><div class="wS">'+w.txt+'</div></div>'
+    +'<button class="tkB'+(w.ok?' go':'')+'" onclick="warrStart(\''+j.id+'\')">🛡 '+(w.ok?(hi?'वारंटी काम':'WARRANTY JOB'):(hi?'फिर भी जाँचें':'RE-CHECK ANYWAY'))+'</button></div>';}).join(''):'<div class="twEmpty">—</div>';}
+function warrStart(oid){var o=DB.jobs[oid];if(!o)return;var hi=LANG==='hi',p=document.getElementById('popArea');if(!p)return;var w=warrInfo(o);
+  p.innerHTML='<div class="popCard" style="border-color:var(--cyn)"><h3 style="color:var(--cyn)">🛡 '+(hi?'वारंटी काम शुरू करें':'START WARRANTY JOB')+'</h3>'+mmCard(o,'')+'<div class="wS">'+w.txt+'</div>'
+    +'<div class="field"><label>🔧 '+(hi?'अब क्या दिक्कत है?':'What is the problem now?')+'</label><input id="wP" value="'+esc((hi?'वही दिक्कत फिर: ':'Same problem again: ')+((o.c||{}).prob||''))+'"></div>'
+    +'<label class="accF"><input type="checkbox" id="wFree" '+(w.ok?'checked':'')+'> 🆓 '+(hi?'फ्री (वारंटी में)':'Free (under warranty)')+'</label>'
+    +'<button class="bigBtn bAccept" onclick="warrGo(\''+oid+'\')">🛡 '+(hi?'काम बनाएँ':'CREATE JOB')+(o.tech?' → '+esc(techName(o.tech)):'')+'</button><button class="bigBtn bGhost" style="opacity:.6" onclick="document.getElementById(\'popArea\').innerHTML=\'\'">✕</button></div>';}
+function warrGo(oid){var o=DB.jobs[oid];if(!o)return;var hi=LANG==='hi',txt=(gv('wP')||'').trim()||((o.c||{}).prob||''),free=document.getElementById('wFree')&&document.getElementById('wFree').checked,n=nextN(),t=now();
+  var j=JSON.parse(JSON.stringify(o));['billed','vyapar','warr','qc','fb','rev','noRep','rtn','appr','prio','chk','urg','wOf','tray'].forEach(function(k){delete j[k];});
+  j.id='R-'+pad(n,4);j.n=n;j.st='NEW';j.tech='';j.createdAt=t;j.tm={created:t};j.log=[];j.parts=[];j.notes=[];j.mm={};j.pay={amt:0,paid:0,due:0};j.c.est=0;j.c.adv=0;j.c.expTs=0;j.c.prob='🛡 '+(free?'WARRANTY':'RE-CHECK')+': '+txt;j.wOf=o.id;j.wFree=free?1:0;j.by=me().name;j.up=t;
+  DB.jobs[j.id]=j;logA(j,'🛡 '+(free?'WARRANTY JOB':'RE-CHECK')+' for '+o.id+' — '+txt+' ('+me().name+')','','NEW');logA(o,'🛡 CAME BACK → '+j.id+' — '+txt,'','');
+  var tg=o.tech&&(DB.staff||[]).filter(function(s){return s.id===o.tech&&s.active!==false;})[0];
+  if(tg){j.tech=o.tech;j.st='ASSIGNED';j.tm.accepted=t;logA(j,'🧑‍🔧 GIVEN TO '+techName(o.tech)+' (did the first repair)','NEW','ASSIGNED');}
+  var mn=0;prioList().forEach(function(x){if((x.prio.rank||0)<mn)mn=x.prio.rank;});j.prio={on:1,ts:t,by:me().name,rank:mn-1};
+  save([j.id,o.id]);try{msgSend({to:tg?'tech:'+o.tech:'tech:*',kind:'warr',jid:j.id,text:(hi?'वारंटी: ':'Warranty: ')+o.id+' '+(hi?'वापस आया — ':'came back — ')+txt});}catch(e){}
+  document.getElementById('popArea').innerHTML='';toast('🛡 '+esc(j.id));render(1);openJob(j.id);}
+var _rqPanel931=rqPanel;rqPanel=function(){return _rqPanel931().replace('</button></div>','</button><button class="mmBig" onclick="warrPick()">🛡 '+(LANG==='hi'?'वारंटी जाँच':'WARRANTY CHECK')+'</button></div>');};
+var _jobToolsHtml931=jobToolsHtml;jobToolsHtml=function(j){var hi=LANG==='hi',h=_jobToolsHtml931(j);
+  if(role()!=='tech'&&j.st==='DELIVERED'&&!j.noRep){var w=warrInfo(j);h+='<div class="jsTools"><span class="wS">'+w.txt+'</span><button class="jsT" onclick="event.stopPropagation();warrStart(\''+j.id+'\')">🛡 '+(hi?'वारंटी / दोबारा जाँच':'WARRANTY / RE-CHECK')+'</button></div>';}
+  if(j.wOf)h+='<div class="jsBan a">🛡 '+(j.wFree?(hi?'वारंटी काम (फ्री)':'Warranty job (free)'):(hi?'दोबारा जाँच':'Re-check'))+' — '+(hi?'पहला काम ':'first job ')+'<a onclick="event.stopPropagation();openJob(\''+j.wOf+'\')">'+esc(j.wOf)+'</a></div>';
+  if(j.fb)h+='<div class="jsQc'+(j.fb.r<=2?' bad':'')+'">'+FB_L[j.fb.r-1][0]+' '+(hi?'ग्राहक: ':'Customer: ')+(hi?FB_L[j.fb.r-1][2]:FB_L[j.fb.r-1][1])+'</div>';
+  return h;};
+
+/* ---------- 📅 udhaar promise dates ---------- */
+function dueKey(x){return tdMob(x.mob)||anNm(x.n);}
+function duePr(k){var D=(DB.settings&&DB.settings.duePr)||{};return D[k]||null;}
+function duePrSheet(k,nm){var hi=LANG==='hi',o=document.getElementById('popArea');if(!o)return;var d=new Date(),day=function(n){return new Date(d.getFullYear(),d.getMonth(),d.getDate()+n,12).getTime();},cur=duePr(k);
+  var C=[[day(1),hi?'कल':'Tomorrow'],[day(3),hi?'3 दिन':'3 days'],[day(7),hi?'1 हफ़्ता':'1 week'],[day(15),hi?'15 दिन':'15 days'],[day(30),hi?'1 महीना':'1 month']];
+  o.innerHTML='<div class="popCard" style="border-color:var(--amb)"><h3 style="color:var(--amb)">📅 '+(hi?'उधार कब देंगे?':'WHEN WILL THEY PAY?')+'</h3><div class="pdim">👤 '+esc(nm||k)+(cur?' · '+(hi?'अभी: ':'now: ')+fmtD(cur.ts):'')+'</div>'
+    +'<div class="rtWhy">'+C.map(function(c){return '<button onclick="duePrSet(\''+k+'\','+c[0]+')">'+c[1]+'<br><small>'+fmtD(c[0])+'</small></button>';}).join('')+'</div>'
+    +(cur?'<button class="bigBtn bGhost" onclick="duePrSet(\''+k+'\',0)">✕ '+(hi?'हटाएँ':'CLEAR')+'</button>':'')+'<button class="bigBtn bGhost" style="opacity:.6" onclick="document.getElementById(\'popArea\').innerHTML=\'\'">✕</button></div>';}
+function duePrSet(k,ts){DB.settings.duePr=Object.assign({},DB.settings.duePr||{});if(ts)DB.settings.duePr[k]={ts:ts,by:me().name,at:now()};else delete DB.settings.duePr[k];metaSave();
+  DB.audit.push({ts:now(),by:me().name,jid:'—',a:'📅 UDHAAR PROMISE '+k+(ts?' → '+fmtD(ts):' cleared'),f:'',t:''});persist([]);document.getElementById('popArea').innerHTML='';toast('📅 '+(ts?fmtD(ts):'✕'));render(1);}
+var _vToday931=vToday;vToday=function(v){_vToday931(v);try{var hi=LANG==='hi',box=v.querySelector('#tdV');if(!box)return;var N=anNow(),end=anNext(dayStart()),t=now();
+  box.querySelector('.tdTop').insertAdjacentHTML('afterend',tstChips());
+  var P=N.dues.filter(function(x){var p=duePr(dueKey(x));return p&&p.ts<end;});
+  if(P.length){var h=tdSec('duep','📅',hi?'आज उधार देने का वादा (या वादा टूटा)':'Udhaar promised for today (or overdue)',P.length,P.map(function(x){var p=duePr(dueKey(x)),late=p.ts<dayStart();
+      return '<div class="tdR"><span class="twNoP">'+(late?'⚠':'📅')+'</span><div class="tdT"><div><b>'+esc(x.n||'—')+'</b> · <b class="r">'+money(Math.round(x.due))+'</b></div><div class="tdS">'+(late?(hi?'वादा था ':'promised ')+fmtD(p.ts)+' — '+(hi?'नहीं आया':'not paid'):(hi?'आज देने का वादा':'promised today'))+' · 📞 '+esc(x.mob||'')+'</div></div><div class="tdB">'
+      +'<button class="tkB" onclick="anRemindDue('+N.dues.indexOf(x)+')">💬</button><button class="tkB" onclick="duePrSheet(\''+dueKey(x)+'\',\''+esc(x.n||'').replace(/\x27/g,'')+'\')">📅</button></div></div>';}).join(''),'var(--red)');
+    var ch=box.querySelector('.tdChips');(ch||box.querySelector('.tstChips')||box.querySelector('.tdTop')).insertAdjacentHTML('afterend',h);}
+  box.querySelectorAll('#td_due .tdR').forEach(function(row,i){var x=N.dues.filter(function(d){return d.old<t-7*864e5;})[i];if(!x)return;var p=duePr(dueKey(x));
+    row.querySelector('.tdS').insertAdjacentHTML('beforeend',p?' · 📅 '+fmtD(p.ts):'');row.querySelector('.tdB').insertAdjacentHTML('beforeend','<button class="tkB" onclick="duePrSheet(\''+dueKey(x)+'\',\''+esc(x.n||'').replace(/\x27/g,'')+'\')">📅</button>');});}catch(e){}};
+
+/* ---------- 🧾 biller: fill the name from a known mobile ---------- */
+var _bilCustHint931=bilCustHint;bilCustHint=function(){_bilCustHint931();try{var m=tdMob(BIL.f&&BIL.f.mob);if(m.length!==10||(''+(BIL.f.cust||'')).trim())return;var D=custData(m);if(!D.name)return;BIL.f.cust=D.name;var e=document.getElementById('bCust');if(e)e.value=D.name;
+  var h=document.getElementById('bCHint');if(h)h.insertAdjacentHTML('beforeend','<div class="bCH new">✔ '+(LANG==='hi'?'नाम भर दिया':'name filled')+': '+esc(D.name)+'</div>');}catch(e){}};
+
+/* ---------- analytics: happiness ---------- */
+var _anCalc931=anCalc;anCalc=function(R){var C=_anCalc931(R),n=0,s=0,bad=0,per={};jobsArr().forEach(function(j){if(j.fb&&j.fb.ts>=R[0]&&j.fb.ts<R[1]){n++;s+=j.fb.r;if(j.fb.r<=2)bad++;if(j.tech){var p=per[j.tech]||(per[j.tech]={n:0,s:0});p.n++;p.s+=j.fb.r;}}});
+  C.T.fbN=n;C.T.fbAvg=n?s/n:0;C.T.fbBad=bad;C.fbPer=per;return C;};
+var _anOver931=anOver;anOver=function(C,Cp,N,R,P){var hi=LANG==='hi',h=_anOver931(C,Cp,N,R,P),T=C.T;if(!T.fbN)return h;
+  var x='<div class="anKs4">'+anK(hi?'ग्राहक ख़ुशी':'Customer happiness',(Math.round(T.fbAvg*10)/10)+' / 5',T.fbN+' '+(hi?'राय':'ratings')+(T.fbBad?' · 😡 '+T.fbBad:''),anTr(T.fbAvg,Cp.T.fbAvg||0),T.fbAvg>=4?'g':T.fbAvg<3?'r':'')+'</div>';
+  var i=h.indexOf('<div class="panel anSay">');return i<0?h+x:h.slice(0,i)+x+h.slice(i);};
+var _anTeam931=anTeam;anTeam=function(C,Cp,N,R){var hi=LANG==='hi',h=_anTeam931(C,Cp,N,R),P=C.fbPer||{},ks=Object.keys(P);if(!ks.length)return h;
+  return h+'<div class="panel"><h2>😊 '+(hi?'ग्राहक ख़ुशी — टेक्नीशियन वार':'Customer happiness by technician')+'</h2>'+anHB(ks.map(function(k){return {n:techName(k),v:Math.round(P[k].s/P[k].n*10)/10,c:P[k].n};}).sort(function(a,b){return b.v-a.v;}),function(x){return x.v;},function(x){return esc(x.n)+' ('+x.c+')';},'var(--grn)',function(v){return v+' / 5';})+'</div>';};
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>
