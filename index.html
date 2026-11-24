@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.26';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.27';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -691,6 +691,65 @@ body.kbOpen .twDock{display:none}@media print{.twDock{display:none!important}}
 .twDqW{display:flex;gap:6px;margin:6px 0}.twDqW input{flex:1;min-width:0}
 .twDay{margin-top:8px}.twDayH{position:sticky;top:0;z-index:1;background:var(--panel);padding:6px 2px;font-weight:900;color:var(--grn);border-bottom:1px solid var(--line2);display:flex;justify-content:space-between}
 .twSort{font-size:12px;color:var(--dim);font-weight:700}
+
+/* ===== v9.28 ===== */
+.twOrd{display:flex;gap:6px;align-items:center;overflow-x:auto;margin:10px 0 4px;padding-bottom:2px}
+.twOrd span,.twFlL{white-space:nowrap;font-size:12px;font-weight:900;color:var(--dim);align-self:center;margin-right:2px}
+.twOrd button{white-space:nowrap;border:1.5px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:10px;padding:7px 11px;font-size:13px;font-weight:800;cursor:pointer}
+.twOrd button.on{border-color:var(--grn);color:var(--grn);background:rgba(16,185,129,.12)}
+.twTf button.on{border-color:var(--cyn);color:var(--cyn);background:rgba(34,211,238,.12)}
+.twFiltOn{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--amb);margin:0 0 8px}
+.twTph img{cursor:zoom-in}.twPc{position:absolute;right:6px;bottom:6px;font-style:normal;background:rgba(0,0,0,.72);color:#fff;border-radius:8px;padding:2px 7px;font-size:12px;font-weight:800}
+.twAddPh{width:100%;height:100%;border:2px dashed var(--line2);background:var(--panel);color:var(--cyn);font-size:30px;font-weight:900;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.twAddPh span{font-size:13px}
+.twR img,.twR .twNoP{width:76px;height:76px}
+.twPhG{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.twPT{border:2px solid var(--line2);border-radius:16px;overflow:hidden;background:var(--panel2);cursor:pointer;display:flex;flex-direction:column}
+.twPT.stNEW{border-color:var(--amb)}.twPT.mine{border-color:var(--grn);box-shadow:0 0 0 3px rgba(16,185,129,.15)}.twPT.stPARTS{border-color:var(--red)}
+.twPTi{position:relative;aspect-ratio:3/4;background:#000;display:flex;align-items:center;justify-content:center}
+.twPTi>img{width:100%;height:100%;object-fit:cover}.twPTi .twAge{position:absolute;right:6px;top:6px}
+.twPTo{position:absolute;left:0;right:0;bottom:0;padding:26px 10px 8px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff}
+.twPTm{font-size:20px;font-weight:900;line-height:1.1}.twPTp{font-size:14px;font-weight:700;color:#fbbf24;margin-top:2px}
+.twPTi .twPc{bottom:auto;top:34px}
+/* analytics */
+#anV .anTop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}#anV .anTop h2{margin:0}
+.anAct{display:flex;gap:6px;flex-wrap:wrap}
+.anPer,.anSec{display:flex;gap:6px;overflow-x:auto;margin:10px 0;padding-bottom:2px}
+.anPer button,.anSec button{white-space:nowrap;border:1.5px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:18px;padding:8px 13px;font-size:14px;font-weight:800;cursor:pointer}
+.anPer button.on{border-color:var(--amb);color:var(--amb);background:rgba(255,179,0,.12)}
+.anSec{border-top:1px solid var(--line);padding-top:10px}.anSec button{border-radius:10px}.anSec button.on{border-color:var(--cyn);color:var(--cyn);background:rgba(34,211,238,.12)}
+.anCus{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}.anCus input{font-size:16px;padding:8px}
+.anRng{font-size:13px;color:var(--dim);margin-bottom:4px}
+.anKs4{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px;margin:10px 0 14px}
+.anK{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px}
+.anK.big{border-color:var(--amb)}.anK.g .anKv{color:var(--grn)}.anK.r .anKv{color:var(--red)}
+.anKl{font-size:11px;letter-spacing:.06em;color:var(--dim);text-transform:uppercase;font-weight:800}.anKv{font-size:24px;font-weight:900;margin:4px 0;font-family:var(--mono,monospace)}
+.anKs{font-size:12px;color:var(--dim)}.anKs span{color:var(--dim)}
+.anSvg{width:100%;height:auto;display:block}
+.anLeg{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--dim);margin:-4px 0 6px}.anLeg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-left:8px}
+.anG2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.anHB{display:flex;flex-direction:column;gap:6px}.anHBr{display:grid;grid-template-columns:minmax(80px,38%) 1fr auto;gap:8px;align-items:center;font-size:13px}
+.anHBl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}.anHBb{background:var(--panel2);border-radius:6px;height:14px;overflow:hidden}.anHBb i{display:block;height:100%;border-radius:6px}
+.anHBr b{font-family:var(--mono,monospace);font-size:13px}
+.anNow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.anNow div{background:var(--panel2);border-radius:10px;padding:8px;text-align:center}.anNow b{display:block;font-size:24px}.anNow span{font-size:12px;color:var(--dim)}
+.anWarn{margin-top:10px;padding:8px 10px;border-radius:10px;background:rgba(239,68,68,.1);border-left:4px solid var(--red);font-size:13px;font-weight:700}
+.anWarn.g{background:rgba(16,185,129,.1);border-left-color:var(--grn)}.anWarn a{color:var(--cyn);cursor:pointer;text-decoration:underline}
+.anSay div{padding:5px 0;border-bottom:1px dashed var(--line);font-size:14px;font-weight:700}.anSay div:last-child{border:0}
+.anTblW{overflow-x:auto;margin-top:8px}
+.anTbl{border-collapse:collapse;width:100%;min-width:640px;font-size:13px}
+.anTbl th{position:sticky;top:0;background:var(--panel);color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.04em;text-align:right;padding:6px;border-bottom:2px solid var(--line2);white-space:nowrap}
+.anTbl td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.anTbl th:first-child,.anTbl td:first-child{text-align:left}.anBook td:nth-child(2),.anBook td:nth-child(4),.anBook td:nth-child(5){text-align:left}
+.anTbl tr[onclick]{cursor:pointer}.anTbl tr[onclick]:hover td{background:rgba(255,255,255,.04)}
+.anTbl tr.tot td{font-weight:900;border-top:2px solid var(--line2);background:var(--panel2)}
+.anTbl .r,.anTbl b.r,.anCl b.r{color:var(--red)}.anTbl .g,.anCl b.g{color:var(--grn)}
+.anD{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.anDim{color:var(--dim);font-size:12px}
+.anBook tr.kin td:nth-child(2),.anBook tr.kout td:nth-child(2),.anBook tr.kfix td:nth-child(2){color:var(--cyn)}
+.anTg .anTgH{display:flex;gap:8px;align-items:baseline;font-weight:900}.anTgH span{color:var(--dim);font-size:12px;font-weight:700}.anTgH b{margin-left:auto;font-size:20px}
+.anTgB{height:14px;background:var(--panel2);border-radius:8px;overflow:hidden;margin:8px 0 4px}.anTgB i{display:block;height:100%}
+.anCl{display:flex;flex-direction:column;gap:6px;margin:10px 0}.anCl>div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;background:var(--panel2);border-radius:10px;font-size:14px}
+.anCl>div.tot{border:2px solid var(--amb);font-weight:900;font-size:16px}.anCl input{width:140px;font-size:17px;text-align:right}
+@media print{.anPer,.anSec,.anAct,.anCus{display:none!important}}
 </style>
 </head>
 <body>
@@ -698,7 +757,7 @@ body.kbOpen .twDock{display:none}@media print{.twDock{display:none!important}}
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.27</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.28</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -790,7 +849,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.27';
+var APP_VER='9.28';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -1405,7 +1464,7 @@ function tabListDef(r){r=r||role();
   if(r==='stockman')return ['SHOP','LIVE','SEARCH'];
   if(r==='billing')return ['BILLER'];   /* Quick Billing login: the Biller only */
   if(r==='manager')return ['MOBILES','EXPRESS','BILLER'];   /* Mobile Manager: phones in / rack / handover */
-  return ['DASH','INSIGHTS','LIVE','EXPRESS','QUICK','BILLER','MOBILES','TEAM','TRACK','FASTBILL','DAYBOOK','SHOP','SCAN','BOARD','NEWJOB','REGISTER','ITEMS','STOCK','PHOTOS','SEARCH','PRINTS','STAFF','REPORTS','AUDIT','SETTINGS'];}
+  return ['DASH','ANALYTICS','INSIGHTS','LIVE','EXPRESS','QUICK','BILLER','MOBILES','TEAM','TRACK','FASTBILL','DAYBOOK','SHOP','SCAN','BOARD','NEWJOB','REGISTER','ITEMS','STOCK','PHOTOS','SEARCH','PRINTS','STAFF','REPORTS','AUDIT','SETTINGS'];}
 var tabLbl={MOBILES:'📱 MOBILE MANAGER',TEAM:'💬 TEAM',QBILL:'🧾 QUICK BILLING',BILLER:'🧾 BILLER',INSIGHTS:'🧠 INSIGHTS',EXPRESS:'⚡ EXPRESS',LIVE:'📺 LIVE',NEWJOB:'＋ NEW JOB',BOARD:'BOARD',JOBS:'🛠 WORK',SEARCH:'SEARCH',DASH:'DASHBOARD',QUICK:'⚡ QUICK',TRACK:'🔎 TRACK',FASTBILL:'⚡ FAST BILL',DAYBOOK:'📅 DAY BOOK',SHOP:'🛒 SHOP',SCAN:'📷 SCAN',REGISTER:'📒 REGISTER',ITEMS:'ITEMS',STOCK:'STOCK',PHOTOS:'PHOTOS',PRINTS:'PRINTS',STAFF:'STAFF',REPORTS:'REPORTS',AUDIT:'AUDIT',SETTINGS:'SETTINGS'};
 var _renderedTab='';
 function buildVip(){var m={};jobsArr().forEach(function(j){m[j.c.mob]=(m[j.c.mob]||0)+1;});window._vipMap=m;}
@@ -8366,7 +8425,7 @@ function render(force){if(!USER)return;var _TL=tabList();if(_TL.indexOf(curTab)<
     if(curTab==='NEWJOB'||curTab==='SETTINGS'){
       if(curTab==='NEWJOB'){var sw=document.getElementById('sbWrap');if(sw)sw.innerHTML=subsBanner();}
       if(ovlJob)openJob(ovlJob,true);return;}}
-  var f={MOBILES:vMobiles,TEAM:vTeam,QBILL:vQuickBill,EXPRESS:vExpress,LIVE:vLive,NEWJOB:vNewJob,BOARD:vBoard,JOBS:vTech,SEARCH:vSearch,SCAN:vScan,SHOP:vShop,QUICK:vQuick,TRACK:vTrack,FASTBILL:vFastBill,DAYBOOK:vDayBook2,REGISTER:vRegister,ITEMS:vItems,STOCK:vStock,PHOTOS:vPhotos,PRINTS:vPrints,DASH:vDash,INSIGHTS:vInsights,BILLER:vBiller,STAFF:vStaff2,REPORTS:vReports,AUDIT:vAudit,SETTINGS:vSettings}[curTab];
+  var f={MOBILES:vMobiles,TEAM:vTeam,QBILL:vQuickBill,EXPRESS:vExpress,LIVE:vLive,NEWJOB:vNewJob,BOARD:vBoard,JOBS:vTech,SEARCH:vSearch,SCAN:vScan,SHOP:vShop,QUICK:vQuick,TRACK:vTrack,FASTBILL:vFastBill,DAYBOOK:vDayBook2,ANALYTICS:vAnalytics,REGISTER:vRegister,ITEMS:vItems,STOCK:vStock,PHOTOS:vPhotos,PRINTS:vPrints,DASH:vDash,INSIGHTS:vInsights,BILLER:vBiller,STAFF:vStaff2,REPORTS:vReports,AUDIT:vAudit,SETTINGS:vSettings}[curTab];
   if(f){if(typing)swapKeep(v,f);else f(v);_renderedTab=curTab;} if(ovlJob)openJob(ovlJob,true);}
 function bilDraw(){var v=document.getElementById('view');if(!v)return;var fn=curTab==='BILLER'?vBiller:curTab==='QBILL'?vQuickBill:null;if(!fn)return;
   var a=document.activeElement;if(a&&v.contains(a)&&isTyping(a))swapKeep(v,fn);else fn(v);}
@@ -8809,7 +8868,7 @@ function msgCheck(){if(!USER||!DB||!DB.msg)return;var lim=now()-alertWinMs();
    ====================================================================================== */
 
 /* ---------- 🔐 admin: who sees which tab ---------- */
-var ALL_TABS=['DASH','INSIGHTS','LIVE','EXPRESS','QUICK','BILLER','MOBILES','TEAM','JOBS','TRACK','FASTBILL','DAYBOOK','SHOP','SCAN','BOARD','NEWJOB','REGISTER','ITEMS','STOCK','PHOTOS','SEARCH','PRINTS','STAFF','REPORTS','AUDIT','SETTINGS'];
+var ALL_TABS=['DASH','ANALYTICS','INSIGHTS','LIVE','EXPRESS','QUICK','BILLER','MOBILES','TEAM','JOBS','TRACK','FASTBILL','DAYBOOK','SHOP','SCAN','BOARD','NEWJOB','REGISTER','ITEMS','STOCK','PHOTOS','SEARCH','PRINTS','STAFF','REPORTS','AUDIT','SETTINGS'];
 var ACC_ROLES=[['reception','🧾 Reception','रिसेप्शन'],['tech','🧑‍🔧 Technician','टेक्नीशियन'],['stockman','📦 Stock','स्टॉक'],['billing','⚡ Quick Billing','क्विक बिलिंग'],['manager','📱 Mobile Manager','मोबाइल मैनेजर']];
 function accSet(){var A=(DB&&DB.settings&&DB.settings.access)||{};return {roles:A.roles||{},staff:A.staff||{},feat:A.feat||{}};}
 function accFeat(k,def){var f=accSet().feat;return f[k]==null?def:!!f[k];}
@@ -8890,23 +8949,14 @@ function twNote(j){var n=(j.notes||[]).filter(function(x){return x.team==='rec';
 function twAge(j){var a=now()-(j.createdAt||now());return '<span class="twAge '+(a<36e5?'g':a<4*36e5?'a':'r')+'">⏱ '+dur(a)+'</span>';}
 function twTile(j){var c=j.c||{},ps=photosOf(j),hi=LANG==='hi',mine=j.tech===me().id;
   return '<div class="twT st'+j.st+(mine?' mine':'')+(urgOn(j)?' tkUrg':'')+(FLASH[j.id]?' newFlash':'')+'" onclick="openJob(\''+j.id+'\')">'
-    +'<div class="twTph">'+(ps.length?'<img src="'+imgSrc(ps[0].d)+'" alt="">':'<span>📵</span>')+'<b class="twTid">'+esc(j.id)+'</b>'+twAge(j)+(urgOn(j)?'<i class="twTu">🚨</i>':'')+'</div>'
-    +'<div class="twTb"><span class="pill p'+j.st+'">'+stName(j.st)+'</span><div class="twTm">'+esc(((c.brand||'')+' '+(c.model||'')).trim()||'—')+'</div>'
+    +'<div class="twTph">'+twPh(j,ps)+'<b class="twTid">'+esc(j.id)+'</b>'+twAge(j)+(urgOn(j)?'<i class="twTu">🚨</i>':'')+'</div>'
+    +'<div class="twTb"><div><span class="pill p'+j.st+'">'+stName(j.st)+'</span> '+techDue(j)+'</div><div class="twTm">'+esc(((c.brand||'')+' '+(c.model||'')).trim()||'—')+'</div>'
     +'<div class="twTp">🔧 '+esc(c.prob||'—')+'</div>'+twNote(j)+twWho(j)+(twWaitP(j)?'<div class="twPw">🧩 '+(hi?'पार्ट का इंतज़ार':'waiting for a part')+'</div>':'')
     +jobStepsHtml(j,'mini')+'<div class="twTbtn">'+twBtns(j)+'</div></div></div>';}
 function twRow(j){var c=j.c||{},ps=photosOf(j);
   return '<div class="twR st'+j.st+(j.tech===me().id?' mine':'')+(urgOn(j)?' tkUrg':'')+'" onclick="openJob(\''+j.id+'\')">'+(ps.length?'<img src="'+imgSrc(ps[0].d)+'" alt="">':'<span class="twNoP">📵</span>')
     +'<div class="twRt"><div><b class="jid">'+esc(j.id)+'</b> <span class="pill p'+j.st+'">'+stName(j.st)+'</span> '+twAge(j)+(urgOn(j)?' 🚨':'')+'</div>'
     +'<div class="twMm">'+esc(((c.brand||'')+' '+(c.model||'')).trim())+' · <span class="twMp">'+esc(c.prob||'—')+'</span></div>'+twNote(j)+twWho(j)+jobStepsHtml(j,'mini')+'</div><div class="twRb">'+twBtns(j)+'</div></div>';}
-function twBoardHtml(){var hi=LANG==='hi',B=twBoard(),fl=[['all','📋',hi?'सब काम':'All work'],['today','📅',hi?'आज के':'Today'],['old','⏳',hi?'पुराने बाकी':'Pending 1–2+ days'],['new','🔔',hi?'नए':'New'],['mine','🫵',hi?'मेरे':'Mine'],['others','🧑‍🔧',hi?'दूसरों के':'Others'],['parts','🧩',hi?'पार्ट':'Parts'],['urgent','🚨',hi?'अर्जेंट':'Urgent']];
-  if(!accFeat('techAll',true))fl=fl.filter(function(f){return f[0]!=='others';});
-  var views=[['tray','▦',hi?'ट्रे':'Tray'],['list','☰',hi?'सूची':'List'],['cards','🃏',hi?'बड़े कार्ड':'Big cards']];
-  var body=!B.L.length?'<div class="twEmpty">'+(hi?'यहाँ अभी कुछ नहीं':'Nothing here right now')+'</div>'
-    :TW.view==='list'?'<div class="twList">'+B.L.map(twRow).join('')+'</div>'
-    :TW.view==='cards'?B.L.map(function(j){var m=j.st==='NEW'?'new':(j.tech===me().id&&open3(j)?'mine':'done');return (j.tech&&j.tech!==me().id?'<div class="twCardWho">'+twWho(j)+'</div>':'')+techCard(j,m);}).join('')
-    :'<div class="twTray">'+B.L.map(twTile).join('')+'</div>';
-  return '<div class="panel twBoard"><div class="twBH"><h2>📋 '+(hi?'दुकान का सारा काम':'ALL WORK IN THE SHOP')+' <small class="twSort">⬆ '+(hi?'नया ऊपर':'newest on top')+'</small></h2><div class="twViews">'+views.map(function(v){return '<button class="'+(TW.view===v[0]?'on':'')+'" onclick="twSetView(\''+v[0]+'\')">'+v[1]+' '+v[2]+'</button>';}).join('')+'</div></div>'
-    +'<div class="twFl">'+fl.map(function(f){return '<button class="'+(TW.f===f[0]?'on':'')+'" onclick="TW.f=\''+f[0]+'\';render(1)">'+f[1]+' '+f[2]+' <b>'+(B.n[f[0]]||0)+'</b></button>';}).join('')+'</div>'+body+'</div>';}
 function twSteps(cur){var hi=LANG==='hi',st=!cur?1:(twWaitP(cur)?3:2);
   var S=[['✋',hi?'काम चुनें':'Pick a job'],['▶',hi?'शुरू करें':'Start'],['🧩',hi?'पार्ट चाहिए? माँगें':'Need a part? Ask'],['✔',hi?'पूरा करें':'Complete']];
   return '<div class="twSteps">'+S.map(function(s,i){return '<div class="'+(i+1===st?'on':(i+1<st?'ok':''))+'"><b>'+s[0]+'</b><span>'+(i+1)+'. '+s[1]+'</span></div>';}).join('')+'</div>';}
@@ -9213,16 +9263,6 @@ var _mmKeepGo926=mmKeepGo;mmKeepGo=function(){var id=KP.id,j0=DB.jobs[id],k0=j0&
 /* ---------- technician board: newest activity on top (receipt, photo, part) ---------- */
 function jobLastAct(j){var t=j.createdAt||0;try{photosOf(j).forEach(function(p){if((p.ts||0)>t)t=p.ts;});}catch(e){}
   (j.parts||[]).forEach(function(p){if((p.ts||0)>t)t=p.ts;(p.hist||[]).forEach(function(h){if((h.ts||0)>t)t=h.ts;});});return t;}
-function twBoard(){var mine=me().id,ds=dayStart(),all=accFeat('techAll',true),ct=clearTs(),open=['NEW','ASSIGNED','REPAIR','PARTS'];
-  var A=jobsArr().filter(function(j){if(open.indexOf(j.st)<0||!techMatch(j))return false;if(urgOn(j)&&j.st==='NEW'&&j.urg.to&&j.urg.to!==mine)return false;
-    if(!(all||j.st==='NEW'||j.tech===mine))return false;return !ct||(j.createdAt||0)>=ct||j.tech===mine||urgOn(j);});
-  var F={all:function(){return true;},today:function(j){return (j.createdAt||0)>=ds;},old:function(j){return (j.createdAt||0)<ds;},new:function(j){return j.st==='NEW';},mine:function(j){return j.tech===mine;},
-    others:function(j){return j.tech&&j.tech!==mine;},parts:twWaitP,urgent:urgOn};
-  if(!F[TW.f])TW.f='all';
-  var n={};Object.keys(F).forEach(function(k){n[k]=A.filter(F[k]).length;});
-  var la={};A.forEach(function(j){la[j.id]=jobLastAct(j);});
-  var L=A.filter(F[TW.f]).sort(function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(la[y.id]-la[x.id]);});
-  return {L:L,n:n};}
 
 /* ---------- ✔ finished work moves to the right — day by day, with search ---------- */
 function twDoneList(){var mine=me().id,all=accFeat('techAll',true),q=(TW.dq||'').trim().toLowerCase(),ct=clearTs(),lim=now()-14*864e5;
@@ -9239,6 +9279,363 @@ function twDonePanel(L){var hi=LANG==='hi',g={},ord=[],q=(TW.dq||'').trim();
     +(q?'<button class="tab" onclick="TW.dq=\'\';render(1)">✕</button>':'')+'</div>'
     +(L.length?ord.map(function(d){return '<div class="twDay"><div class="twDayH"><span>📅 '+twDayLbl(d)+'</span><b>'+g[d].length+'</b></div>'+g[d].map(function(j){return twMini(j,'prev');}).join('')+'</div>';}).join('')
       :'<div class="twEmpty">'+(q?(hi?'कुछ नहीं मिला':'No match'):(hi?'अभी कोई पूरा काम नहीं':'No finished work yet'))+'</div>')+'</div>';}
+
+
+/* ======================================================================================
+   v9.28 — technician board: time filter (last hour / today / yesterday / 2–3 days / older), order (newest / oldest / most urgent),
+   big-photo view, photo on every tile opens the gallery, LATE / due badges ·
+   📈 ANALYTICS for the owner: every number worked out from the shop's own records, day by day —
+   overview with comparison, day-wise book with every entry, weekly + monthly, team, items & models, customers & udhaar,
+   cash closing, daily target, WhatsApp day report, CSV
+   ====================================================================================== */
+
+/* ---------- 🛠 technician board: time + order ---------- */
+(function(){try{TW.sort=localStorage.getItem('SSM_WOS_TWSORT')||'new';TW.tf=localStorage.getItem('SSM_WOS_TWTF')||'all';}catch(e){TW.sort='new';TW.tf='all';}})();
+function twSetSort(k){TW.sort=k;try{localStorage.setItem('SSM_WOS_TWSORT',k);}catch(e){}render(1);}
+function twSetTf(k){TW.tf=k;try{localStorage.setItem('SSM_WOS_TWTF',k);}catch(e){}render(1);}
+function twUrgScore(j){var c=j.c||{},t=now(),s=0;if(urgOn(j))s+=1e7;
+  if(c.expTs&&c.expTs<t)s+=5e6+(t-c.expTs)/6e4;else if(c.expTs)s+=Math.max(0,2e6-(c.expTs-t)/6e4);
+  if(twWaitP(j))s+=1e5;return s+(t-(j.createdAt||t))/6e4;}
+var TW_TF={all:function(){return true;},
+  '1h':function(j){return (j.createdAt||0)>=now()-36e5;},
+  today:function(j){return (j.createdAt||0)>=dayStart();},
+  before:function(j){return (j.createdAt||0)<dayStart();},
+  yday:function(j){var d=dayStart();return (j.createdAt||0)>=dayStart(d-1)&&(j.createdAt||0)<d;},
+  '2d':function(j){var d=dayStart(),y=dayStart(d-1);return (j.createdAt||0)>=dayStart(dayStart(y-1)-1)&&(j.createdAt||0)<y;},
+  old:function(j){var d=dayStart(),y=dayStart(d-1);return (j.createdAt||0)<dayStart(dayStart(y-1)-1);}};
+function twBoard(){var mine=me().id,ds=dayStart(),all=accFeat('techAll',true),ct=clearTs(),open=['NEW','ASSIGNED','REPAIR','PARTS'];
+  var A=jobsArr().filter(function(j){if(open.indexOf(j.st)<0||!techMatch(j))return false;if(urgOn(j)&&j.st==='NEW'&&j.urg.to&&j.urg.to!==mine)return false;
+    if(!(all||j.st==='NEW'||j.tech===mine))return false;return !ct||(j.createdAt||0)>=ct||j.tech===mine||urgOn(j);});
+  var F={all:function(){return true;},today:function(j){return (j.createdAt||0)>=ds;},old:function(j){return (j.createdAt||0)<ds;},new:function(j){return j.st==='NEW';},mine:function(j){return j.tech===mine;},
+    others:function(j){return j.tech&&j.tech!==mine;},parts:twWaitP,urgent:urgOn,late:function(j){return !!(j.c&&j.c.expTs&&j.c.expTs<now());}};
+  if(!F[TW.f])TW.f='all';if(!TW_TF[TW.tf])TW.tf='all';
+  var At=A.filter(TW_TF[TW.tf]),n={},t={};Object.keys(F).forEach(function(k){n[k]=At.filter(F[k]).length;});
+  var Af=A.filter(F[TW.f]);Object.keys(TW_TF).forEach(function(k){t[k]=Af.filter(TW_TF[k]).length;});
+  var la={},us={};At.forEach(function(j){la[j.id]=jobLastAct(j);us[j.id]=twUrgScore(j);});
+  var L=At.filter(F[TW.f]).sort(TW.sort==='old'?function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||((x.createdAt||0)-(y.createdAt||0));}
+    :TW.sort==='urg'?function(x,y){return us[y.id]-us[x.id];}
+    :function(x,y){return (urgOn(y)?1:0)-(urgOn(x)?1:0)||(la[y.id]-la[x.id]);});
+  return {L:L,n:n,t:t,total:A.length};}
+function twBoardHtml(){var hi=LANG==='hi',B=twBoard(),fl=[['all','📋',hi?'सब काम':'All work'],['new','🔔',hi?'नए':'New'],['mine','🫵',hi?'मेरे':'Mine'],['others','🧑‍🔧',hi?'दूसरों के':'Others'],['parts','🧩',hi?'पार्ट':'Parts'],['urgent','🚨',hi?'अर्जेंट':'Urgent'],['late','⏰',hi?'लेट':'Late']];
+  if(!accFeat('techAll',true))fl=fl.filter(function(f){return f[0]!=='others';});
+  var views=[['tray','▦',hi?'ट्रे':'Tray'],['photo','🖼',hi?'बड़ी फोटो':'Big photos'],['list','☰',hi?'सूची':'List'],['cards','🃏',hi?'बड़े कार्ड':'Big cards']];
+  var tfs=[['all','🕘',hi?'सब समय':'All time'],['1h','⚡',hi?'पिछला 1 घंटा':'Last 1 hour'],['today','📅',hi?'आज':'Today'],['before','⏳',hi?'पुराने बाकी (1–2+ दिन)':'Pending 1–2+ days'],['yday','↩',hi?'कल':'Yesterday'],['2d','⏳',hi?'2–3 दिन पहले':'2–3 days ago'],['old','🐢',hi?'3+ दिन पुराने':'3+ days old']];
+  var sorts=[['new','🆕',hi?'नया पहले':'Newest first'],['old','⏳',hi?'पुराना पहले':'Oldest first'],['urg','🚨',hi?'सबसे ज़रूरी पहले':'Most urgent first']];
+  var sl={new:hi?'नया ऊपर':'newest on top',old:hi?'पुराना ऊपर':'oldest on top',urg:hi?'सबसे ज़रूरी ऊपर':'most urgent on top'}[TW.sort]||'';
+  var body=!B.L.length?'<div class="twEmpty">'+(hi?'यहाँ अभी कुछ नहीं':'Nothing here right now')+'</div>'
+    :TW.view==='list'?'<div class="twList">'+B.L.map(twRow).join('')+'</div>'
+    :TW.view==='photo'?'<div class="twPhG">'+B.L.map(twPhotoTile).join('')+'</div>'
+    :TW.view==='cards'?B.L.map(function(j){var m=j.st==='NEW'?'new':(j.tech===me().id&&open3(j)?'mine':'done');return (j.tech&&j.tech!==me().id?'<div class="twCardWho">'+twWho(j)+'</div>':'')+techCard(j,m);}).join('')
+    :'<div class="twTray">'+B.L.map(twTile).join('')+'</div>';
+  return '<div class="panel twBoard"><div class="twBH"><h2>📋 '+(hi?'दुकान का सारा काम':'ALL WORK IN THE SHOP')+' <small class="twSort">↕ '+sl+'</small></h2><div class="twViews">'+views.map(function(v){return '<button class="'+(TW.view===v[0]?'on':'')+'" onclick="twSetView(\''+v[0]+'\')">'+v[1]+' '+v[2]+'</button>';}).join('')+'</div></div>'
+    +'<div class="twOrd"><span>↕ '+(hi?'क्रम':'Order')+'</span>'+sorts.map(function(s){return '<button class="'+(TW.sort===s[0]?'on':'')+'" onclick="twSetSort(\''+s[0]+'\')">'+s[1]+' '+s[2]+'</button>';}).join('')+'</div>'
+    +'<div class="twFl twTf"><span class="twFlL">⏱ '+(hi?'समय':'Time')+'</span>'+tfs.map(function(f){return '<button class="'+(TW.tf===f[0]?'on':'')+'" onclick="twSetTf(\''+f[0]+'\')">'+f[1]+' '+f[2]+' <b>'+(B.t[f[0]]||0)+'</b></button>';}).join('')+'</div>'
+    +'<div class="twFl"><span class="twFlL">🔎 '+(hi?'काम':'Work')+'</span>'+fl.map(function(f){return '<button class="'+(TW.f===f[0]?'on':'')+'" onclick="TW.f=\''+f[0]+'\';render(1)">'+f[1]+' '+f[2]+' <b>'+(B.n[f[0]]||0)+'</b></button>';}).join('')+'</div>'
+    +((TW.tf!=='all'||TW.f!=='all')?'<div class="twFiltOn">'+B.L.length+' / '+B.total+' '+(hi?'काम दिख रहे':'jobs shown')+' <button class="tab" onclick="TW.f=\'all\';twSetTf(\'all\')">✕ '+(hi?'सब दिखाएँ':'show all')+'</button></div>':'')
+    +body+'</div>';}
+/* clear device pictures */
+function twAddPhoto(id){askPhoto(id,'DEVICE PHOTO');}
+function twPh(j,ps){var hi=LANG==='hi';if(!ps.length)return '<button class="twAddPh" onclick="event.stopPropagation();twAddPhoto(\''+j.id+'\')">📸<span>'+(hi?'फोटो लें':'ADD PHOTO')+'</span></button>';
+  return '<img src="'+imgSrc(ps[0].d)+'" alt="" onclick="event.stopPropagation();bigView(\''+j.id+'\')">'+(ps.length>1?'<i class="twPc">📷 '+ps.length+'</i>':'');}
+function twPhotoTile(j){var c=j.c||{},ps=photosOf(j),hi=LANG==='hi',mine=j.tech===me().id;
+  return '<div class="twPT st'+j.st+(mine?' mine':'')+(urgOn(j)?' tkUrg':'')+'" onclick="bigView(\''+j.id+'\')">'
+    +'<div class="twPTi">'+(ps.length?'<img src="'+imgSrc(ps[0].d)+'" alt="">'+(ps.length>1?'<i class="twPc">📷 '+ps.length+'</i>':''):'<button class="twAddPh" onclick="event.stopPropagation();twAddPhoto(\''+j.id+'\')">📸<span>'+(hi?'फोटो लें':'ADD PHOTO')+'</span></button>')
+      +'<b class="twTid">'+esc(j.id)+'</b>'+twAge(j)
+      +'<div class="twPTo"><div class="twPTm">'+esc(((c.brand||'')+' '+(c.model||'')).trim()||'—')+'</div><div class="twPTp">🔧 '+esc(c.prob||'—')+'</div></div></div>'
+    +'<div class="twTb"><div><span class="pill p'+j.st+'">'+stName(j.st)+'</span>'+urgBadge(j)+' '+techDue(j)+'</div>'+twWho(j)+twNote(j)+jobStepsHtml(j,'mini')+'<div class="twTbtn">'+twBtns(j)+'</div></div></div>';}
+
+/* ======================================================================================
+   📈 ANALYTICS — real numbers from the shop's own records
+   money rules: a bill counts on the day it was made (what was received then); udhaar paid later counts on the day it came in
+   (Payment-In, not counted twice); a repair without a bill counts on delivery; returns are minus; expenses and Payment-Out are money out
+   ====================================================================================== */
+tabLbl.ANALYTICS='📈 ANALYTICS';
+var AN={p:'today',from:'',to:'',sec:'over'};
+(function(){try{var a=JSON.parse(localStorage.getItem('SSM_WOS_AN')||'{}');if(a.p)AN.p=a.p;if(a.sec)AN.sec=a.sec;if(a.from)AN.from=a.from;if(a.to)AN.to=a.to;}catch(e){}})();
+function anKeep(){try{localStorage.setItem('SSM_WOS_AN',JSON.stringify(AN));}catch(e){}}
+function anSet(k,v){AN[k]=v;anKeep();render(1);}
+function anIso(t){var d=new Date(t);return d.getFullYear()+'-'+pad(d.getMonth()+1,2)+'-'+pad(d.getDate(),2);}
+function anFromIso(v){var p=(''+(v||'')).split('-');if(p.length<3||!+p[0])return 0;return new Date(+p[0],+p[1]-1,+p[2]).getTime();}
+function anNext(t){var d=new Date(t);d.setDate(d.getDate()+1);d.setHours(0,0,0,0);return d.getTime();}
+function anRange(k){var ds=dayStart(),d=new Date(),dow=(d.getDay()+6)%7,ws=new Date(d.getFullYear(),d.getMonth(),d.getDate()-dow).getTime(),tm=anNext(ds);
+  if(k==='today')return [ds,tm];if(k==='yest')return [dayStart(ds-1),ds];if(k==='week')return [ws,tm];
+  if(k==='lweek')return [new Date(d.getFullYear(),d.getMonth(),d.getDate()-dow-7).getTime(),ws];
+  if(k==='month')return [monStart(),tm];if(k==='lmonth')return [new Date(d.getFullYear(),d.getMonth()-1,1).getTime(),monStart()];
+  if(k==='30')return [new Date(d.getFullYear(),d.getMonth(),d.getDate()-29).getTime(),tm];if(k==='90')return [new Date(d.getFullYear(),d.getMonth(),d.getDate()-89).getTime(),tm];
+  if(k==='year')return [new Date(d.getFullYear(),0,1).getTime(),tm];
+  if(k==='custom'){var a=anFromIso(AN.from)||ds,b=anFromIso(AN.to)||a;if(b<a){var x=a;a=b;b=x;}return [a,anNext(b)];}
+  return [ds,tm];}
+function anPrev(k,R){var d0=new Date(R[0]),len=R[1]-R[0];
+  if(k==='week'||k==='lweek')return [R[0]-7*864e5,R[1]-7*864e5];
+  if(k==='month'){var a=new Date(d0.getFullYear(),d0.getMonth()-1,1).getTime();return [a,Math.min(a+len,R[0])];}
+  if(k==='lmonth'){var b=new Date(d0.getFullYear(),d0.getMonth()-1,1).getTime();return [b,R[0]];}
+  if(k==='year'){var y=new Date(d0.getFullYear()-1,0,1).getTime();return [y,y+len];}
+  return [R[0]-len,R[0]];}
+function anDays(R){var L=[];for(var t=R[0];t<R[1]&&L.length<400;t=anNext(t))L.push(t);return L;}
+function anLbl(k){var hi=LANG==='hi';return ({today:hi?'आज':'Today',yest:hi?'कल':'Yesterday',week:hi?'इस हफ़्ते':'This week',lweek:hi?'पिछला हफ़्ता':'Last week',month:hi?'इस महीने':'This month',lmonth:hi?'पिछला महीना':'Last month','30':hi?'30 दिन':'Last 30 days','90':hi?'90 दिन':'Last 90 days',year:hi?'इस साल':'This year',custom:hi?'तारीख चुनें':'Pick dates'})[k]||k;}
+function anRangeTxt(R){var a=fmtD(R[0]),b=fmtD(R[1]-1);return a===b?a:a+' → '+b;}
+function anMode(t){t=(''+(t||'')).toUpperCase();if(!t||/CASH/.test(t))return 'CASH';if(/UPI|GPAY|PHONE|PAYTM|QR|BHIM/.test(t))return 'UPI';if(/CARD/.test(t))return 'CARD';if(/BANK|CHEQUE|NEFT|IMPS|RTGS/.test(t))return 'BANK';if(/UDHAAR|CREDIT/.test(t))return 'CASH';return 'OTHER';}
+function anNm(n){return (''+(n||'')).trim().toUpperCase().replace(/\s+/g,' ').slice(0,42)||'—';}
+function anZ(){return {bills:0,rev:0,rep:0,ctr:0,col:0,colBill:0,colLater:0,credit:0,refund:0,refN:0,out:0,exp:0,m:{CASH:0,UPI:0,CARD:0,BANK:0,OTHER:0},mo:{CASH:0,UPI:0,CARD:0,BANK:0,OTHER:0},
+  cost:0,costRev:0,jin:0,jfin:0,jdel:0,jRev:0,parts:0,partCost:0};}
+function anAdd(a,b){Object.keys(b).forEach(function(k){if(typeof b[k]==='number')a[k]=(a[k]||0)+b[k];else if(b[k]&&typeof b[k]==='object'){a[k]=a[k]||{};Object.keys(b[k]).forEach(function(m){a[k][m]=(a[k][m]||0)+b[k][m];});}});return a;}
+/* the engine: one pass over every bill, payment, expense and job */
+function anCalc(R){var days={},T=anZ(),A={},it={},cust={},billers={},hrs=[],techs={},models={},probs={},partsN={},work=[],tat=[],wait=[],events=[],inR=function(t){return t>=R[0]&&t<R[1];};
+  for(var h=0;h<24;h++)hrs[h]=0;
+  anDays(R).forEach(function(d){days[d]=anZ();});
+  var B=function(t){var k=dayStart(t);return days[k]||(days[k]=anZ());};
+  payArr().forEach(function(y){if(y.kind==='in')(y.alloc||[]).forEach(function(a){A[a[0]]=(A[a[0]]||0)+(+a[1]||0);});});
+  var prodCost=function(c){if(+c.ci>0)return +c.ci;var p=c.pid&&DB.prod&&DB.prod[c.pid];return p&&+p.buy>0?+p.buy:0;};
+  saleArr().forEach(function(s){if(!inR(s.ts))return;var d=B(s.ts);
+    if(s.ret){var rv=Math.abs(+s.total||0);d.refund+=rv;d.refN++;d.rev-=rv;d.col-=Math.abs(+s.paid||0);d.mo[anMode(s.mode)]+=Math.abs(+s.paid||0);
+      events.push({ts:s.ts,k:'ret',id:s.id,who:s.cust||'',txt:(s.items||[]).map(function(c){return c.name;}).join(', '),amt:-rv,mode:anMode(s.mode),by:s.by});return;}
+    var tot=+s.total||0,bp=Math.max(0,(+s.paid||0)-(A[s.id]||0)),rep=!!s.job;
+    d.bills++;d.rev+=tot;if(rep)d.rep+=tot;else d.ctr+=tot;d.col+=bp;d.colBill+=bp;d.credit+=Math.max(0,tot-bp);
+    var pays=(s.pays||[]).filter(function(p){return +p.a>0;}),ps=pays.reduce(function(x,p){return x+(+p.a);},0);
+    if(pays.length&&ps>0){pays.forEach(function(p){d.m[anMode(p.t)]+=bp*(+p.a)/ps;});}else if(bp)d.m[anMode(s.mode)]+=bp;
+    hrs[new Date(s.ts).getHours()]++;
+    (s.items||[]).forEach(function(c){var k=anNm(c.name),q=+c.qty||0,r=q*(+c.rate||0),pc=prodCost(c);var o=it[k]||(it[k]={n:k,q:0,r:0,c:0,cr:0,b:0});o.q+=q;o.r+=r;o.b++;if(pc>0){o.c+=pc*q;o.cr+=r;d.cost+=pc*q;d.costRev+=r;}});
+    var ck=(''+(s.mob||'')).replace(/\D/g,'').slice(-10)||anNm(s.cust);if(ck&&ck!=='—'){var cu=cust[ck]||(cust[ck]={k:ck,n:s.cust||'',mob:s.mob||'',b:0,r:0});cu.b++;cu.r+=tot;if(s.cust)cu.n=s.cust;}
+    var bb=billers[s.by||'—']||(billers[s.by||'—']={n:s.by||'—',b:0,r:0,c:0});bb.b++;bb.r+=tot;bb.c+=bp;
+    events.push({ts:s.ts,k:'bill',id:s.id,who:s.cust||'',txt:(s.items||[]).map(function(c){return c.name+(c.qty>1?' ×'+c.qty:'');}).join(', '),amt:tot,paid:bp,due:Math.max(0,tot-bp),mode:Math.max(0,tot-bp)>0&&!bp?'CREDIT':anMode(pays.length?pays[0].t:s.mode),by:s.by,job:s.job||''});});
+  payArr().forEach(function(y){if(!inR(y.ts))return;var d=B(y.ts),a=+y.amt||0,md=anMode(y.mode);
+    if(y.kind==='in'){d.colLater+=a;d.col+=a;d.m[md]+=a;}else{d.out+=a;d.mo[md]+=a;}
+    events.push({ts:y.ts,k:y.kind==='in'?'pin':'pout',id:y.id,who:y.name||'',txt:y.note||'',amt:y.kind==='in'?a:-a,mode:md,by:y.by});});
+  (DB.exp||[]).forEach(function(e){if(!e||!inR(e.ts))return;var d=B(e.ts),a=+e.amt||0;d.exp+=a;d.mo.CASH+=a;events.push({ts:e.ts,k:'exp',id:'',who:e.cat||'',txt:e.note||'',amt:-a,mode:'CASH',by:e.by});});
+  var CB={};try{CB=insComebacks(insRows());}catch(e){}
+  var TK=function(id){return techs[id]||(techs[id]={id:id,n:techName(id),take:0,done:0,del:0,w:[],rev:0,cb:0,parts:0,open:0});};
+  jobsArr().forEach(function(j){if(!j||!j.c)return;var tm=j.tm||{},c=j.c,ct=j.createdAt||tm.created||0;
+    if(inR(ct)){var d=B(ct);d.jin++;var mk=anNm(((c.brand||'')+' '+(c.model||'')).trim());models[mk]=(models[mk]||0)+1;var pk=insProbKey(c.prob);probs[pk]=(probs[pk]||0)+1;
+      if(tm.accepted&&tm.accepted>ct)wait.push(tm.accepted-ct);
+      if(CB[j.id]){var pv=CB[j.id],pj=DB.jobs[pv.id];if(pj&&pj.tech)TK(pj.tech).cb++;}
+      events.push({ts:ct,k:'in',id:j.id,who:c.name||'',txt:mk+' · '+(c.prob||''),amt:null,by:''});}
+    if(j.tech&&tm.accepted&&inR(tm.accepted))TK(j.tech).take++;
+    if(tm.finished&&inR(tm.finished)&&['DONE','READY','DELIVERED'].indexOf(j.st)>=0){B(tm.finished).jfin++;var w=(tm.work||0)||((tm.started&&tm.finished>tm.started)?tm.finished-tm.started:0);if(w>0)work.push(w);
+      if(j.tech){var tk=TK(j.tech);tk.done++;if(w>0)tk.w.push(w);}events.push({ts:tm.finished,k:'fix',id:j.id,who:j.tech?techName(j.tech):'',txt:anNm(((c.brand||'')+' '+(c.model||'')).trim()),amt:null,by:''});}
+    if(tm.delivered&&inR(tm.delivered)&&j.st==='DELIVERED'){var dd=B(tm.delivered);dd.jdel++;if(ct&&tm.delivered>ct)tat.push(tm.delivered-ct);
+      var sb=j.billed&&DB.sale[j.billed],val=sb?(+sb.total||0):(+(j.pay||{}).amt||0);if(j.tech){TK(j.tech).del++;TK(j.tech).rev+=val;}
+      if(!sb){var p=j.pay||{},amt=+p.amt||0,pd=+p.paid||0;dd.rev+=amt;dd.rep+=amt;dd.jRev+=amt;dd.col+=pd;dd.colBill+=pd;dd.credit+=Math.max(0,amt-pd);dd.m[anMode(p.mode)]+=pd;
+        var jp=(j.parts||[]).filter(function(x){return x.status==='INSTALLED'&&+x.cost>0;}).reduce(function(a,x){return a+(+x.cost)*(+x.qty||1);},0);if(jp>0&&amt>0){dd.cost+=jp;dd.costRev+=amt;}
+        if(amt||pd)events.push({ts:tm.delivered,k:'jpay',id:j.id,who:c.name||'',txt:(LANG==='hi'?'रिपेयर का पैसा':'repair payment')+' · '+(p.mode||''),amt:amt,paid:pd,due:Math.max(0,amt-pd),mode:anMode(p.mode),by:''});}
+      events.push({ts:tm.delivered,k:'out',id:j.id,who:c.name||'',txt:anNm(((c.brand||'')+' '+(c.model||'')).trim()),amt:null,by:''});}
+    (j.parts||[]).forEach(function(p){if(!p||!inR(p.ts||0))return;B(p.ts).parts++;var pn=anNm(p.name);partsN[pn]=(partsN[pn]||0)+(+p.qty||1);if(j.tech)TK(j.tech).parts++;if(p.status==='INSTALLED')B(p.ts).partCost+=(+p.cost||0)*(+p.qty||1);});
+    if(j.tech&&['ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0)TK(j.tech).open++;});
+  Object.keys(days).forEach(function(k){anAdd(T,days[k]);});
+  T.net=T.col-T.out-T.exp;T.prof=T.costRev-T.cost;T.margin=T.costRev?T.prof/T.costRev:0;T.cover=T.rev>0?Math.min(1,T.costRev/T.rev):0;T.avg=T.bills?(T.rev-T.jRev+T.refund)/T.bills:0;
+  events.sort(function(a,b){return a.ts-b.ts;});
+  return {R:R,days:days,T:T,items:it,cust:cust,billers:billers,hrs:hrs,techs:techs,models:models,probs:probs,parts:partsN,work:work,tat:tat,wait:wait,events:events};}
+/* what is true right now (not for a period) */
+function anNow(){var t=now(),J=jobsArr(),o={NEW:0,ASSIGNED:0,REPAIR:0,PARTS:0,DONE:0,READY:0},late=[],ready=[],stuck=0;
+  J.forEach(function(j){if(o[j.st]!=null)o[j.st]++;var c=j.c||{};
+    if(['NEW','ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0&&c.expTs&&c.expTs<t)late.push(j);
+    if(j.st==='READY'||j.st==='DONE'){var since=(j.tm||{}).ready||(j.tm||{}).finished||j.createdAt||t;ready.push({j:j,since:since});var sb=j.billed&&DB.sale[j.billed];stuck+=sb?(+sb.due||0):Math.max(0,(+c.est||0)-(+c.adv||0));}});
+  ready.sort(function(a,b){return a.since-b.since;});
+  var dues={},dueT=0,age={a:0,b:0,c:0,d:0};
+  saleArr().forEach(function(s){if(s.ret||!(+s.due>0))return;var k=(''+(s.mob||'')).replace(/\D/g,'').slice(-10)||anNm(s.cust),g=t-s.ts;dueT+=+s.due;
+    if(g<8*864e5)age.a+=+s.due;else if(g<31*864e5)age.b+=+s.due;else if(g<91*864e5)age.c+=+s.due;else age.d+=+s.due;
+    var x=dues[k]||(dues[k]={n:s.cust||'',mob:s.mob||'',due:0,old:s.ts,bills:[]});x.due+=+s.due;x.bills.push(s.id);if(s.ts<x.old)x.old=s.ts;if(s.cust)x.n=s.cust;});
+  J.forEach(function(j){var p=j.pay||{};if(j.st==='DELIVERED'&&!j.billed&&+p.due>0){var c=j.c||{},k=(''+(c.mob||'')).replace(/\D/g,'').slice(-10)||anNm(c.name),ts=(j.tm||{}).delivered||j.createdAt||t;dueT+=+p.due;
+    var g=t-ts;if(g<8*864e5)age.a+=+p.due;else if(g<31*864e5)age.b+=+p.due;else if(g<91*864e5)age.c+=+p.due;else age.d+=+p.due;
+    var x=dues[k]||(dues[k]={n:c.name||'',mob:c.mob||'',due:0,old:ts,bills:[]});x.due+=+p.due;x.bills.push(j.id);if(ts<x.old)x.old=ts;}});
+  return {o:o,late:late,ready:ready,stuck:stuck,dues:Object.keys(dues).map(function(k){return dues[k];}).sort(function(a,b){return b.due-a.due;}),dueT:dueT,age:age};}
+/* ---------- drawing helpers ---------- */
+function anTr(a,b,inv){return insTrend(a,b,inv);}
+function anK(lbl,val,sub,tr,cls){return '<div class="anK'+(cls?' '+cls:'')+'"><div class="anKl">'+lbl+'</div><div class="anKv">'+val+'</div><div class="anKs">'+(tr||'')+(sub?' <span>'+sub+'</span>':'')+'</div></div>';}
+function anPct(x){return Math.round((x||0)*100)+'%';}
+function anBars(rows,keys,cols,fmt){var W=760,H=190,pl=40,pb=24,pt=12,n=rows.length||1,mx=1;
+  rows.forEach(function(r){var s=0;keys.forEach(function(k){s+=Math.max(0,r[k]||0);});if(s>mx)mx=s;});
+  var bw=(W-pl-8)/n,g='';
+  [0,.5,1].forEach(function(f){var y=pt+(H-pt-pb)*(1-f);g+='<line x1="'+pl+'" x2="'+(W-8)+'" y1="'+y+'" y2="'+y+'" stroke="var(--line)" stroke-dasharray="'+(f?'3 3':'')+'"/><text x="'+(pl-4)+'" y="'+(y+4)+'" font-size="10" text-anchor="end" fill="var(--dim)">'+(fmt?fmt(mx*f):Math.round(mx*f))+'</text>';});
+  rows.forEach(function(r,i){var y=H-pb,x=pl+i*bw+1;keys.forEach(function(k,ki){var v=Math.max(0,r[k]||0),h=(H-pt-pb)*v/mx;if(h<=0)return;y-=h;g+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+Math.max(1,bw-2).toFixed(1)+'" height="'+h.toFixed(1)+'" fill="'+cols[ki]+'" rx="1.5"><title>'+esc(r.l)+' · '+(fmt?fmt(v):v)+'</title></rect>';});
+    if(n<=16||i%Math.ceil(n/12)===0)g+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(H-8)+'" font-size="10" text-anchor="middle" fill="var(--dim)">'+esc(r.l)+'</text>';});
+  return '<svg class="anSvg" viewBox="0 0 '+W+' '+H+'">'+g+'</svg>';}
+function anLines(rows,keys,cols){var W=760,H=170,pl=30,pb=24,pt=10,n=rows.length,mx=1;rows.forEach(function(r){keys.forEach(function(k){if((r[k]||0)>mx)mx=r[k];});});
+  var X=function(i){return pl+(n<=1?(W-pl-8)/2:i*(W-pl-8)/(n-1));},Y=function(v){return pt+(H-pt-pb)*(1-v/mx);},g='<line x1="'+pl+'" x2="'+(W-8)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" stroke="var(--line)"/><text x="'+(pl-4)+'" y="'+(Y(mx)+4)+'" font-size="10" text-anchor="end" fill="var(--dim)">'+mx+'</text>';
+  keys.forEach(function(k,ki){g+='<polyline fill="none" stroke="'+cols[ki]+'" stroke-width="2.5" points="'+rows.map(function(r,i){return X(i).toFixed(1)+','+Y(r[k]||0).toFixed(1);}).join(' ')+'"/>';
+    rows.forEach(function(r,i){g+='<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(r[k]||0).toFixed(1)+'" r="3" fill="'+cols[ki]+'"><title>'+esc(r.l)+' · '+(r[k]||0)+'</title></circle>';});});
+  rows.forEach(function(r,i){if(n<=16||i%Math.ceil(n/12)===0)g+='<text x="'+X(i).toFixed(1)+'" y="'+(H-8)+'" font-size="10" text-anchor="middle" fill="var(--dim)">'+esc(r.l)+'</text>';});
+  return '<svg class="anSvg" viewBox="0 0 '+W+' '+H+'">'+g+'</svg>';}
+function anHB(L,valFn,lblFn,col,fmt){var mx=Math.max.apply(null,L.map(valFn).concat([1]));
+  return L.length?'<div class="anHB">'+L.map(function(x){var v=valFn(x);return '<div class="anHBr"><span class="anHBl">'+lblFn(x)+'</span><span class="anHBb"><i style="width:'+Math.max(2,Math.round(v*100/mx))+'%;background:'+(col||'var(--amb)')+'"></i></span><b>'+(fmt?fmt(v):v)+'</b></div>';}).join('')+'</div>':'<div class="twEmpty">—</div>';}
+function anDl(t){var hi=LANG==='hi',d=new Date(t);return pad(d.getDate(),2)+'/'+pad(d.getMonth()+1,2)+' '+(hi?['रवि','सोम','मंगल','बुध','गुरु','शुक्र','शनि']:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'])[d.getDay()];}
+function anTarget(){return +((DB.settings||{}).anTarget)||0;}
+function anTargetSet(){var v=+gv('anTg')||0;DB.settings.anTarget=v;metaSave();toast('🎯 '+money(v)+' / '+(LANG==='hi'?'दिन':'day'));render(1);}
+
+/* ---------- the tab ---------- */
+function vAnalytics(v){var hi=LANG==='hi',R=anRange(AN.p),P=anPrev(AN.p,R),C=anCalc(R),Cp=anCalc(P),T=C.T,Tp=Cp.T,N=anNow(),one=(R[1]-R[0])<=864e5+36e5;
+  var per=['today','yest','week','lweek','month','lmonth','30','90','year','custom'];
+  var secs=[['over','📊',hi?'सारांश':'Overview'],['days',one?'📒':'📅',one?(hi?'दिन की बही':'Day book'):(hi?'दिन वार':'Day by day')],['weeks','🗓',hi?'हफ़्ता / महीना':'Weekly / Monthly'],['team','🧑‍🔧',hi?'टीम':'Team'],['items','📦',hi?'सामान व मॉडल':'Items & models'],['cust','👥',hi?'ग्राहक व उधार':'Customers & udhaar'],['cash','💵',hi?'कैश मिलान':'Cash closing']];
+  if(!secs.some(function(s){return s[0]===AN.sec;}))AN.sec='over';
+  var h='<div id="anV"><div class="anTop"><h2>📈 '+(hi?'बिज़नेस एनालिटिक्स':'BUSINESS ANALYTICS')+'</h2><div class="anAct">'
+    +'<button class="tab" onclick="anWa()">📤 '+(hi?'WhatsApp रिपोर्ट':'WhatsApp report')+'</button><button class="tab" onclick="anCsv()">⬇ CSV</button><button class="tab" onclick="window.print()">🖨</button></div></div>'
+    +'<div class="anPer">'+per.map(function(k){return '<button class="'+(AN.p===k?'on':'')+'" onclick="anSet(\'p\',\''+k+'\')">'+anLbl(k)+'</button>';}).join('')+'</div>'
+    +(AN.p==='custom'?'<div class="anCus"><input type="date" id="anF" value="'+(AN.from||anIso(dayStart()))+'" onchange="AN.from=this.value;anKeep();render(1)"> → <input type="date" id="anT" value="'+(AN.to||AN.from||anIso(dayStart()))+'" onchange="AN.to=this.value;anKeep();render(1)"></div>':'')
+    +'<div class="anRng">📅 <b>'+anRangeTxt(R)+'</b> · '+(hi?'तुलना':'vs')+' '+anRangeTxt(P)+'</div>'
+    +'<div class="anSec">'+secs.map(function(s){return '<button class="'+(AN.sec===s[0]?'on':'')+'" onclick="anSet(\'sec\',\''+s[0]+'\')">'+s[1]+' '+s[2]+'</button>';}).join('')+'</div>';
+  h+=({over:anOver,days:anDaysSec,weeks:anWeeks,team:anTeam,items:anItems,cust:anCust,cash:anCash})[AN.sec](C,Cp,N,R,P,one);
+  v.innerHTML=h+'</div>';}
+function anOver(C,Cp,N,R,P){var hi=LANG==='hi',T=C.T,Tp=Cp.T,days=anDays(R),tg=anTarget(),nd=days.length;
+  var tgH='';if(tg){var pct=T.rev/(tg*nd);tgH='<div class="panel anTg"><div class="anTgH">🎯 '+(hi?'टारगेट':'Target')+' '+money(tg*nd)+' <span>('+money(tg)+' × '+nd+' '+(hi?'दिन':'days')+')</span><b>'+anPct(pct)+'</b></div><div class="anTgB"><i style="width:'+Math.min(100,Math.round(pct*100))+'%;background:'+(pct>=1?'var(--grn)':pct>=.6?'var(--amb)':'var(--red)')+'"></i></div><div class="anKs">'+(pct>=1?'🎉 '+(hi?'टारगेट पूरा!':'Target reached!'):(hi?'बाकी ':'Still to go ')+money(Math.max(0,tg*nd-T.rev)))+'</div></div>';}
+  var k='<div class="anKs4">'
+    +anK(hi?'कुल बिक्री':'Total sales',money(T.rev),T.bills+' '+(hi?'बिल':'bills'),anTr(T.rev,Tp.rev),'big')
+    +anK(hi?'पैसा आया':'Money received',money(T.col),(hi?'उधार वसूली ':'udhaar in ')+money(T.colLater),anTr(T.col,Tp.col),'g')
+    +anK(hi?'उधार दिया':'Credit given',money(T.credit),'',anTr(T.credit,Tp.credit,1),'r')
+    +anK(hi?'खर्च + भुगतान':'Expenses + paid out',money(T.exp+T.out),(hi?'खर्च ':'exp ')+money(T.exp)+' · '+(hi?'भुगतान ':'paid ')+money(T.out),anTr(T.exp+T.out,Tp.exp+Tp.out,1))
+    +anK(hi?'शुद्ध कैश':'Net cash',money(T.net),hi?'आया − खर्च − भुगतान':'received − expenses − paid out',anTr(T.net,Tp.net),T.net>=0?'g':'r')
+    +anK(hi?'मुनाफ़ा (जहाँ लागत पता)':'Profit (where cost known)',money(T.prof),anPct(T.margin)+' '+(hi?'मार्जिन':'margin')+' · '+anPct(T.cover)+' '+(hi?'बिक्री में लागत पता':'of sales costed'),anTr(T.prof,Tp.prof))
+    +anK(hi?'औसत बिल':'Average bill',money(Math.round(T.avg)),'',anTr(T.avg,Tp.avg))
+    +anK(hi?'वापसी':'Returns',money(T.refund),T.refN+' '+(hi?'बिल':'bills'),anTr(T.refund,Tp.refund,1))
+    +anK(hi?'फोन आए':'Phones received',T.jin,'',anTr(T.jin,Tp.jin))
+    +anK(hi?'रिपेयर हुए':'Repaired',T.jfin,(hi?'औसत ':'avg ')+insH(insMed(C.work)),anTr(T.jfin,Tp.jfin))
+    +anK(hi?'ग्राहक को दिए':'Handed over',T.jdel,(hi?'आने से देने तक ':'in → out ')+insH(insMed(C.tat)),anTr(T.jdel,Tp.jdel))
+    +anK(hi?'टेक्नीशियन ने लेने में':'Wait before a technician took it',insH(insMed(C.wait)),'',anTr(insMed(C.wait),insMed(Cp.wait),1))
+    +'</div>';
+  var rows=days.map(function(d){var x=C.days[d]||anZ();return {l:anDl(d).slice(0,5),rep:x.rep,ctr:x.ctr,jin:x.jin,jdel:x.jdel,jfin:x.jfin};});
+  var hourly=nd===1;if(hourly){rows=[];for(var hh=9;hh<=22;hh++)rows.push({l:(hh>12?hh-12:hh)+(hh>=12?'p':'a'),rep:0,ctr:0,jin:0,jdel:0,jfin:0});
+    saleArr().forEach(function(s){if(s.ret||s.ts<R[0]||s.ts>=R[1])return;var hr=Math.min(22,Math.max(9,new Date(s.ts).getHours())),r=rows[hr-9];if(s.job)r.rep+=+s.total||0;else r.ctr+=+s.total||0;});
+    jobsArr().forEach(function(j){var t=j.createdAt||0;if(t>=R[0]&&t<R[1])rows[Math.min(22,Math.max(9,new Date(t).getHours()))-9].jin++;var dl=(j.tm||{}).delivered||0;if(dl>=R[0]&&dl<R[1])rows[Math.min(22,Math.max(9,new Date(dl).getHours()))-9].jdel++;});}
+  var md=Object.keys(T.m).map(function(m){return {n:m,v:T.m[m]};}).filter(function(x){return x.v>0;}).sort(function(a,b){return b.v-a.v;});
+  var best=null,worst=null;days.forEach(function(d){var x=C.days[d];if(!x||d>now())return;if(!best||x.rev>best.v)best={d:d,v:x.rev};if(!worst||x.rev<worst.v)worst={d:d,v:x.rev};});
+  var topI=Object.keys(C.items).map(function(k){return C.items[k];}).sort(function(a,b){return b.r-a.r;})[0];
+  var topT=Object.keys(C.techs).map(function(k){return C.techs[k];}).sort(function(a,b){return b.done-a.done;})[0];
+  var bh=C.hrs.indexOf(Math.max.apply(null,C.hrs));
+  var says=[];
+  if(Tp.rev)says.push((T.rev>=Tp.rev?'📈 ':'📉 ')+(hi?'बिक्री पिछली बार से ':'Sales ')+(T.rev>=Tp.rev?(hi?'ज़्यादा ':'up '):(hi?'कम ':'down '))+money(Math.abs(T.rev-Tp.rev))+' ('+Math.round(Math.abs(T.rev-Tp.rev)*100/Tp.rev)+'%)');
+  if(nd>1&&best&&best.v>0)says.push('🏆 '+(hi?'सबसे अच्छा दिन ':'Best day ')+anDl(best.d)+' — '+money(best.v)+(worst&&worst.d!==best.d?' · '+(hi?'सबसे कम ':'lowest ')+anDl(worst.d)+' — '+money(worst.v):''));
+  if(topI)says.push('📦 '+(hi?'सबसे ज़्यादा बिका: ':'Top seller: ')+esc(topI.n)+' — '+money(topI.r)+' ('+topI.q+')');
+  if(topT&&topT.done)says.push('🧑‍🔧 '+(hi?'सबसे ज़्यादा रिपेयर: ':'Most repairs: ')+esc(topT.n)+' — '+topT.done);
+  if(C.hrs[bh])says.push('⏰ '+(hi?'सबसे ज़्यादा बिल ':'Busiest billing hour ')+(bh>12?bh-12:bh||12)+(bh>=12?' PM':' AM')+' ('+C.hrs[bh]+')');
+  if(T.credit>T.colLater&&T.credit>0)says.push('⚠ '+(hi?'उधार दिया ज़्यादा, वसूली कम: ':'More credit given than collected: ')+money(T.credit)+' vs '+money(T.colLater));
+  if(N.ready.length)says.push('📦 '+N.ready.length+' '+(hi?'फोन तैयार पड़े हैं — ':'phones ready, not collected — ')+money(N.stuck)+' '+(hi?'अटका':'waiting'));
+  var hm='';try{hm=insHeat(insRows(),R).html;}catch(e){}
+  return tgH+k
+    +(says.length?'<div class="panel anSay"><h2>💡 '+(hi?'आँकड़े क्या कहते हैं':'What the numbers say')+'</h2>'+says.map(function(s){return '<div>'+s+'</div>';}).join('')+'</div>':'')
+    +'<div class="panel"><h2>💰 '+(hourly?(hi?'घंटे वार बिक्री':'Sales by hour'):(hi?'दिन वार बिक्री':'Sales day by day'))+'</h2><div class="anLeg"><i style="background:var(--amb)"></i>'+(hi?'रिपेयर':'Repairs')+' <i style="background:var(--cyn)"></i>'+(hi?'काउंटर बिक्री':'Counter sales')+'</div>'+anBars(rows,['rep','ctr'],['var(--amb)','var(--cyn)'],function(v){return v>=1000?'₹'+Math.round(v/100)/10+'k':'₹'+Math.round(v);})+'</div>'
+    +'<div class="panel"><h2>📱 '+(hi?'फोन आए / बने / दिए':'Phones in / repaired / handed over')+'</h2><div class="anLeg"><i style="background:var(--cyn)"></i>'+(hi?'आए':'In')+' <i style="background:var(--amb)"></i>'+(hi?'बने':'Repaired')+' <i style="background:var(--grn)"></i>'+(hi?'दिए':'Out')+'</div>'+anLines(rows,['jin','jfin','jdel'],['var(--cyn)','var(--amb)','var(--grn)'])+'</div>'
+    +'<div class="anG2"><div class="panel"><h2>💳 '+(hi?'पैसा कैसे आया':'How money came in')+'</h2>'+anHB(md,function(x){return Math.round(x.v);},function(x){return x.n;},'var(--grn)',money)+'</div>'
+    +'<div class="panel"><h2>🔴 '+(hi?'अभी दुकान में':'Right now in the shop')+'</h2><div class="anNow">'
+      +[['NEW','🔔',hi?'नए':'New'],['ASSIGNED','✋',hi?'लिए गए':'Taken'],['REPAIR','🔧',hi?'रिपेयर में':'Repairing'],['PARTS','🧩',hi?'पार्ट रुके':'Waiting part'],['DONE','📤',hi?'काउंटर पर आने हैं':'To counter'],['READY','📍',hi?'तैयार':'Ready']].map(function(s){return '<div><b>'+N.o[s[0]]+'</b><span>'+s[1]+' '+s[2]+'</span></div>';}).join('')
+      +'</div>'+(N.late.length?'<div class="anWarn">⏰ '+N.late.length+' '+(hi?'फोन वादे के समय से लेट: ':'phones past the promised time: ')+N.late.slice(0,8).map(function(j){return '<a onclick="openJob(\''+j.id+'\')">'+esc(j.id)+'</a>';}).join(', ')+'</div>':'')
+      +(N.ready.length?'<div class="anWarn g">📦 '+N.ready.length+' '+(hi?'तैयार फोन — ':'ready phones — ')+money(N.stuck)+' '+(hi?'आना बाकी':'to collect')+' · <a onclick="anSet(\'sec\',\'cust\')">'+(hi?'ग्राहकों को याद दिलाएँ →':'remind customers →')+'</a></div>':'')+'</div></div>'
+    +(hm?'<div class="panel"><h2>🔥 '+(hi?'किस दिन, किस घंटे सबसे ज़्यादा फोन':'Busiest days & hours (phones in)')+'</h2>'+hm+'</div>':'');}
+/* day by day + full day book for a single day */
+function anDayRow(d,x,hi){return '<tr onclick="AN.p=\'custom\';AN.from=AN.to=\''+anIso(d)+'\';AN.sec=\'days\';anKeep();render(1)"><td>'+anDl(d)+'</td><td>'+x.bills+'</td><td>'+money(x.rep)+'</td><td>'+money(x.ctr)+'</td><td><b>'+money(x.rev)+'</b></td><td>'+money(Math.round(x.m.CASH))+'</td><td>'+money(Math.round(x.m.UPI+x.m.CARD+x.m.BANK+x.m.OTHER))+'</td><td class="r">'+money(x.credit)+'</td><td class="g">'+money(x.colLater)+'</td><td class="r">'+money(x.exp+x.out)+'</td><td><b>'+money(Math.round(x.col-x.exp-x.out))+'</b></td><td>'+x.jin+'</td><td>'+x.jfin+'</td><td>'+x.jdel+'</td></tr>';}
+function anDaysSec(C,Cp,N,R,P,one){var hi=LANG==='hi',T=C.T,days=anDays(R).slice().reverse();
+  var head='<tr><th>'+(hi?'दिन':'Day')+'</th><th>'+(hi?'बिल':'Bills')+'</th><th>'+(hi?'रिपेयर':'Repairs')+'</th><th>'+(hi?'काउंटर':'Counter')+'</th><th>'+(hi?'कुल':'Total')+'</th><th>Cash</th><th>UPI/'+(hi?'बैंक':'bank')+'</th><th>'+(hi?'उधार दिया':'Credit')+'</th><th>'+(hi?'उधार आया':'Udhaar in')+'</th><th>'+(hi?'खर्च':'Out')+'</th><th>'+(hi?'शुद्ध':'Net')+'</th><th>📥</th><th>🔧</th><th>🤝</th></tr>';
+  var tbl='<div class="panel"><h2>📅 '+(hi?'दिन वार हिसाब':'Day-by-day account')+' <small class="twSort">'+(hi?'किसी दिन पर दबाएँ = उस दिन की पूरी बही':'tap a day = that day\'s full book')+'</small></h2><div class="anTblW"><table class="anTbl">'+head
+    +days.map(function(d){return anDayRow(d,C.days[d]||anZ(),hi);}).join('')
+    +'<tr class="tot"><td>'+(hi?'कुल':'TOTAL')+'</td><td>'+T.bills+'</td><td>'+money(T.rep)+'</td><td>'+money(T.ctr)+'</td><td>'+money(T.rev)+'</td><td>'+money(Math.round(T.m.CASH))+'</td><td>'+money(Math.round(T.m.UPI+T.m.CARD+T.m.BANK+T.m.OTHER))+'</td><td>'+money(T.credit)+'</td><td>'+money(T.colLater)+'</td><td>'+money(T.exp+T.out)+'</td><td>'+money(Math.round(T.net))+'</td><td>'+T.jin+'</td><td>'+T.jfin+'</td><td>'+T.jdel+'</td></tr></table></div></div>';
+  if(!one)return tbl;
+  var ic={bill:'🧾',ret:'↩',pin:'💰',pout:'💸',exp:'💸',in:'📥',fix:'🔧',out:'🤝',jpay:'💵'},nm={bill:hi?'बिल':'Bill',ret:hi?'वापसी':'Return',pin:hi?'उधार आया':'Payment-in',pout:hi?'भुगतान':'Payment-out',exp:hi?'खर्च':'Expense',in:hi?'फोन आया':'Phone in',fix:hi?'रिपेयर पूरा':'Repaired',out:hi?'ग्राहक को दिया':'Handed over',jpay:hi?'रिपेयर का पैसा':'Repair payment'};
+  var EV=C.events.slice().reverse(),f=AN.ef||'all',fl=[['all',hi?'सब':'All'],['money',hi?'पैसा':'Money'],['bill',hi?'बिल':'Bills'],['phone',hi?'फोन':'Phones']];
+  var EF=EV.filter(function(e){if(f==='money')return e.amt!=null;if(f==='bill')return e.k==='bill'||e.k==='ret';if(f==='phone')return ['in','fix','out'].indexOf(e.k)>=0;return true;});
+  var book='<div class="panel"><h2>📒 '+(hi?'दिन की बही — हर एंट्री':'Day book — every entry')+' ('+EV.length+')</h2>'
+    +'<div class="twFl">'+fl.map(function(x){return '<button class="'+(f===x[0]?'on':'')+'" onclick="AN.ef=\''+x[0]+'\';render(1)">'+x[1]+'</button>';}).join('')+'</div>'
+    +(EF.length?'<div class="anTblW"><table class="anTbl anBook"><tr><th>'+(hi?'समय':'Time')+'</th><th></th><th>'+(hi?'नंबर':'No.')+'</th><th>'+(hi?'किसका':'Who')+'</th><th>'+(hi?'विवरण':'Details')+'</th><th>'+(hi?'रकम':'Amount')+'</th><th>'+(hi?'मिला':'Paid')+'</th><th>'+(hi?'बाकी':'Due')+'</th><th>'+(hi?'तरीका':'Mode')+'</th><th>'+(hi?'किसने':'By')+'</th></tr>'
+      +EF.map(function(e){var op=e.k==='bill'?'bilOpenSaleSafe(\''+e.id+'\')':(e.id&&DB.jobs[e.id]?'openJob(\''+e.id+'\')':'');
+        return '<tr class="k'+e.k+'"'+(op?' onclick="'+op+'"':'')+'><td>'+fmtT(e.ts)+'</td><td>'+ic[e.k]+' '+nm[e.k]+'</td><td>'+esc(e.id||'')+'</td><td>'+esc(e.who||'')+'</td><td class="anD">'+esc(e.txt||'')+'</td><td>'+(e.amt==null?'':'<b class="'+(e.amt<0?'r':'')+'">'+money(e.amt)+'</b>')+'</td><td>'+(e.paid!=null?money(Math.round(e.paid)):'')+'</td><td class="r">'+(e.due?money(e.due):'')+'</td><td>'+(e.amt==null?'':esc(e.mode||''))+'</td><td>'+esc(e.by||'')+'</td></tr>';}).join('')+'</table></div>':'<div class="twEmpty">'+(hi?'इस दिन कुछ नहीं':'Nothing on this day')+'</div>')+'</div>';
+  var J=jobsArr().filter(function(j){var t=j.createdAt||0,dl=(j.tm||{}).delivered||0,fi=(j.tm||{}).finished||0;return (t>=R[0]&&t<R[1])||(dl>=R[0]&&dl<R[1])||(fi>=R[0]&&fi<R[1]);}).sort(function(a,b){return (b.createdAt||0)-(a.createdAt||0);});
+  var ph='<div class="panel"><h2>📱 '+(hi?'इस दिन के मोबाइल — फोटो के साथ':'Mobiles of this day — with photos')+' ('+J.length+')</h2>'+(J.length?'<div class="dbGrid">'+J.map(dbTile).join('')+'</div>':'<div class="twEmpty">—</div>')+'</div>';
+  return book+ph+tbl;}
+function bilOpenSaleSafe(id){try{curTab='BILLER';render();bilOpenSale(id);}catch(e){toast(esc(id));}}
+/* weekly + monthly */
+function anWeeks(C,Cp,N,R){var hi=LANG==='hi',d=new Date(),dow=(d.getDay()+6)%7,ws=new Date(d.getFullYear(),d.getMonth(),d.getDate()-dow).getTime(),W=[],M=[];
+  for(var i=11;i>=0;i--){var a=new Date(d.getFullYear(),d.getMonth(),d.getDate()-dow-7*i).getTime(),b=new Date(d.getFullYear(),d.getMonth(),d.getDate()-dow-7*i+7).getTime();var x=anCalc([a,b]).T;W.push({a:a,b:b,x:x,l:anDl(a).slice(0,5)});}
+  for(i=11;i>=0;i--){var ma=new Date(d.getFullYear(),d.getMonth()-i,1).getTime(),mb=new Date(d.getFullYear(),d.getMonth()-i+1,1).getTime();var y=anCalc([ma,mb]).T;M.push({a:ma,b:mb,x:y,l:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][new Date(ma).getMonth()]+' '+(''+new Date(ma).getFullYear()).slice(2)});}
+  var tb=function(L,lbl){return '<div class="anTblW"><table class="anTbl"><tr><th>'+lbl+'</th><th>'+(hi?'बिक्री':'Sales')+'</th><th>'+(hi?'बदलाव':'Change')+'</th><th>'+(hi?'पैसा आया':'Received')+'</th><th>'+(hi?'उधार दिया':'Credit')+'</th><th>'+(hi?'खर्च':'Out')+'</th><th>'+(hi?'शुद्ध':'Net')+'</th><th>'+(hi?'बिल':'Bills')+'</th><th>'+(hi?'औसत बिल':'Avg bill')+'</th><th>📥</th><th>🔧</th><th>🤝</th></tr>'
+    +L.slice().reverse().map(function(r,i,arr){var pv=arr[i+1];return '<tr onclick="AN.p=\'custom\';AN.from=\''+anIso(r.a)+'\';AN.to=\''+anIso(r.b-1)+'\';AN.sec=\'days\';anKeep();render(1)"><td>'+(lbl===(hi?'हफ़्ता':'Week')?fmtD(r.a).slice(0,5)+' – '+fmtD(r.b-1).slice(0,5):r.l)+'</td><td><b>'+money(r.x.rev)+'</b></td><td>'+(pv?anTr(r.x.rev,pv.x.rev):'')+'</td><td>'+money(Math.round(r.x.col))+'</td><td class="r">'+money(r.x.credit)+'</td><td>'+money(r.x.exp+r.x.out)+'</td><td>'+money(Math.round(r.x.net))+'</td><td>'+r.x.bills+'</td><td>'+money(Math.round(r.x.avg))+'</td><td>'+r.x.jin+'</td><td>'+r.x.jfin+'</td><td>'+r.x.jdel+'</td></tr>';}).join('')+'</table></div>';};
+  var mf=function(v){return v>=1e5?'₹'+Math.round(v/1e4)/10+'L':v>=1000?'₹'+Math.round(v/100)/10+'k':'₹'+Math.round(v);};
+  return '<div class="panel"><h2>🗓 '+(hi?'पिछले 12 हफ़्ते':'Last 12 weeks')+'</h2>'+anBars(W.map(function(w){return {l:w.l,rev:w.x.rev};}),['rev'],['var(--amb)'],mf)+tb(W,hi?'हफ़्ता':'Week')+'</div>'
+    +'<div class="panel"><h2>📆 '+(hi?'पिछले 12 महीने':'Last 12 months')+'</h2>'+anBars(M.map(function(m){return {l:m.l,rev:m.x.rev,col:0};}),['rev'],['var(--cyn)'],mf)+tb(M,hi?'महीना':'Month')+'</div>';}
+/* team */
+function anTeam(C,Cp,N,R){var hi=LANG==='hi',L=Object.keys(C.techs).map(function(k){return C.techs[k];}).filter(function(t){return t.take||t.done||t.del||t.open;}).sort(function(a,b){return b.done-a.done;});
+  var B=Object.keys(C.billers).map(function(k){return C.billers[k];}).sort(function(a,b){return b.r-a.r;});
+  return '<div class="panel"><h2>🧑‍🔧 '+(hi?'टेक्नीशियन का काम':'Technician scorecard')+'</h2>'+(L.length?'<div class="anTblW"><table class="anTbl"><tr><th>'+(hi?'नाम':'Name')+'</th><th>'+(hi?'लिए':'Taken')+'</th><th>'+(hi?'पूरे':'Repaired')+'</th><th>'+(hi?'दिए':'Delivered')+'</th><th>'+(hi?'औसत समय':'Avg time')+'</th><th>'+(hi?'सबसे तेज़':'Fastest')+'</th><th>'+(hi?'कमाई':'Value')+'</th><th>'+(hi?'वापस आए':'Comebacks')+'</th><th>'+(hi?'पार्ट माँगे':'Parts asked')+'</th><th>'+(hi?'अभी हाथ में':'In hand now')+'</th></tr>'
+    +L.map(function(t){return '<tr><td><b>'+esc(t.n)+'</b></td><td>'+t.take+'</td><td><b>'+t.done+'</b></td><td>'+t.del+'</td><td>'+insH(insMed(t.w))+'</td><td>'+(t.w.length?insH(Math.min.apply(null,t.w)):'—')+'</td><td>'+money(t.rev)+'</td><td class="'+(t.cb?'r':'')+'">'+t.cb+(t.done?' ('+Math.round(t.cb*100/t.done)+'%)':'')+'</td><td>'+t.parts+'</td><td>'+t.open+'</td></tr>';}).join('')+'</table></div>'
+    +anHB(L,function(t){return t.done;},function(t){return esc(t.n);},'var(--amb)')
+    :'<div class="twEmpty">'+(hi?'इस समय में कोई रिपेयर नहीं':'No repairs in this period')+'</div>')+'</div>'
+    +'<div class="panel"><h2>🧾 '+(hi?'किसने कितने बिल बनाए':'Who made the bills')+'</h2>'+(B.length?'<div class="anTblW"><table class="anTbl"><tr><th>'+(hi?'नाम':'Name')+'</th><th>'+(hi?'बिल':'Bills')+'</th><th>'+(hi?'बिक्री':'Sales')+'</th><th>'+(hi?'पैसा लिया':'Collected')+'</th><th>'+(hi?'औसत बिल':'Avg bill')+'</th></tr>'
+    +B.map(function(b){return '<tr><td><b>'+esc(b.n)+'</b></td><td>'+b.b+'</td><td>'+money(b.r)+'</td><td>'+money(Math.round(b.c))+'</td><td>'+money(Math.round(b.b?b.r/b.b:0))+'</td></tr>';}).join('')+'</table></div>':'<div class="twEmpty">—</div>')+'</div>';}
+/* items & models */
+function anItems(C){var hi=LANG==='hi',I=Object.keys(C.items).map(function(k){return C.items[k];}).sort(function(a,b){return b.r-a.r;}),q=(AN.iq||'').trim().toUpperCase();
+  var IF=q?I.filter(function(x){return x.n.indexOf(q)>=0;}):I;
+  var top=function(o,n){return Object.keys(o).map(function(k){return {n:k,v:o[k]};}).sort(function(a,b){return b.v-a.v;}).slice(0,n);};
+  return '<div class="panel"><h2>📦 '+(hi?'क्या बिका':'What sold')+' ('+I.length+')</h2><input id="anIq" class="tkSearch" autocomplete="off" placeholder="🔎 '+(hi?'सामान खोजें':'Search items')+'" value="'+esc(AN.iq||'')+'" oninput="AN.iq=this.value;clearTimeout(window._aiq);window._aiq=setTimeout(function(){render(1)},150)">'
+    +(IF.length?'<div class="anTblW"><table class="anTbl"><tr><th>#</th><th>'+(hi?'सामान':'Item')+'</th><th>'+(hi?'कितने':'Qty')+'</th><th>'+(hi?'बिल':'Bills')+'</th><th>'+(hi?'बिक्री':'Sales')+'</th><th>'+(hi?'औसत रेट':'Avg rate')+'</th><th>'+(hi?'मुनाफ़ा':'Profit')+'</th><th>'+(hi?'मार्जिन':'Margin')+'</th></tr>'
+      +IF.slice(0,60).map(function(x,i){var pf=x.cr?x.cr-x.c:null;return '<tr><td>'+(i+1)+'</td><td><b>'+esc(x.n)+'</b></td><td>'+x.q+'</td><td>'+x.b+'</td><td>'+money(x.r)+'</td><td>'+money(Math.round(x.q?x.r/x.q:0))+'</td><td>'+(pf==null?'<span class="anDim">'+(hi?'लागत नहीं':'no cost')+'</span>':money(Math.round(pf)))+'</td><td>'+(pf==null?'':anPct(x.cr?pf/x.cr:0))+'</td></tr>';}).join('')+'</table></div>':'<div class="twEmpty">—</div>')+'</div>'
+    +'<div class="anG2"><div class="panel"><h2>📱 '+(hi?'कौन से मॉडल आए':'Models received')+'</h2>'+anHB(top(C.models,12),function(x){return x.v;},function(x){return esc(x.n);},'var(--cyn)')+'</div>'
+    +'<div class="panel"><h2>🔧 '+(hi?'कौन सी खराबी':'Problems')+'</h2>'+anHB(top(C.probs,12),function(x){return x.v;},function(x){return esc(x.n);},'var(--amb)')+'</div></div>'
+    +'<div class="panel"><h2>🧩 '+(hi?'कौन से पार्ट माँगे गए':'Parts asked for')+'</h2>'+anHB(top(C.parts,12),function(x){return x.v;},function(x){return esc(x.n);},'var(--red)')+'</div>';}
+/* customers + udhaar + ready phones */
+function anWaTo(mob,txt){var n=(''+(mob||'')).replace(/\D/g,'').slice(-10);if(n.length<10){toast('⚠ '+(LANG==='hi'?'मोबाइल नंबर नहीं':'no mobile number'));return;}try{window.open('https://wa.me/91'+n+'?text='+encodeURIComponent(txt),'_blank');}catch(e){}}
+function anRemindDue(i){var N=anNow(),x=N.dues[i];if(!x)return;anWaTo(x.mob,'Namaste '+((x.n||'').split(' ')[0])+' ji 🙏\n'+(DB.settings.shop||'')+'\n'+(LANG==='hi'?'आपका बकाया':'Your pending amount')+': ₹'+Math.round(x.due)+' ('+x.bills.join(', ')+')\n'+(LANG==='hi'?'कृपया जल्द जमा करें। धन्यवाद।':'Kindly clear it at your convenience. Thank you.'));
+  DB.audit.push({ts:now(),by:me().name,jid:x.bills[0]||'—',a:'💬 UDHAAR REMINDER ₹'+Math.round(x.due)+' — '+(x.n||x.mob),f:'',t:''});persist([]);}
+function anRemindReady(id){var j=DB.jobs[id];if(!j)return;var c=j.c||{};anWaTo(c.wa||c.mob,'Namaste '+((c.name||'').split(' ')[0])+' ji 🙏\n'+(DB.settings.shop||'')+'\n📱 '+j.id+' — '+((c.brand||'')+' '+(c.model||'')).trim()+'\n✅ Your phone is ready, please collect it.\n✅ आपका फोन तैयार है, कृपया ले जाएँ।');
+  j.mm=j.mm||{};j.mm.told={ts:now(),by:me().name,wa:1};logA(j,'📲 READY REMINDER sent (WhatsApp) by '+me().name,'','');save([id]);}
+function anCust(C,Cp,N,R){var hi=LANG==='hi',first={};
+  saleArr().forEach(function(s){if(s.ret)return;var k=(''+(s.mob||'')).replace(/\D/g,'').slice(-10)||anNm(s.cust);if(!first[k]||s.ts<first[k])first[k]=s.ts;});
+  jobsArr().forEach(function(j){var c=j.c||{},k=(''+(c.mob||'')).replace(/\D/g,'').slice(-10)||anNm(c.name),t=j.createdAt||0;if(t&&(!first[k]||t<first[k]))first[k]=t;});
+  var L=Object.keys(C.cust).map(function(k){return C.cust[k];}),nw=L.filter(function(c){return first[c.k]>=R[0];}).length,rp=L.length-nw;
+  L.sort(function(a,b){return b.r-a.r;});
+  var dueRows=N.dues.slice(0,25),rd=N.ready.slice(0,30);
+  return '<div class="anKs4">'+anK(hi?'ग्राहक':'Customers',L.length,'')+anK(hi?'नए ग्राहक':'New customers',nw,L.length?anPct(nw/L.length):'','','g')+anK(hi?'दोबारा आए':'Returning',rp,L.length?anPct(rp/L.length):'')
+    +anK(hi?'कुल उधार बाकी':'Total udhaar pending',money(Math.round(N.dueT)),N.dues.length+' '+(hi?'लोग':'people'),'','r')+'</div>'
+    +'<div class="panel"><h2>💰 '+(hi?'उधार — कितना पुराना':'Udhaar by age')+'</h2>'+anHB([{n:hi?'0–7 दिन':'0–7 days',v:N.age.a},{n:hi?'8–30 दिन':'8–30 days',v:N.age.b},{n:hi?'31–90 दिन':'31–90 days',v:N.age.c},{n:hi?'90+ दिन':'90+ days',v:N.age.d}],function(x){return Math.round(x.v);},function(x){return x.n;},'var(--red)',money)
+    +(dueRows.length?'<div class="anTblW"><table class="anTbl"><tr><th>'+(hi?'नाम':'Name')+'</th><th>'+(hi?'मोबाइल':'Mobile')+'</th><th>'+(hi?'बाकी':'Due')+'</th><th>'+(hi?'सबसे पुराना':'Oldest')+'</th><th>'+(hi?'बिल':'Bills')+'</th><th></th></tr>'
+      +dueRows.map(function(x,i){return '<tr><td><b>'+esc(x.n||'—')+'</b></td><td>'+esc(x.mob||'')+'</td><td class="r"><b>'+money(Math.round(x.due))+'</b></td><td>'+fmtD(x.old)+' <span class="anDim">('+Math.floor((now()-x.old)/864e5)+'d)</span></td><td>'+esc(x.bills.slice(0,4).join(', '))+(x.bills.length>4?'…':'')+'</td><td><button class="tab" onclick="anRemindDue('+i+')">💬 '+(hi?'याद दिलाएँ':'Remind')+'</button></td></tr>';}).join('')+'</table></div>':'')+'</div>'
+    +'<div class="panel"><h2>📦 '+(hi?'तैयार फोन — ग्राहक नहीं आए':'Ready phones not collected')+' ('+N.ready.length+')</h2>'+(rd.length?'<div class="anTblW"><table class="anTbl"><tr><th>'+(hi?'फोन':'Phone')+'</th><th>'+(hi?'ग्राहक':'Customer')+'</th><th>'+(hi?'कब से':'Ready since')+'</th><th>'+(hi?'जगह':'Place')+'</th><th>'+(hi?'बताया?':'Told?')+'</th><th></th></tr>'
+      +rd.map(function(r){var j=r.j,c=j.c||{},told=j.mm&&j.mm.told;return '<tr><td><a onclick="openJob(\''+j.id+'\')"><b>'+esc(j.id)+'</b></a> '+esc(((c.brand||'')+' '+(c.model||'')).trim())+'</td><td>'+esc(c.name||'')+'</td><td>'+fmtD(r.since)+' <span class="'+((now()-r.since)>2*864e5?'r':'anDim')+'">('+insH(now()-r.since)+')</span></td><td>'+esc(j.tray||'—')+'</td><td>'+(told?'✔ '+fmtD(told.ts):'—')+'</td><td><button class="tab" onclick="anRemindReady(\''+j.id+'\');render(1)">💬 '+(hi?'याद दिलाएँ':'Remind')+'</button></td></tr>';}).join('')+'</table></div>':'<div class="twEmpty">👍</div>')+'</div>'
+    +'<div class="panel"><h2>⭐ '+(hi?'सबसे ज़्यादा ख़रीदने वाले':'Top customers in this period')+'</h2>'+(L.length?'<div class="anTblW"><table class="anTbl"><tr><th>#</th><th>'+(hi?'नाम':'Name')+'</th><th>'+(hi?'मोबाइल':'Mobile')+'</th><th>'+(hi?'बिल':'Bills')+'</th><th>'+(hi?'ख़रीद':'Spent')+'</th><th></th></tr>'
+      +L.slice(0,20).map(function(c,i){return '<tr><td>'+(i+1)+'</td><td><b>'+esc(c.n||'—')+'</b></td><td>'+esc(c.mob||'')+'</td><td>'+c.b+'</td><td>'+money(c.r)+'</td><td>'+(first[c.k]>=R[0]?'<span class="pill pDONE">'+(hi?'नया':'NEW')+'</span>':'')+'</td></tr>';}).join('')+'</table></div>':'<div class="twEmpty">—</div>')+'</div>';}
+/* 💵 cash closing: what should be in the drawer vs what was counted */
+function anCashExp(day){var C=anCalc([day,anNext(day)]),T=C.T;return {cashIn:Math.round(T.m.CASH),cashOut:Math.round(T.mo.CASH),upi:Math.round(T.m.UPI+T.m.CARD+T.m.BANK+T.m.OTHER),exp:Math.round(T.m.CASH-T.mo.CASH)};}
+function anCloseSave(){var hi=LANG==='hi',day=anFromIso(gv('anCd'))||dayStart(),E=anCashExp(day),open=+gv('anOp')||0,cnt=gv('anCnt');if(cnt===''){toast('⚠ '+(hi?'गिना हुआ कैश लिखें':'enter the counted cash'));return;}cnt=+cnt||0;
+  var exp=open+E.exp,diff=cnt-exp,k=anIso(day);DB.settings.dayClose=Object.assign({},DB.settings.dayClose||{});
+  DB.settings.dayClose[k]={day:k,open:open,cashIn:E.cashIn,cashOut:E.cashOut,exp:exp,cnt:cnt,diff:diff,upi:E.upi,note:gv('anCn')||'',by:me().name,ts:now()};
+  var ks=Object.keys(DB.settings.dayClose).sort();if(ks.length>120)ks.slice(0,ks.length-120).forEach(function(x){delete DB.settings.dayClose[x];});
+  DB.audit.push({ts:now(),by:me().name,jid:'—',a:'💵 CASH CLOSE '+k+': expected '+money(exp)+', counted '+money(cnt)+(diff?' — '+(diff>0?'EXTRA ':'SHORT ')+money(Math.abs(diff)):' — matched'),f:'',t:''});
+  metaSave();toast(diff===0?'✔ '+(hi?'कैश मिल गया':'cash matched'):(diff>0?'➕ ':'➖ ')+money(Math.abs(diff))+' '+(diff>0?(hi?'ज़्यादा':'extra'):(hi?'कम':'short')));render(1);}
+function anCash(C,Cp,N,R){var hi=LANG==='hi',day=anFromIso(AN.cd)||dayStart(),E=anCashExp(day),k=anIso(day),H=(DB.settings.dayClose)||{},cur=H[k],prev=Object.keys(H).filter(function(x){return x<k;}).sort().pop(),open=cur?cur.open:(prev?H[prev].cnt:0);
+  var hist=Object.keys(H).sort().reverse().slice(0,30);
+  return '<div class="panel anClose"><h2>💵 '+(hi?'दिन का कैश मिलान':'Daily cash closing')+'</h2>'
+    +'<div class="field"><label>'+(hi?'दिन':'Day')+'</label><input type="date" id="anCd" value="'+k+'" onchange="AN.cd=this.value;render(1)"></div>'
+    +'<div class="anCl"><div><span>'+(hi?'सुबह का कैश (गल्ला)':'Opening cash in drawer')+'</span><input id="anOp" inputmode="numeric" value="'+open+'"></div>'
+    +'<div><span>+ '+(hi?'कैश आया (बिल, उधार, रिपेयर)':'Cash received (bills, udhaar, repairs)')+'</span><b class="g">'+money(E.cashIn)+'</b></div>'
+    +'<div><span>− '+(hi?'कैश गया (खर्च, भुगतान, वापसी)':'Cash paid out (expenses, payments, returns)')+'</span><b class="r">'+money(E.cashOut)+'</b></div>'
+    +'<div class="tot"><span>= '+(hi?'गल्ले में होना चाहिए':'Should be in the drawer')+'</span><b>'+money(open+E.exp)+'</b></div>'
+    +'<div><span>'+(hi?'UPI / कार्ड / बैंक में आया (गल्ले में नहीं)':'UPI / card / bank (not in drawer)')+'</span><b>'+money(E.upi)+'</b></div>'
+    +'<div><span>'+(hi?'गिनकर कितना है?':'Counted cash')+'</span><input id="anCnt" inputmode="numeric" value="'+(cur?cur.cnt:'')+'" placeholder="₹"></div>'
+    +'<div><span>'+(hi?'नोट':'Note')+'</span><input id="anCn" value="'+esc(cur?cur.note:'')+'"></div></div>'
+    +'<button class="bigBtn bAccept" onclick="anCloseSave()">✔ '+(hi?'कैश मिलान सेव करें':'SAVE CASH CLOSING')+'</button>'
+    +(cur?'<div class="anWarn '+(cur.diff===0?'g':'')+'">'+(cur.diff===0?'✔ '+(hi?'मिल गया':'Matched'):(cur.diff>0?'➕ '+(hi?'ज़्यादा ':'Extra '):'➖ '+(hi?'कम ':'Short '))+money(Math.abs(cur.diff)))+' · '+esc(cur.by)+' '+fmtT(cur.ts)+'</div>':'')+'</div>'
+    +'<div class="panel"><h2>🎯 '+(hi?'रोज़ का बिक्री टारगेट':'Daily sales target')+'</h2><div class="mmSrch"><input id="anTg" inputmode="numeric" value="'+(anTarget()||'')+'" placeholder="₹ '+(hi?'प्रति दिन':'per day')+'"><button class="mmScanB" onclick="anTargetSet()">✔</button></div><div class="anKs">'+(hi?'सारांश में टारगेट की पट्टी दिखेगी':'A progress bar shows on the Overview')+'</div></div>'
+    +'<div class="panel"><h2>📜 '+(hi?'पिछले कैश मिलान':'Past cash closings')+'</h2>'+(hist.length?'<div class="anTblW"><table class="anTbl"><tr><th>'+(hi?'दिन':'Day')+'</th><th>'+(hi?'सुबह':'Opening')+'</th><th>'+(hi?'आया':'In')+'</th><th>'+(hi?'गया':'Out')+'</th><th>'+(hi?'होना था':'Expected')+'</th><th>'+(hi?'गिना':'Counted')+'</th><th>'+(hi?'फ़र्क':'Difference')+'</th><th>'+(hi?'किसने':'By')+'</th></tr>'
+      +hist.map(function(x){var c=H[x];return '<tr onclick="AN.cd=\''+x+'\';render(1)"><td>'+fmtD(anFromIso(x))+'</td><td>'+money(c.open)+'</td><td>'+money(c.cashIn)+'</td><td>'+money(c.cashOut)+'</td><td>'+money(c.exp)+'</td><td><b>'+money(c.cnt)+'</b></td><td class="'+(c.diff<0?'r':c.diff>0?'g':'')+'"><b>'+(c.diff>0?'+':'')+money(c.diff)+'</b></td><td>'+esc(c.by||'')+'</td></tr>';}).join('')+'</table></div>':'<div class="twEmpty">—</div>')+'</div>';}
+/* share + export */
+function anReportText(){var hi=LANG==='hi',R=anRange(AN.p),C=anCalc(R),T=C.T,N=anNow();
+  var topI=Object.keys(C.items).map(function(k){return C.items[k];}).sort(function(a,b){return b.r-a.r;}).slice(0,3);
+  var topT=Object.keys(C.techs).map(function(k){return C.techs[k];}).filter(function(t){return t.done;}).sort(function(a,b){return b.done-a.done;});
+  var r=function(n){return 'Rs.'+Math.round(n).toLocaleString('en-IN');};
+  return '📈 '+(DB.settings.shop||'SAI WOS')+' — '+anLbl(AN.p)+' ('+anRangeTxt(R)+')\n'
+    +'💰 Sales: '+r(T.rev)+' ('+T.bills+' bills, avg '+r(T.avg)+')\n'
+    +'✅ Received: '+r(T.col)+' (cash '+r(T.m.CASH)+', UPI/bank '+r(T.m.UPI+T.m.CARD+T.m.BANK+T.m.OTHER)+')\n'
+    +'🧾 Credit given: '+r(T.credit)+' · Udhaar collected: '+r(T.colLater)+'\n'
+    +'💸 Expenses + paid out: '+r(T.exp+T.out)+(T.refund?' · Returns: '+r(T.refund):'')+'\n'
+    +'🟢 Net cash: '+r(T.net)+'\n'
+    +(T.costRev?'📊 Profit (costed sales): '+r(T.prof)+' ('+Math.round(T.margin*100)+'%)\n':'')
+    +'📱 Phones in '+T.jin+' · repaired '+T.jfin+' · handed over '+T.jdel+'\n'
+    +'⏳ Open now: '+(N.o.NEW+N.o.ASSIGNED+N.o.REPAIR+N.o.PARTS)+' · ready not collected: '+N.ready.length+'\n'
+    +'🔴 Udhaar pending (all): '+r(N.dueT)+'\n'
+    +(topI.length?'📦 Top: '+topI.map(function(x){return x.n+' '+r(x.r);}).join(', ')+'\n':'')
+    +(topT.length?'🧑‍🔧 '+topT.map(function(t){return t.n+' '+t.done;}).join(', ')+'\n':'')
+    +'— SAI Workshop OS';}
+function anWa(){var t=anReportText();try{window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');}catch(e){}try{navigator.clipboard&&navigator.clipboard.writeText(t).catch(function(){});}catch(e){}}
+function anCsv(){var R=anRange(AN.p),C=anCalc(R),rows=[['Day','Bills','Repairs','Counter sales','Total sales','Cash','UPI','Card','Bank','Other','Credit given','Udhaar collected','Returns','Expenses','Paid out','Net cash','Profit (costed)','Phones in','Repaired','Handed over','Parts asked']];
+  anDays(R).forEach(function(d){var x=C.days[d]||anZ();rows.push([fmtD(d),x.bills,x.rep,x.ctr,x.rev,Math.round(x.m.CASH),Math.round(x.m.UPI),Math.round(x.m.CARD),Math.round(x.m.BANK),Math.round(x.m.OTHER),x.credit,x.colLater,x.refund,x.exp,x.out,Math.round(x.col-x.exp-x.out),Math.round(x.costRev-x.cost),x.jin,x.jfin,x.jdel,x.parts]);});
+  var T=C.T;rows.push(['TOTAL',T.bills,T.rep,T.ctr,T.rev,Math.round(T.m.CASH),Math.round(T.m.UPI),Math.round(T.m.CARD),Math.round(T.m.BANK),Math.round(T.m.OTHER),T.credit,T.colLater,T.refund,T.exp,T.out,Math.round(T.net),Math.round(T.prof),T.jin,T.jfin,T.jdel,T.parts]);
+  rows.push([]);rows.push(['Time','Type','No','Who','Details','Amount','Paid','Due','Mode','By']);
+  C.events.forEach(function(e){rows.push([fmtDT(e.ts),e.k,e.id||'',e.who||'',e.txt||'',e.amt==null?'':e.amt,e.paid==null?'':Math.round(e.paid),e.due||'',e.amt==null?'':e.mode||'',e.by||'']);});
+  csvDL('analytics_'+AN.p,rows);}
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>
