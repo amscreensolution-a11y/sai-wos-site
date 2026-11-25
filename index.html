@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.35';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.36';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -902,6 +902,11 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 #wtGate.off{border-color:#64748b}#wtGate .t{color:#fbbf24}
 #wtGate button{border:1px solid #475569;background:#1e293b;color:#e5e7eb;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:800;cursor:pointer}#wtGate button.act{border-color:#fbbf24;color:#fbbf24}
 .wtDev{margin:0 0 12px;padding:10px;border-radius:12px;background:var(--panel2);border:1.5px solid var(--grn)}.wtDev>b{display:block;margin-bottom:6px}
+
+/* ===== v9.37 ===== */
+.wtBg{margin-top:10px;padding:10px;border-radius:10px;font-size:13px;font-weight:700;background:var(--panel);border:1.5px solid var(--line2)}
+.wtBg.on{border-color:var(--grn);color:var(--grn)}.wtBg.old{border-color:var(--amb);color:var(--amb)}.wtBg.off{border-color:var(--red);color:var(--red)}.wtBg small{color:var(--dim);font-weight:600}
+.wtBg .twOrd{margin:8px 0 4px}.wtBg button{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -909,7 +914,7 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.36</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.37</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -1001,7 +1006,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.36';
+var APP_VER='9.37';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -10626,6 +10631,26 @@ var _wtSheet935=wtSheet;wtSheet=function(){_wtSheet935();try{var hi=LANG==='hi',
 setInterval(function(){wtRemember();wtGate();wtWakeApply();},5000);
 setTimeout(function(){wtRemember();wtNativeSync();wtGate();},2500);
 setInterval(wtNativeSync,60000);
+
+
+/* ======================================================================================
+   v9.37 — walkie with the app closed: the SAI WOS Android app (1.7) plays voices through the phone's own speaker
+   from its always-on service; comes back by itself if the app is swiped away; one tap to allow it in the background
+   (battery / autostart settings of Xiaomi, Vivo, Oppo, Realme, Samsung…); test sound
+   ====================================================================================== */
+function wtBgState(){try{if(!window.SaiNative)return 'web';if(typeof SaiNative.wtCfg!=='function')return 'old';return SaiNative.wtListening()?'on':'off';}catch(e){return 'web';}}
+function wtBgHtml(){var hi=LANG==='hi',s=wtBgState(),v='';try{v=SaiNative.version();}catch(e){}
+  if(s==='web')return '<div class="wtBg web">📱 '+(hi?'ऐप बंद होने पर भी आवाज़ के लिए SAI WOS Android ऐप इस्तेमाल करें':'To hear voices with the app closed, use the SAI WOS Android app on this phone')+'</div>';
+  if(s==='old')return '<div class="wtBg old">⬆ '+(hi?'ऐप अपडेट करें (अभी ':'Update the app (now ')+esc(v)+(hi?') — तभी बंद ऐप में आवाज़ आएगी':') — then voices play with the app closed')+' <button onclick="wtAppUpd()">⬆ '+(hi?'अपडेट':'UPDATE')+'</button></div>';
+  return '<div class="wtBg '+s+'">'+(s==='on'?'✅ '+(hi?'बैकग्राउंड में सुन रहा — ऐप बंद होने पर भी आवाज़ आएगी':'Listening in the background — voices play even with the app closed'):'⏸ '+(hi?'बैकग्राउंड सुनना बंद':'Background listening is off'))+' <small>app '+esc(v)+'</small>'
+    +'<div class="twOrd"><button onclick="try{SaiNative.wtTest()}catch(e){}">🔔 '+(hi?'टेस्ट आवाज़':'Test sound')+'</button><button onclick="try{SaiNative.wtSetup()}catch(e){}">⚙ '+(hi?'बैकग्राउंड में चलने दें (बैटरी / ऑटोस्टार्ट)':'Allow in background (battery / autostart)')+'</button></div>'
+    +'<div class="anDim">'+(hi?'Xiaomi / Vivo / Oppo / Realme में "ऑटोस्टार्ट" चालू करें और बैटरी में "कोई रोक नहीं" चुनें — एक बार':'On Xiaomi / Vivo / Oppo / Realme turn on "Autostart" and set battery to "No restrictions" — once')+'</div></div>';}
+var _wtSheet936=wtSheet;wtSheet=function(){_wtSheet936();try{var w=document.querySelector('#popArea .wtDev');if(w)w.insertAdjacentHTML('beforeend',wtBgHtml());}catch(e){}};
+/* once per phone (Android app): ask to allow the walkie in the background */
+setTimeout(function(){try{if(wtBgState()!=='on'||wtPref('BGASK')||!USER||WR.muted)return;wtPref('BGASK',1);var hi=LANG==='hi';
+  jsPop('<h3>📻 '+(hi?'ऐप बंद होने पर भी वॉकी':'WALKIE EVEN WITH THE APP CLOSED')+'</h3><div class="jsHint" style="font-size:15px">'+(hi?'फोन को बैकग्राउंड में ऐप चलाने दें, ताकि ऐप बंद होने पर भी लाइव आवाज़ आए।':'Let this phone run the app in the background so live voices play even when the app is closed.')+'</div>'
+    +'<button class="bigBtn bAccept" onclick="jsPopClose();try{SaiNative.wtSetup()}catch(e){}">⚙ '+(hi?'अनुमति दें':'ALLOW')+'</button><button class="bigBtn bGhost" onclick="jsPopClose();try{SaiNative.wtTest()}catch(e){}">🔔 '+(hi?'टेस्ट आवाज़':'TEST SOUND')+'</button><button class="bigBtn bGhost" onclick="jsPopClose()">'+(hi?'बाद में':'LATER')+'</button>','var(--grn)');}catch(e){}},9000);
+function wtAppUpd(){try{location.href=siteBase()+'bridge/sai-print.apk?t='+now();}catch(e){}}
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>

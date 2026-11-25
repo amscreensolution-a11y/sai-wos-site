@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.37",
+  "date": "2026-11-25",
+  "notes": "Walkie with the app closed: SAI WOS app 1.7 plays live voices through the phone's own speaker from its always-on background service, comes back by itself if the app is swiped away or killed (checks every 15 minutes), one tap to allow it in the background (battery / autostart on Xiaomi, Vivo, Oppo, Realme, Samsung), test sound button, shows if background listening is on.",
+  "hi": "ऐप बंद होने पर भी वॉकी: SAI WOS ऐप 1.7 फोन के अपने स्पीकर से लाइव आवाज़ चलाता है, ऐप हटाने या बंद होने पर अपने आप वापस (हर 15 मिनट जाँच), एक टैप में बैकग्राउंड की अनुमति (Xiaomi, Vivo, Oppo, Realme, Samsung), टेस्ट आवाज़ बटन।"
+ },
+ {
   "v": "9.36",
   "date": "2026-11-25",
   "notes": "Walkie-talkie on every phone, logged in or not (on by default, each phone can turn it off): live voices play on the login screen and with the screen off; a logged-out phone still gets personal messages for the person who last used it; keep-screen-on for desk phones. New SAI WOS Android app keeps listening in the background even when the app is closed or after a restart. walkie.html: a listen-only page any spare phone can stay open on.",
