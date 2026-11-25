@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.36",
+  "date": "2026-11-25",
+  "notes": "Walkie-talkie on every phone, logged in or not (on by default, each phone can turn it off): live voices play on the login screen and with the screen off; a logged-out phone still gets personal messages for the person who last used it; keep-screen-on for desk phones. New SAI WOS Android app keeps listening in the background even when the app is closed or after a restart. walkie.html: a listen-only page any spare phone can stay open on.",
+  "hi": "हर फोन पर वॉकी-टॉकी, लॉगिन हो या न हो (पहले से चालू, हर फोन बंद कर सकता): लॉगिन स्क्रीन पर और स्क्रीन बंद होने पर भी लाइव आवाज़; लॉगआउट फोन पर भी आख़िरी इस्तेमाल करने वाले के संदेश; डेस्क फोन के लिए स्क्रीन जगी रहे। नया SAI WOS Android ऐप बंद होने पर भी और फोन रीस्टार्ट के बाद भी सुनता रहे।"
+ },
+ {
   "v": "9.35",
   "date": "2026-11-25",
   "notes": "Faster technician screen: tap any phone in a list and it becomes the big card with its right button; scan a phone's sticker to jump to it; UNDO for 10 seconds after TAKE or COMPLETE; the phone buzzes on every big button. Auto-assign: new phones nobody took within a few minutes go to the best free technician (admin switch, minutes and max jobs per technician). One-tap expense from TODAY.",

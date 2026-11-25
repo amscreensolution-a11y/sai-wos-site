@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.34';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.35';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -895,6 +895,13 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 #undoBar button{border:0;background:var(--amb);color:#1a1200;border-radius:10px;padding:10px 14px;font-size:15px;font-weight:900;cursor:pointer}
 .tfBack{margin-left:6px;border:1.5px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:10px;padding:5px 10px;font-size:12px;font-weight:800;cursor:pointer}
 .tdAct{display:flex;gap:8px;align-items:center}.tdAuto{font-size:12px;font-weight:800;color:var(--cyn);border:1.5px solid var(--cyn);border-radius:12px;padding:4px 9px}
+
+/* ===== v9.36 ===== */
+#wtGate{position:fixed;left:50%;transform:translateX(-50%);top:calc(6px + env(safe-area-inset-top));z-index:9700;display:flex;align-items:center;gap:6px;flex-wrap:nowrap;white-space:nowrap;overflow-x:auto;max-width:calc(100vw - 12px);
+  background:#0f172a;color:#e5e7eb;border:2px solid var(--grn);border-radius:14px;padding:5px 8px;font:700 12px system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+#wtGate.off{border-color:#64748b}#wtGate .t{color:#fbbf24}
+#wtGate button{border:1px solid #475569;background:#1e293b;color:#e5e7eb;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:800;cursor:pointer}#wtGate button.act{border-color:#fbbf24;color:#fbbf24}
+.wtDev{margin:0 0 12px;padding:10px;border-radius:12px;background:var(--panel2);border:1.5px solid var(--grn)}.wtDev>b{display:block;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -902,7 +909,7 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.35</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.36</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -994,7 +1001,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.35';
+var APP_VER='9.36';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -10567,6 +10574,58 @@ function xpSave(){var a=+gv('xpA')||0,hi=LANG==='hi';if(a<=0){toast('⚠ '+(hi?'
   DB.audit.push({ts:now(),by:me().name,jid:'—',a:'💸 EXPENSE Rs.'+a+' — '+cat+' — '+n,f:'',t:''});metaSave();document.getElementById('popArea').innerHTML='';toast('💸 '+money(a)+' ✔');render(1);}
 var _vToday934=vToday;vToday=function(v){_vToday934(v);try{var hi=LANG==='hi',t=v.querySelector('.tdTop');if(!t)return;var c=asgCfg();
   t.insertAdjacentHTML('beforeend','<div class="tdAct">'+(c.on?'<span class="tdAuto">🤖 '+(hi?'अपने आप काम बँट रहा':'Auto-assign ON')+'</span>':'')+'<button class="tab" onclick="xpSheet()">💸 '+(hi?'खर्च':'Expense')+'</button></div>');}catch(e){}};
+
+
+/* ======================================================================================
+   v9.36 — 📻 walkie for every phone, logged in or not (on by default, each phone can turn it off):
+   plays on the login screen and with the screen off; remembers who uses this phone for personal messages;
+   keeps the sound alive; "keep screen on" for desk phones; the SAI WOS Android app keeps listening in the
+   background even when the app is closed (walkie.html in its service)
+   ====================================================================================== */
+function wtLast(){try{return JSON.parse(localStorage.getItem('SSM_WT_LAST')||'null');}catch(e){return null;}}
+function wtWho(){if(USER){var s=(DB.staff||[]).filter(function(x){return x.id===USER;})[0];return {id:USER,role:role(),name:s?s.name:''};}return wtLast()||{id:'',role:'',name:''};}
+function wtRemember(){try{if(!USER)return;var w=wtWho(),o=wtLast();if(!o||o.id!==w.id||o.role!==w.role){localStorage.setItem('SSM_WT_LAST',JSON.stringify(w));wtNativeSync();}}catch(e){}}
+wtForMe=function(d){if(!d||FB.gate)return false;var w=wtWho();if(w.id&&d.fid===w.id)return false;var t=d.to||'all';if(t==='all')return true;if(t==='tech')return w.role==='tech';return !!w.id&&t===w.id;};
+function wtNativeOwns(){try{return !!(window.SaiNative&&typeof SaiNative.wtCfg==='function');}catch(e){return false;}}
+wtRecv=function(d){if(!wtForMe(d))return;
+  if(WR.muted||(document.hidden&&wtNativeOwns())){WR.missed[d.sid]=WR.missed[d.sid]||{sid:d.sid,from:d.from,fid:d.fid,to:d.to,ts:d.ts};try{wtUi();}catch(e){}if(!WR.muted)wtGate();return;}
+  var s=WR.sess[d.sid];
+  if(!s){s=WR.sess[d.sid]={next:0,buf:{},t:0,from:d.from,to:d.to,endAt:0,fin:0};WR.heard[d.sid]=1;delete WR.missed[d.sid];wtChirp(1);wtBanner();wtKeep();}
+  s.buf[d.seq]=d;s.lastIn=now();wtDrain(d.sid);clearTimeout(s.gapT);s.gapT=setTimeout(function(){wtSkipGap(d.sid);},1600);};
+wtCatchUp=function(){if(WR.muted)return;var ks=Object.keys(WR.missed).map(function(k){return WR.missed[k];}).filter(function(m){return now()-m.ts<120000;}).sort(function(a,b){return a.ts-b.ts;});
+  ks.forEach(function(m,ix){setTimeout(function(){wtPlaySaved(m.sid,1);},ix*400);});};
+/* keep the speaker path awake so voices play instantly, even with the screen off */
+function wtKeep(){try{if(WR.muted||!AC||AC.state!=='running'||window._wtKeep)return;var b=AC.createBuffer(1,Math.round(AC.sampleRate/10),AC.sampleRate),s=AC.createBufferSource(),g=AC.createGain();
+  g.gain.value=0.0001;s.buffer=b;s.loop=true;s.connect(g);g.connect(AC.destination);s.start();window._wtKeep=s;
+  if('mediaSession' in navigator){try{navigator.mediaSession.metadata=new MediaMetadata({title:'SAI WOS walkie',artist:(DB.settings&&DB.settings.shop)||'SAI WOS',album:'Listening'});}catch(e){}}}catch(e){}}
+try{document.addEventListener('pointerdown',function(){setTimeout(function(){wtKeep();wtGate();},50);},{passive:true});}catch(e){}
+/* keep the screen on (reception / desk phones) */
+var WL={lock:null};
+function wtWakeOn(){return wtPref('WAKE')==='1';}
+function wtWake(on){wtPref('WAKE',on?1:0);wtWakeApply();try{wtGate();}catch(e){}}
+function wtWakeApply(){try{if(wtWakeOn()&&!document.hidden&&navigator.wakeLock&&!WL.lock){navigator.wakeLock.request('screen').then(function(l){WL.lock=l;l.addEventListener('release',function(){WL.lock=null;});}).catch(function(){});}
+  if(!wtWakeOn()&&WL.lock){WL.lock.release();WL.lock=null;}}catch(e){}}
+try{document.addEventListener('visibilitychange',function(){if(!document.hidden)wtWakeApply();});}catch(e){}
+/* the walkie switch for this phone */
+function wtDevSet(on){WR.muted=!on;wtPref('MUTE',on?0:1);if(on){acUnlock();setTimeout(wtKeep,100);}else{try{if(window._wtKeep){window._wtKeep.stop();window._wtKeep=null;}}catch(e){}}
+  wtNativeSync();try{wtUi();}catch(e){}wtGate();toast(on?'📻 '+(LANG==='hi'?'वॉकी चालू — लाइव आवाज़ आएगी':'Walkie ON — live voices will play'):'🔇 '+(LANG==='hi'?'इस फोन पर वॉकी बंद':'Walkie OFF on this phone'));}
+/* small walkie chip when nobody is logged in (login screen) */
+function wtGate(){try{var g=document.getElementById('wtGate');if(USER||!FB.db||FB.mode==='phone'){if(g)g.remove();return;}var hi=LANG==='hi',on=!WR.muted,snd=soundReady(),mc=Object.keys(WR.missed).length;
+  if(!g){g=document.createElement('div');g.id='wtGate';document.body.appendChild(g);}
+  g.className=on?'on':'off';
+  g.innerHTML='<b>📻 '+(hi?'वॉकी':'Walkie')+'</b> '+(on?(snd?'<span>🟢 '+(hi?'चालू (बिना लॉगिन)':'on (no login needed)')+'</span>':'<span class="t">👆 '+(hi?'आवाज़ के लिए एक बार दबाएँ':'tap once for sound')+'</span>'):'<span>🔇 '+(hi?'बंद':'off')+'</span>')
+    +(mc&&on?' <button onclick="wtCatchUp()">▶ '+mc+'</button>':'')+'<button onclick="wtDevSet('+(on?0:1)+')">'+(on?'🔇 '+(hi?'बंद':'Off'):'🔊 '+(hi?'चालू':'On'))+'</button>'
+    +'<button class="'+(wtWakeOn()?'act':'')+'" onclick="wtWake('+(wtWakeOn()?0:1)+')">☀ '+(hi?'स्क्रीन जगी':'Screen on')+'</button>';}catch(e){}}
+/* tell the SAI WOS Android app (1.x new) what to listen for in the background */
+function wtNativeSync(){try{if(!wtNativeOwns()||!FB||FB.mode==='phone')return;var cfg=null;try{cfg=JSON.parse(fbCfg().config);}catch(e){}if(!cfg||!cfg.projectId)cfg=DEFAULT_FB;var w=wtWho();
+  SaiNative.wtCfg(JSON.stringify({on:!WR.muted,cid:CID(),fb:cfg,user:w.id||'',role:w.role||'',name:w.name||'',url:'https://sai-workshop-os.web.app/walkie.html',lang:LANG}));}catch(e){}}
+/* walkie sheet: the phone switch + keep screen on */
+var _wtSheet935=wtSheet;wtSheet=function(){_wtSheet935();try{var hi=LANG==='hi',c=document.querySelector('#popArea .popCard');if(!c)return;
+  c.insertAdjacentHTML('afterbegin','<div class="wtDev"><b>📻 '+(hi?'इस फोन पर वॉकी (लॉगिन हो या न हो)':'Walkie on this phone (logged in or not)')+'</b><div class="twOrd"><button class="'+(!WR.muted?'on':'')+'" onclick="wtDevSet(1);wtSheet()">🔊 '+(hi?'चालू':'ON')+'</button><button class="'+(WR.muted?'on':'')+'" onclick="wtDevSet(0);wtSheet()">🔇 '+(hi?'बंद':'OFF')+'</button><button class="'+(wtWakeOn()?'on':'')+'" onclick="wtWake('+(wtWakeOn()?0:1)+');wtSheet()">☀ '+(hi?'स्क्रीन जगी रहे':'Keep screen on')+'</button></div>'
+    +'<div class="anDim">'+(wtNativeOwns()?(hi?'SAI WOS ऐप बंद होने पर भी आवाज़ आएगी':'Plays even when the SAI WOS app is closed'):(hi?'ऐप / ब्राउज़र खुला रहे तो आवाज़ आएगी — बंद होने पर भी सुनने के लिए SAI WOS Android ऐप लें':'Plays while the app/browser is open — install the SAI WOS Android app to hear it even when closed'))+'</div></div>');}catch(e){}};
+setInterval(function(){wtRemember();wtGate();wtWakeApply();},5000);
+setTimeout(function(){wtRemember();wtNativeSync();wtGate();},2500);
+setInterval(wtNativeSync,60000);
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>

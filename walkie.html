@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAI WOS Walkie</title>
+<style>
+:root{--bg:#0b1220;--fg:#e5e7eb;--dim:#94a3b8;--grn:#10b981;--red:#ef4444;--amb:#f59e0b}
+@media (prefers-color-scheme:light){:root{--bg:#f8fafc;--fg:#0f172a;--dim:#475569}}
+body{margin:0;background:var(--bg);color:var(--fg);font:600 16px system-ui,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center;padding:16px;box-sizing:border-box}
+.c{max-width:420px;width:100%}.big{font-size:64px}h1{font-size:22px;margin:8px 0}#st{color:var(--dim);margin:8px 0 18px}
+button{border:0;border-radius:14px;padding:16px 20px;font-size:18px;font-weight:900;width:100%;margin-top:10px;cursor:pointer;background:var(--grn);color:#00140c}
+button.off{background:var(--red);color:#fff}#live{min-height:28px;font-size:18px;color:var(--amb)}#log{margin-top:16px;color:var(--dim);font-size:13px;text-align:left}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head><body><div class="c"><div class="big">📻</div><h1>SAI WOS Walkie</h1><div id="st">…</div><div id="live"></div>
+<button id="tg" onclick="LS.toggle()">🔊 ON</button><div id="log"></div></div>
+<script>
+/* Live walkie-talkie listener. Runs inside the SAI WOS Android app in the background (no login needed),
+   or on any phone/tablet left open on this page. It only listens — talking is in the app. */
+var DEFAULT_FB={apiKey:"AIzaSyA_aJKaE6CivRxU7shigB8HGoBteJfFMZ8",authDomain:"sai-workshop-os.firebaseapp.com",projectId:"sai-workshop-os",storageBucket:"sai-workshop-os.firebasestorage.app",messagingSenderId:"928193040623",appId:"1:928193040623:web:78e03432a7c9b7baf84b1a"};
+var ADPCM_STEP=[7,8,9,10,11,12,13,14,16,17,19,21,23,25,28,31,34,37,41,45,50,55,60,66,73,80,88,97,107,118,130,143,157,173,190,209,230,253,279,307,337,371,408,449,494,544,598,658,724,796,876,963,1060,1166,1282,1411,1552,1707,1878,2066,2272,2499,2749,3024,3327,3660,4026,4428,4871,5358,5894,6484,7132,7845,8630,9493,10442,11487,12635,13899,15289,16818,18500,20350,22385,24623,27086,29794,32767];
+var ADPCM_IDX=[-1,-1,-1,-1,2,4,6,8];
+function adpcmDec(b,n,st){var out=new Float32Array(n),p=st.p,i=st.i;
+  for(var k=0;k<n;k++){var code=(k&1)?(b[k>>1]>>4):(b[k>>1]&15),step=ADPCM_STEP[i],dq=step>>3;
+    if(code&4)dq+=step;if(code&2)dq+=step>>1;if(code&1)dq+=step>>2;
+    p=(code&8)?p-dq:p+dq;if(p>32767)p=32767;else if(p<-32768)p=-32768;
+    i+=ADPCM_IDX[code&7];if(i<0)i=0;else if(i>88)i=88;out[k]=p/32768;}
+  st.p=p;st.i=i;return out;}
+function b64u8(b){var s=atob(b||''),u=new Uint8Array(s.length);for(var k=0;k<s.length;k++)u[k]=s.charCodeAt(k);return u;}
+var LS={c:null,db:null,un:null,AC:null,sess:{},seen:{},ready:false,
+  svc:function(){try{return window.SaiSvc||null;}catch(e){return null;}},
+  appVisible:function(){var s=LS.svc();try{return !!(s&&s.appVisible());}catch(e){return false;}},
+  lsCfg:function(){var c={};try{var f=JSON.parse(localStorage.getItem('SSM_WOS_FB')||'{}');c.cid=f.cid||'main';try{c.fb=JSON.parse(f.config);}catch(e){}c.mode=f.mode||'';}catch(e){}
+    try{var l=JSON.parse(localStorage.getItem('SSM_WT_LAST')||'null');if(l){c.user=l.id;c.role=l.role;}}catch(e){}try{c.on=localStorage.getItem('SSM_WT_MUTE')!=='1';}catch(e){c.on=true;}return c;},
+  start:function(c){try{if(typeof c==='string')c=JSON.parse(c);}catch(e){c=null;}c=c||LS.lsCfg();LS.c=c;if(!c.fb||!c.fb.projectId)c.fb=DEFAULT_FB;
+    if(c.on===false){LS.stop();LS.ui('🔇 Walkie is OFF on this phone');return 'off';}
+    if(c.mode==='phone'){LS.ui('Offline mode — no live walkie');return 'phone';}
+    try{var app=firebase.apps.filter(function(a){return a.name==='wt';})[0]||firebase.initializeApp(c.fb,'wt');LS.db=app.firestore();}catch(e){LS.ui('⚠ '+e.message);return 'err';}
+    LS.listen();LS.ui('🟢 Listening'+(c.user?' · '+(c.name||c.user):'')+' — no login needed');return 'ok';},
+  update:function(c){try{if(typeof c==='string')c=JSON.parse(c);}catch(e){return;}var o=LS.c||{};LS.c=c;
+    if(c.on===false){LS.stop();LS.ui('🔇 Walkie is OFF on this phone');return;}
+    if(!LS.un||o.cid!==c.cid)LS.start(c);else LS.ui('🟢 Listening'+(c.user?' · '+(c.name||c.user):''));},
+  stop:function(){try{if(LS.un)LS.un();}catch(e){}LS.un=null;LS.ready=false;},
+  listen:function(){LS.stop();var q=LS.db.collection('c_'+LS.c.cid+'_ptt').where('ts','>',Date.now()-60000);
+    LS.un=q.onSnapshot(function(snap){var first=!LS.ready;snap.docChanges().forEach(function(ch){if(ch.type!=='added')return;var id=ch.doc.id,d=ch.doc.data();if(!d||LS.seen[id])return;LS.seen[id]=1;if(first)return;LS.recv(d);});LS.ready=true;},
+      function(e){LS.ui('⚠ '+(e&&e.message||'connection'));setTimeout(function(){LS.listen();},15000);});},
+  forMe:function(d){var c=LS.c||{};if(!d)return false;if(c.user&&d.fid===c.user)return false;var t=d.to||'all';if(t==='all')return true;if(t==='tech')return c.role==='tech';return !!c.user&&t===c.user;},
+  recv:function(d){if(!LS.forMe(d))return;if(LS.appVisible())return;   /* the open app plays it itself */
+    var s=LS.sess[d.sid];if(!s){s=LS.sess[d.sid]={next:0,buf:{},t:0,from:d.from,fin:0};LS.chirp(1);LS.live(s);LS.log('🔊 '+(d.from||'')+' → '+(d.to||'all'));}
+    s.buf[d.seq]=d;s.lastIn=Date.now();LS.drain(d.sid);clearTimeout(s.gapT);s.gapT=setTimeout(function(){LS.gap(d.sid);},1600);},
+  drain:function(sid){var s=LS.sess[sid];if(!s)return;while(s.buf[s.next]){var c=s.buf[s.next];delete s.buf[s.next];s.next++;LS.play(s,c);if(c.last){LS.fin(sid);return;}}},
+  gap:function(sid){var s=LS.sess[sid];if(!s||s.fin)return;var ks=Object.keys(s.buf).map(Number).sort(function(a,b){return a-b;});if(ks.length){s.next=ks[0];LS.drain(sid);}else if(Date.now()-(s.lastIn||0)>8000)LS.fin(sid);},
+  ac:function(){try{LS.AC=LS.AC||new (window.AudioContext||window.webkitAudioContext)();if(LS.AC.state==='suspended')LS.AC.resume();}catch(e){}return LS.AC;},
+  play:function(s,c){try{if(!c.n)return;var AC=LS.ac();var pcm=adpcmDec(b64u8(c.d),c.n,{p:c.p,i:c.i}),buf=AC.createBuffer(1,pcm.length,c.r||16000);buf.getChannelData(0).set(pcm);
+    var src=AC.createBufferSource(),g=AC.createGain();g.gain.value=1.4;src.buffer=buf;src.connect(g);g.connect(AC.destination);var t=Math.max(AC.currentTime+(s.t?0.04:0.3),s.t);src.start(t);s.t=t+buf.duration;s.endAt=s.t;}catch(e){}},
+  fin:function(sid){var s=LS.sess[sid];if(!s||s.fin)return;s.fin=1;clearTimeout(s.gapT);var AC=LS.AC,w=AC?Math.max(0,(s.endAt-AC.currentTime))*1000:0;setTimeout(function(){LS.chirp(0);delete LS.sess[sid];LS.live(null);},w+150);},
+  chirp:function(up){try{var AC=LS.ac(),t=AC.currentTime;[up?1200:900,up?1600:600].forEach(function(f,i){var o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.setValueAtTime(.0001,t+i*.07);g.gain.exponentialRampToValueAtTime(.18,t+i*.07+.01);g.gain.exponentialRampToValueAtTime(.0001,t+i*.07+.06);o.connect(g);g.connect(AC.destination);o.start(t+i*.07);o.stop(t+i*.07+.07);});}catch(e){}},
+  live:function(s){var e=document.getElementById('live');if(e)e.textContent=s?'🔊 '+(s.from||'')+' is speaking…':'';},
+  ui:function(t){var e=document.getElementById('st');if(e)e.textContent=t;var b=document.getElementById('tg'),on=!(LS.c&&LS.c.on===false);if(b){b.textContent=on?'🔊 ON — tap to turn off':'🔇 OFF — tap to turn on';b.className=on?'':'off';}},
+  log:function(t){var e=document.getElementById('log');if(e){var d=new Date();e.innerHTML=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+' '+t.replace(/</g,'&lt;')+'<br>'+e.innerHTML.split('<br>').slice(0,9).join('<br>');}},
+  toggle:function(){LS.ac();var c=LS.c||LS.lsCfg();c.on=(c.on===false);try{localStorage.setItem('SSM_WT_MUTE',c.on?'0':'1');}catch(e){}LS.update(c);if(c.on&&!LS.un)LS.start(c);},
+  alive:function(){return LS.un?'ok':'down';}};
+/* opened on its own (not inside the app's background service): start from this phone's saved setup */
+document.addEventListener('pointerdown',function(){LS.ac();},{passive:true});
+setTimeout(function(){if(!LS.c&&!LS.svc())LS.start(null);},300);
+</script></body></html>
