@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.38",
+  "date": "2026-11-25",
+  "notes": "Technicians see if a part is IN STOCK (and where) before asking; reception gets 'in stock — please give'. Supplier list skips what is in stock and adds shop items running low (sold this month, at or below minimum). Weekly technician leaderboard with points (repairs, happy customers, on time, minus unhappy and comebacks) on TODAY and the technician screen. Biller warns when a rate is far below what you usually charge.",
+  "hi": "टेक्नीशियन पार्ट माँगने से पहले देखें कि स्टॉक में है (और कहाँ); रिसेप्शन को 'स्टॉक में है — दें'। सप्लायर लिस्ट में स्टॉक वाले नहीं, ख़त्म होने वाला दुकान का सामान जुड़े। हफ़्ते के स्टार टेक्नीशियन अंकों के साथ। बिलर: रेट आम से बहुत कम हो तो चेतावनी।"
+ },
+ {
   "v": "9.37",
   "date": "2026-11-25",
   "notes": "Walkie with the app closed: SAI WOS app 1.7 plays live voices through the phone's own speaker from its always-on background service, comes back by itself if the app is swiped away or killed (checks every 15 minutes), one tap to allow it in the background (battery / autostart on Xiaomi, Vivo, Oppo, Realme, Samsung), test sound button, shows if background listening is on.",

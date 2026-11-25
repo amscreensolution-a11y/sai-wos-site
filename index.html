@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.36';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.37';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -907,6 +907,15 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 .wtBg{margin-top:10px;padding:10px;border-radius:10px;font-size:13px;font-weight:700;background:var(--panel);border:1.5px solid var(--line2)}
 .wtBg.on{border-color:var(--grn);color:var(--grn)}.wtBg.old{border-color:var(--amb);color:var(--amb)}.wtBg.off{border-color:var(--red);color:var(--red)}.wtBg small{color:var(--dim);font-weight:600}
 .wtBg .twOrd{margin:8px 0 4px}.wtBg button{white-space:nowrap}
+
+/* ===== v9.38 ===== */
+.tfChips button.stk{border-color:var(--grn);color:var(--grn);background:rgba(16,185,129,.1)}
+.stkTag{flex-basis:100%;font-size:12px;font-weight:800;color:var(--grn)}
+.lbMe{font-size:13px;font-weight:900;color:#ca8a04;border:1.5px solid #eab308;border-radius:12px;padding:4px 10px;cursor:pointer}
+.lbP{border-color:#eab308}.lbP h2{color:#ca8a04}
+.lbR{display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:1px solid var(--line);font-size:14px}.lbR.me{background:rgba(250,204,21,.1);border-radius:8px}
+.lbN{font-size:20px;min-width:30px}.lbS{flex:1;color:var(--dim);font-size:12px}.lbPts{font-size:18px;color:#ca8a04}
+.pgR{padding:8px 10px;border-radius:10px;background:var(--panel2);margin:6px 0}.pgR .r{color:var(--red)}.pgR .g{color:var(--grn)}
 </style>
 </head>
 <body>
@@ -914,7 +923,7 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.37</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.38</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -1006,7 +1015,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.37';
+var APP_VER='9.38';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -10651,6 +10660,66 @@ setTimeout(function(){try{if(wtBgState()!=='on'||wtPref('BGASK')||!USER||WR.mute
   jsPop('<h3>📻 '+(hi?'ऐप बंद होने पर भी वॉकी':'WALKIE EVEN WITH THE APP CLOSED')+'</h3><div class="jsHint" style="font-size:15px">'+(hi?'फोन को बैकग्राउंड में ऐप चलाने दें, ताकि ऐप बंद होने पर भी लाइव आवाज़ आए।':'Let this phone run the app in the background so live voices play even when the app is closed.')+'</div>'
     +'<button class="bigBtn bAccept" onclick="jsPopClose();try{SaiNative.wtSetup()}catch(e){}">⚙ '+(hi?'अनुमति दें':'ALLOW')+'</button><button class="bigBtn bGhost" onclick="jsPopClose();try{SaiNative.wtTest()}catch(e){}">🔔 '+(hi?'टेस्ट आवाज़':'TEST SOUND')+'</button><button class="bigBtn bGhost" onclick="jsPopClose()">'+(hi?'बाद में':'LATER')+'</button>','var(--grn)');}catch(e){}},9000);
 function wtAppUpd(){try{location.href=siteBase()+'bridge/sai-print.apk?t='+now();}catch(e){}}
+
+
+/* ======================================================================================
+   v9.38 — 📦 technicians see if a part is IN STOCK before asking (and where it is); reception gets "in stock — give it" ·
+   supplier list skips what is in stock and adds shop items running low · 🏆 weekly technician leaderboard ·
+   💸 biller low-price guard (warns when a rate is far below what you usually charge)
+   ====================================================================================== */
+/* ---------- 📦 part stock ---------- */
+var PK_MAP=[[/display|combo|lcd|folder|screen/i,/display|combo|lcd|folder|screen|touch/i],[/batter/i,/batter/i],[/charging|port|jack/i,/charg|port|jack|usb|type.?c/i],[/back glass|back panel/i,/back/i],
+  [/speaker/i,/speaker|ringer/i],[/earpiece/i,/ear/i],[/mic/i,/mic/i],[/camera/i,/camera|cam/i],[/power/i,/power|on.?off/i],[/volume/i,/volume/i],[/frame/i,/frame|middle/i],[/sim/i,/sim/i],[/finger/i,/finger/i]];
+function stockFor(j,part){var c=j.c||{},m=(''+(c.model||'')).trim().toLowerCase();if(m.length<2)return [];var re=null;PK_MAP.forEach(function(x){if(!re&&x[0].test(part||''))re=x[1];});
+  if(!re){var w=(''+(part||'')).split(/[ \/]/)[0];if(!w)return [];re=new RegExp(w.replace(/[^a-z0-9]/gi,''),'i');}
+  var mre=new RegExp('(^|[^a-z0-9])'+m.replace(/[^a-z0-9]/gi,'\\s*')+'([^a-z0-9]|$)','i');
+  return prodArr().filter(function(p){var n=(p.name||'').toLowerCase();return p.qty>0&&re.test(n)&&mre.test(n);})
+    .sort(function(a,b){return b.qty-a.qty;}).slice(0,3);}
+var _tfFocus937=tfFocus;tfFocus=function(j,mode){var h=_tfFocus937(j,mode);if(mode!=='run')return h;var hi=LANG==='hi';
+  qpSuggest(j).forEach(function(n){var s=stockFor(j,n);if(!s.length)return;var key='quickPart(\''+j.id+'\',\''+esc(n).replace(/'/g,'')+'\')">'+esc(n)+'</button>';
+    h=h.replace(key,'quickPart(\''+j.id+'\',\''+esc(n).replace(/'/g,'')+'\')" class="stk">'+esc(n)+' <b>✅ '+s[0].qty+'</b></button>');});
+  return h;};
+var _quickPart937=quickPart;quickPart=function(id,nm){var j=DB.jobs[id];var s=j?stockFor(j,nm):[];_quickPart937(id,nm);var k=DB.jobs[id];if(!k||!s.length)return;
+  var p=(k.parts||[]).filter(function(x){return x.name===nm&&x.status==='WAITING';}).pop();if(!p||p.stk)return;p.stk={pid:s[0].id,name:s[0].name,qty:s[0].qty,loc:s[0].loc||''};save([id]);
+  try{msgSend({to:'rec',kind:'part',jid:id,pi:k.parts.indexOf(p),text:'✅ '+(LANG==='hi'?'स्टॉक में है':'IN STOCK')+': '+s[0].name+(s[0].loc?' @ '+s[0].loc:'')+' — '+(LANG==='hi'?'कृपया दें':'please give')});}catch(e){}
+  toast('✅ '+(LANG==='hi'?'स्टॉक में है — रिसेप्शन देगा':'in stock — reception will give it'));};
+/* TODAY: in-stock parts first, low shop stock, supplier list without in-stock items */
+function lowStock(){var since=now()-30*864e5,sold={};saleArr().forEach(function(s){if(s.ret||s.ts<since)return;(s.items||[]).forEach(function(c){if(c.pid)sold[c.pid]=(sold[c.pid]||0)+(+c.qty||1);});});
+  return prodArr().filter(function(p){return sold[p.id]&&p.qty<=p.min;}).map(function(p){return {p:p,sold:sold[p.id]};}).sort(function(a,b){return b.sold-a.sold;}).slice(0,25);}
+tdPartsWa=function(){var hi=LANG==='hi',L=tdParts().filter(function(x){return !x.p.ord&&!x.p.stk&&!stockFor(x.j,x.p.name).length;}),g={},LS=lowStock();
+  L.forEach(function(x){var c=x.j.c||{},k=anNm(((c.brand||'')+' '+(c.model||'')).trim())+' — '+x.p.name;g[k]=(g[k]||0)+(+x.p.qty||1);});
+  if(!L.length&&!LS.length){toast('👍 '+(hi?'सब स्टॉक में है':'everything is in stock'));return;}
+  var t='🛒 '+(DB.settings.shop||'')+' — '+fmtD(now())+(L.length?'\n\n🔧 Parts for repairs:\n'+Object.keys(g).map(function(k,i){return (i+1)+'. '+k+' ×'+g[k];}).join('\n'):'')
+    +(LS.length?'\n\n📦 Shop stock:\n'+LS.map(function(x,i){return (i+1)+'. '+x.p.name+' ×'+Math.max(1,x.sold-x.p.qty);}).join('\n'):'')+'\n\nPlease confirm price & availability 🙏',n=tdMob(DB.settings.supWa||'');
+  try{window.open(n.length===10?'https://wa.me/91'+n+'?text='+encodeURIComponent(t):'https://wa.me/?text='+encodeURIComponent(t),'_blank');}catch(e){}};
+/* ---------- 🏆 weekly leaderboard ---------- */
+function lbWeek(){var d=new Date(),dow=(d.getDay()+6)%7,ws=new Date(d.getFullYear(),d.getMonth(),d.getDate()-dow).getTime(),S={};
+  (DB.staff||[]).filter(function(s){return s.role==='tech'&&s.active!==false;}).forEach(function(s){S[s.id]={id:s.id,n:s.name,done:0,happy:0,sad:0,cb:0,ontime:0,pts:0};});
+  jobsArr().forEach(function(j){var t=S[j.tech],tm=j.tm||{};if(t&&tm.finished>=ws&&['DONE','READY','DELIVERED'].indexOf(j.st)>=0){t.done++;if(j.c&&j.c.expTs&&tm.finished<=j.c.expTs)t.ontime++;}
+    if(t&&j.fb&&j.fb.ts>=ws){if(j.fb.r>=4)t.happy++;else if(j.fb.r<=2)t.sad++;}
+    if((j.createdAt||0)>=ws){var p=cbPrev(j);if(p&&S[p.tech])S[p.tech].cb++;}});
+  return Object.keys(S).map(function(k){var t=S[k];t.pts=t.done*10+t.happy*3+t.ontime*2-t.sad*5-t.cb*15;return t;}).sort(function(a,b){return b.pts-a.pts||b.done-a.done;});}
+function lbHtml(n){var hi=LANG==='hi',L=lbWeek().slice(0,n||5);if(!L.length||!L.some(function(t){return t.done;}))return '';
+  return '<div class="panel lbP"><h2>🏆 '+(hi?'इस हफ़्ते के स्टार':'Stars of the week')+'</h2>'+L.map(function(t,i){return '<div class="lbR'+(t.id===me().id?' me':'')+'"><span class="lbN">'+(['🥇','🥈','🥉'][i]||'#'+(i+1))+'</span><b>'+esc(t.n)+'</b><span class="lbS">✔ '+t.done+(t.happy?' · 😊 '+t.happy:'')+(t.ontime?' · ⏰ '+t.ontime:'')+(t.cb?' · 🔁 '+t.cb:'')+'</span><b class="lbPts">'+t.pts+'</b></div>';}).join('')
+    +'<div class="anDim">'+(hi?'अंक: रिपेयर ×10, ख़ुश ग्राहक ×3, समय पर ×2, नाराज़ −5, वापस आया −15':'Points: repair ×10, happy customer ×3, on time ×2, unhappy −5, comeback −15')+'</div></div>';}
+var _vTechFast937=vTechFast;vTechFast=function(v){_vTechFast937(v);try{var hi=LANG==='hi',L=lbWeek(),i=L.findIndex(function(t){return t.id===me().id;});if(i<0||!L[i].done)return;var hd=v.querySelector('.tfHead h2');
+  if(hd)hd.insertAdjacentHTML('afterend','<span class="lbMe" onclick="var e=document.querySelector(\'#tfV .lbP\');if(e)e.scrollIntoView({behavior:\'smooth\'})">🏆 #'+(i+1)+' · '+L[i].pts+' '+(hi?'अंक':'pts')+'</span>');
+  var f=v.querySelector('#tfV');if(f)f.insertAdjacentHTML('beforeend',lbHtml(5));}catch(e){}};
+var _vToday937=vToday;vToday=function(v){_vToday937(v);try{var hi=LANG==='hi',box=v.querySelector('#tdV');if(!box)return;
+  box.querySelectorAll('#td_parts .tdPj').forEach(function(row){var a=row.querySelector('a');if(!a)return;var j=DB.jobs[a.textContent.trim()];if(!j)return;var nm=row.parentNode.querySelector('.tdPh b').textContent.split(' — ').pop();
+    var wp=(j.parts||[]).filter(function(x){return x.status==='WAITING';}),p=wp.filter(function(x){return anNm(x.name)===nm;})[0]||wp[0];if(!p)return;var s=p.stk?[{name:p.stk.name,qty:p.stk.qty,loc:p.stk.loc}]:stockFor(j,p.name);
+    if(s.length)row.insertAdjacentHTML('afterbegin','<span class="stkTag">✅ '+(hi?'स्टॉक में':'IN STOCK')+': '+esc(s[0].name)+(s[0].loc?' @ '+esc(s[0].loc):'')+' ('+s[0].qty+')</span>');});
+  var LS=lowStock();if(LS.length){var h=tdSec('low','📦',hi?'दुकान का सामान ख़त्म होने वाला (30 दिन में बिका)':'Shop stock running low (sold in last 30 days)',LS.length,LS.map(function(x){var p=x.p;return '<div class="tdR"><span class="twNoP">📦</span><div class="tdT"><div><b>'+esc(p.name)+'</b></div><div class="tdS">'+(hi?'बचे ':'left ')+'<b class="r">'+p.qty+'</b> · min '+p.min+' · '+(hi?'30 दिन में बिके ':'sold in 30 days ')+x.sold+(p.loc?' · 📍 '+esc(p.loc):'')+'</div></div></div>';}).join('')+'<button class="bigBtn bAccept" onclick="tdPartsWa()">💬 '+(hi?'सप्लायर को लिस्ट भेजें':'SEND LIST TO SUPPLIER')+'</button>','var(--amb)');
+    var w=box.querySelector('#td_watch');if(w)w.insertAdjacentHTML('beforebegin',h);else box.insertAdjacentHTML('beforeend',h);}
+  if(role()==='owner'||role()==='reception'||role()==='manager'){var lb=lbHtml(5);if(lb){var w2=box.querySelector('#td_watch');if(w2)w2.insertAdjacentHTML('beforebegin',lb);else box.insertAdjacentHTML('beforeend',lb);}}}catch(e){}};
+/* ---------- 💸 biller low-price guard ---------- */
+function usualRate(name){var k=anNm(name),a=[];saleArr().forEach(function(s){if(s.ret)return;(s.items||[]).forEach(function(c){if(anNm(c.name)===k&&+c.rate>0)a.push(+c.rate);});});if(a.length<3)return 0;a.sort(function(x,y){return x-y;});return a[Math.floor(a.length/2)];}
+var _bilSave937=bilSave;bilSave=function(andNew,after,skipStock){try{if(!window._pgOk&&BIL.f&&!((BIL.f.old||[]).length)){var B=bilBuild(),bad=[];(B.items||[]).forEach(function(c){var u=usualRate(c.name),r=+c.rate||0;if(u&&r>0&&r<u*0.6)bad.push({n:c.name,r:r,u:u});});
+    if(bad.length){var hi=LANG==='hi';window._pgArgs=[andNew,after,skipStock];
+      jsPop('<h3>💸 '+(hi?'रेट बहुत कम है?':'PRICE LOOKS TOO LOW')+'</h3>'+bad.map(function(b){return '<div class="pgR"><b>'+esc(b.n)+'</b><div>'+(hi?'आपने लिखा ':'You typed ')+'<b class="r">'+money(b.r)+'</b> · '+(hi?'आम तौर पर ':'usually ')+'<b class="g">'+money(b.u)+'</b></div></div>';}).join('')
+        +'<button class="bigBtn bGhost" onclick="jsPopClose();var e=document.querySelector(\'#bil input[id^=bR]\');if(e)e.focus();">✏ '+(hi?'रेट ठीक करें':'FIX THE PRICE')+'</button><button class="bigBtn bAccept" onclick="jsPopClose();window._pgOk=1;bilSave.apply(null,window._pgArgs);">✔ '+(hi?'फिर भी सेव करें':'SAVE ANYWAY')+'</button>','var(--amb)');
+      try{DB.audit.push({ts:now(),by:me().name,jid:'—',a:'💸 LOW PRICE WARNING: '+bad.map(function(b){return b.n+' '+b.r+' (usual '+b.u+')';}).join(', '),f:'',t:''});}catch(e){}return;}}}catch(e){}
+  window._pgOk=0;return _bilSave937(andNew,after,skipStock);};
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>
