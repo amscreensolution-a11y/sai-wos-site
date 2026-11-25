@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.34",
+  "date": "2026-11-25",
+  "notes": "Faster technician work: while repairing, one-tap 'what I found' (reception sees it), one-tap part request suggested for the problem and model (clock pauses by itself), one-tap messages to reception (password, data backup, call customer, more time, almost done). Daily repair target bar for each technician (admin sets it). No extra pop-up after COMPLETE on the fast screen. Live team panel for reception and owner: who is on which phone, timer vs usual time, done vs target, waiting parts, who is free.",
+  "hi": "तेज़ टेक्नीशियन काम: रिपेयर करते समय एक टैप में 'क्या मिला' (रिसेप्शन को दिखे), खराबी और मॉडल के हिसाब से एक टैप में पार्ट माँग (घड़ी अपने आप रुके), रिसेप्शन को एक टैप संदेश। हर टेक्नीशियन का रोज़ का टारगेट (एडमिन तय करे)। तेज़ स्क्रीन पर काम पूरा के बाद कोई अतिरिक्त पॉप-अप नहीं। रिसेप्शन और मालिक के लिए लाइव टीम: कौन किस फोन पर, टाइमर, टारगेट, पार्ट, कौन खाली।"
+ },
+ {
   "v": "9.33",
   "date": "2026-11-25",
   "notes": "New FAST technician screen: one job at a time with giant buttons — NOW WORKING card (photo, timer, usual time, tips, parts) with COMPLETE / pause / part / customer OK / photo / message; the next job is chosen for you (admin priority first) with TAKE & START or show another; finished phones to the counter one by one or all in one tap; my other jobs, waiting for part, new jobs and done today in tidy sections. Full board one tap away; admin chooses the default. Compact status bar. Biller: frequent items in one tap.",
