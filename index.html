@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.31';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.32';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -842,6 +842,41 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 .wR{display:flex;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line)}.wR>div{flex:1;min-width:0}.wS{font-size:13px;font-weight:800;margin-top:3px}
 .wR.ok .wS,.wS:not(.no){color:var(--grn)}.wR.no .wS{color:var(--dim)}
 .rqBar{display:grid;gap:8px}
+
+/* ===== v9.33 — fast technician screen ===== */
+.tfMode{border-color:var(--cyn)!important;color:var(--cyn)!important}
+.tfHead{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:4px 0 10px}.tfHead h2{margin:0;font-size:20px}
+.tfCnt{display:flex;gap:6px;flex-wrap:wrap}.tfCnt span{background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:5px 10px;font-size:13px;font-weight:700}.tfCnt b{font-size:16px}
+.tfSrch{margin-bottom:12px}
+.tfFocus{border:3px solid var(--cyn);border-radius:20px;background:var(--panel);padding:14px;margin:0 0 14px;box-shadow:0 8px 28px rgba(0,0,0,.12)}
+.tfFocus.run{border-color:var(--grn)}.tfFocus.open{border-color:var(--amb)}.tfFocus.prio{border-color:#eab308}.tfFocus.empty{border-style:dashed;border-color:var(--line2);box-shadow:none}
+.tfH{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;font-size:14px}.tfH .twAge{margin-left:auto;position:static}
+.tfTag{font-weight:900;font-size:13px;letter-spacing:.04em;color:var(--amb)}.tfTag.mine{color:var(--cyn)}
+.tfB{display:flex;gap:14px;align-items:flex-start}
+.tfPh{position:relative;width:min(44%,240px);aspect-ratio:3/4;flex:none;border-radius:14px;overflow:hidden;background:#000}.tfPh img{width:100%;height:100%;object-fit:cover;cursor:zoom-in}.tfPh .twPc{bottom:8px;right:8px}
+.tfI{flex:1;min-width:0;cursor:pointer}.tfM{font-size:26px;font-weight:900;line-height:1.1}.tfP{font-size:19px;font-weight:800;color:var(--amb);margin:6px 0}
+.tfTimer{display:flex;align-items:baseline;justify-content:center;gap:10px;font-size:34px;font-weight:900;margin:12px 0 6px;font-family:var(--mono,monospace)}.tfTimer small{font-size:14px;color:var(--dim);font-family:inherit}
+.tfGo{display:block;width:100%;margin-top:12px;border:0;border-radius:16px;padding:22px 12px;font-size:24px;font-weight:900;letter-spacing:.03em;cursor:pointer;background:var(--amb);color:#1a1200;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.tfGo.done{background:var(--grn);color:#00140c}.tfFocus.mine .tfGo{background:var(--cyn);color:#001318}
+.tfGo:active{transform:scale(.98)}
+.tfMore{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:8px;margin-top:10px}
+.tfMore button{border:1.5px solid var(--line2);background:var(--panel2);color:var(--txt);border-radius:14px;padding:10px 4px;font-size:12px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;min-height:64px}.tfMore button b{font-size:24px}
+.tfEmpty{text-align:center;font-size:22px;font-weight:900;padding:26px 10px;color:var(--dim)}.tfEmpty small{display:block;font-size:14px;font-weight:600;margin-top:6px}
+.tfCtr{border:2px solid var(--grn);background:rgba(16,185,129,.06)}.tfCtr h2{color:var(--grn)}
+.tfSec>summary{cursor:pointer;list-style:none}.tfSec>summary::-webkit-details-marker{display:none}.tfSec>summary h2{display:flex;align-items:center;gap:6px;margin:0}.tfSec>summary h2::after{content:'▾';color:var(--dim);margin-left:6px}.tfSec[open]>summary h2::after{content:'▴'}
+.tfSec[open]>summary{margin-bottom:8px}
+.tfR{display:flex;gap:12px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer}.tfR:last-child{border-bottom:0}
+.tfR img,.tfR .twNoP{width:68px;height:68px;object-fit:cover;border-radius:12px;flex:none}.tfR.prio{background:rgba(250,204,21,.08)}
+.tfRt{flex:1;min-width:0;font-size:15px}.tfRp{font-weight:800;color:var(--amb);font-size:14px}.tfRs{font-size:12px;color:var(--dim)}
+.tfRb .tkB{padding:14px 16px;font-size:15px}
+@media(max-width:520px){.tfPh{width:42%}.tfM{font-size:21px}.tfP{font-size:16px}.tfGo{font-size:21px;padding:20px 10px}}
+.bQuick{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;background:#F9FAFB;border-bottom:1px solid #EAECF0}.bQuick span{white-space:nowrap;font-size:12px;font-weight:700;color:#667085;align-self:center}
+.bQuick button{white-space:nowrap;border:1.5px solid #B2DDFF;background:#EFF8FF;color:#175CD3;border-radius:16px;padding:7px 12px;font-size:13px;cursor:pointer}.bQuick button b{color:#027A48}
+
+.tstBar{flex-wrap:nowrap;overflow-x:auto;gap:5px;padding:6px 8px}.tstBar .tsp{flex:1}.tstBar .eodB{margin-left:0}
+.tstBar button{white-space:nowrap;padding:7px 10px}
+@media(max-width:600px){.tstBar button:not(.on) .tl{display:none}.tstBar button{font-size:16px;padding:6px 10px}.tstBar button.on .tl{font-size:12px}}
+@media(max-width:600px){#toasts{top:64px;bottom:auto}}
 </style>
 </head>
 <body>
@@ -849,7 +884,7 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.32</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.33</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -941,7 +976,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.32';
+var APP_VER='9.33';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -5287,7 +5322,7 @@ function bilSale(){var f=BIL.f,T=bilTotals(),pb=bilPartyBal(),ed=!!f.edit;
     +(!f.party?'<div class="bOut" style="margin-top:14px"><label>Phone No.</label><input id="bMob" inputmode="tel" value="'+esc(f.mob)+'" oninput="BIL.f.mob=this.value;bilCustHint()"><div id="bCHint">'+bilCustHintHtml(f.mob)+'</div></div>':'')
     +bilJobBox()
     +'<div class="bBI"><b>Billed Items</b><a class="'+(bilRows().length?'':'off')+'" onclick="if(bilRows().length){BIL.sel=!BIL.sel;bilDraw();}">'+(BIL.sel?'Done':'Delete Items')+'</a></div></div>'
-    +'<div id="bItemSug" class="bItemSugW"></div>'
+    +'<div id="bItemSug" class="bItemSugW"></div>'+bilQuickChips()
     +'<table class="bTbl"><tr>'+(BIL.sel?'<th></th>':'')+'<th>Item Name <span class="bBar" title="scan barcode" onclick="var e=document.getElementById(\'bN'+(f.rows.length-1)+'\');if(e)e.focus()">▥</span></th><th>Qty</th><th>Rate</th><th>Amount</th></tr>'+rows
     +'<tr class="bTotR">'+(BIL.sel?'<td></td>':'')+'<td>Total</td><td id="bTq">'+(bilRows().length?T.qty.toFixed(1):'')+'</td><td></td><td id="bTa">'+(bilRows().length?T.amt.toFixed(2):'')+'</td></tr></table>'
     +'<div class="bMoney"><div class="bMr"><span class="bBig">Total Amount</span><span class="bDash">₹<input id="bTot" inputmode="decimal" '+(bilRows().length?'readonly':'')+' value="'+(bilRows().length?T.tot.toFixed(2):esc(f.manualTot))+'" oninput="BIL.f.manualTot=this.value;bilRecalc()"></span></div>'
@@ -10328,6 +10363,85 @@ var _anOver931=anOver;anOver=function(C,Cp,N,R,P){var hi=LANG==='hi',h=_anOver93
   var i=h.indexOf('<div class="panel anSay">');return i<0?h+x:h.slice(0,i)+x+h.slice(i);};
 var _anTeam931=anTeam;anTeam=function(C,Cp,N,R){var hi=LANG==='hi',h=_anTeam931(C,Cp,N,R),P=C.fbPer||{},ks=Object.keys(P);if(!ks.length)return h;
   return h+'<div class="panel"><h2>😊 '+(hi?'ग्राहक ख़ुशी — टेक्नीशियन वार':'Customer happiness by technician')+'</h2>'+anHB(ks.map(function(k){return {n:techName(k),v:Math.round(P[k].s/P[k].n*10)/10,c:P[k].n};}).sort(function(a,b){return b.v-a.v;}),function(x){return x.v;},function(x){return esc(x.n)+' ('+x.c+')';},'var(--grn)',function(v){return v+' / 5';})+'</div>';};
+
+
+/* ======================================================================================
+   v9.33 — ⚡ FAST technician screen: one job at a time with giant buttons.
+   NOW (timer, photo, tips, parts) → ✔ COMPLETE / ⏸ / 🧩 / 🙋 · NEXT job chosen for you (TAKE & START / skip) ·
+   📤 hand finished phones to the counter (one or all) · my queue · open jobs · done today.
+   Full board one tap away; admin picks the default style. · 🧾 biller: one-tap frequent items
+   ====================================================================================== */
+TW.skip=TW.skip||{};
+function twMode(){var m='';try{m=localStorage.getItem('SSM_WOS_TWMODE')||'';}catch(e){}return m||((DB.settings&&DB.settings.twMode)||'fast');}
+function twSetMode(m){try{localStorage.setItem('SSM_WOS_TWMODE',m);}catch(e){}render(1);try{window.scrollTo(0,0);}catch(e){}}
+tstBar=function(){var hi=LANG==='hi',c=tstOf(me().id),f=twMode()==='fast';
+  return '<div class="tstBar">'+Object.keys(TST_L).map(function(k){var l=TST_L[k];return '<button class="'+(c.s===k?'on '+k:'')+'" onclick="tstSet(\''+k+'\')">'+l[0]+'<span class="tl"> '+(hi?l[2]:l[1])+'</span></button>';}).join('')
+    +(c.s!=='on'&&c.ts?'<small>'+insH(now()-c.ts)+'</small>':'')+'<span class="tsp"></span>'
+    +'<button class="tfMode" onclick="twSetMode(\''+(f?'full':'fast')+'\')">'+(f?'📋':'⚡')+'<span class="tl"> '+(f?(hi?'पूरा बोर्ड':'FULL BOARD'):(hi?'तेज़ स्क्रीन':'FAST SCREEN'))+'</span></button>'
+    +'<button class="eodB" onclick="eodSheet()">🏁<span class="tl"> '+(hi?'दिन ख़त्म':'END OF DAY')+'</span></button></div>';};
+var _vTech0932=vTech0;vTech0=function(v){if(twMode()!=='fast')return _vTech0932(v);return vTechFast(v);};
+function tfOpen(){var f=TW.f,t=TW.tf;TW.f='new';TW.tf='all';var L=[];try{L=twBoard().L;}finally{TW.f=f;TW.tf=t;}return L;}
+function tfMine(){var id=me().id,J=jobsArr().filter(function(j){return j.tech===id&&!j.noRep&&techMatch(j);});
+  var run=J.filter(function(j){return j.st==='REPAIR'&&j.tm&&j.tm.run&&!(j.rtn&&j.rtn.ask);})[0]||null;
+  var wp=function(j){return (j.parts||[]).some(function(p){return p.status==='WAITING';});};
+  var q=J.filter(function(j){return j!==run&&['ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0&&!(j.rtn&&j.rtn.ask)&&!(j.appr&&j.appr.st==='ASK');})
+    .sort(function(a,b){return ((prioOn(b)?1:0)-(prioOn(a)?1:0))||((wp(a)?1:0)-(wp(b)?1:0))||((urgOn(b)?1:0)-(urgOn(a)?1:0))||(((a.tm||{}).accepted||a.createdAt||0)-((b.tm||{}).accepted||b.createdAt||0));});
+  var ask=J.filter(function(j){return j.appr&&j.appr.st==='ASK'&&['ASSIGNED','REPAIR','PARTS'].indexOf(j.st)>=0;});
+  var ctr=J.filter(function(j){return j.st==='DONE'&&!jsDone(j,'sent')&&!(j.rtn&&j.rtn.ask);});
+  var ds=dayStart(),done=J.filter(function(j){return (j.tm||{}).finished>=ds&&['DONE','READY','DELIVERED'].indexOf(j.st)>=0;}).sort(function(a,b){return b.tm.finished-a.tm.finished;});
+  return {run:run,q:q,qr:q.filter(function(j){return !wp(j);}),qw:q.filter(wp),ask:ask,ctr:ctr,done:done};}
+function tfTitle(j){var c=j.c||{};return esc(((c.brand||'')+' '+(c.model||'')).trim()||'—');}
+function tfPhoto(j,cls){var ps=photosOf(j);return ps.length?'<div class="'+cls+'"><img src="'+imgSrc(ps[0].d)+'" alt="" onclick="event.stopPropagation();bigView(\''+j.id+'\')">'+(ps.length>1?'<i class="twPc">📷 '+ps.length+'</i>':'')+'</div>'
+  :'<div class="'+cls+'"><button class="twAddPh" onclick="event.stopPropagation();twAddPhoto(\''+j.id+'\')">📸<span>'+(LANG==='hi'?'फोटो लें':'ADD PHOTO')+'</span></button></div>';}
+function tfFocus(j,mode){var hi=LANG==='hi',c=j.c||{},id=j.id,u=usualMs(j),tips=tipsOf(tipKey(j)).length,head,btn,more='';
+  if(mode==='run'){head='<span class="twLive">● '+(hi?'अभी चल रहा':'NOW WORKING')+'</span>';
+    btn='<div class="tfTimer">⏱ '+wkTag(j)+(u?'<small>'+(hi?'आम तौर पर ':'usually ')+insH(u)+'</small>':'')+'</div><button class="tfGo done" onclick="act(\''+id+'\',\'finish\')">✔ '+(hi?'काम पूरा':'COMPLETE')+'</button>';
+    more='<div class="tfMore"><button onclick="act(\''+id+'\',\'pause\')"><b>⏸</b>'+(hi?'रोकें':'Pause')+'</button><button onclick="askPartSheet(\''+id+'\')"><b>🧩</b>'+(hi?'पार्ट':'Part')+'</button><button onclick="apprAsk(\''+id+'\')"><b>🙋</b>'+(hi?'ग्राहक OK':'Customer OK')+'</button><button onclick="askPhoto(\''+id+'\',\'REPAIR\')"><b>📸</b>'+(hi?'फोटो':'Photo')+'</button><button onclick="msgCompose(\'rec\',\''+id+'\')"><b>💬</b>'+(hi?'संदेश':'Message')+'</button></div>';}
+  else if(mode==='mine'){head='<span class="tfTag mine">▶ '+(hi?'आपका अगला काम':'YOUR NEXT JOB')+'</span>';
+    btn='<button class="tfGo" onclick="twPick(\''+id+'\')">▶ '+(j.st==='ASSIGNED'?(hi?'शुरू करें':'START'):(hi?'फिर शुरू':'CONTINUE'))+'</button>';}
+  else{head='<span class="tfTag">🆕 '+(prioOn(j)?(hi?'एडमिन ने पहले कहा':'ADMIN SAYS FIRST'):urgOn(j)?(hi?'अर्जेंट':'URGENT'):(hi?'अगला काम आपके लिए':'NEXT JOB FOR YOU'))+'</span>';
+    btn=accFeat('techTake',true)?'<button class="tfGo" onclick="twTakeStart(\''+id+'\')">▶ '+(hi?'लें + शुरू करें':'TAKE & START')+'</button>':'<div class="anDim">'+(hi?'रिसेप्शन काम देगा':'Reception will assign')+'</div>';
+    more='<div class="tfMore"><button onclick="TW.skip[\''+id+'\']=1;render(1)"><b>⏭</b>'+(hi?'दूसरा दिखाएँ':'Show another')+'</button><button onclick="bigView(\''+id+'\')"><b>🔍</b>'+(hi?'पूरा देखें':'Details')+'</button></div>';}
+  return '<div class="tfFocus '+mode+(urgOn(j)?' tkUrg':'')+(prioOn(j)?' prio':'')+'"><div class="tfH">'+head+' <b class="jid">'+esc(id)+'</b>'+urgBadge(j)+' '+techDue(j)+twAge(j)+'</div>'
+    +'<div class="tfB">'+tfPhoto(j,'tfPh')+'<div class="tfI" onclick="openJob(\''+id+'\')"><div class="tfM">'+tfTitle(j)+'</div><div class="tfP">🔧 '+esc(c.prob||'—')+'</div>'+techFacts(j)
+      +((c.req&&c.req.length)?'<div class="tkReq">✅ '+c.req.map(esc).join(' · ')+'</div>':'')+(c.rem?'<div class="tkRem">📝 '+esc(c.rem)+'</div>':'')+techNotes(j)
+      +(tips?'<button class="tipChip" onclick="event.stopPropagation();tipsSheet(\''+id+'\')">💡 '+tips+' '+(hi?'टिप्स इस मॉडल की':'tips for this model')+'</button>':'')+'</div></div>'
+    +jobStepsHtml(j,'mini')+twParts(j)+btn+more+'</div>';}
+function tfRow(j,btn,sub){var c=j.c||{},ps=photosOf(j);return '<div class="tfR'+(prioOn(j)?' prio':'')+(urgOn(j)?' tkUrg':'')+'" onclick="openJob(\''+j.id+'\')">'+(ps.length?'<img src="'+imgSrc(ps[0].d)+'" alt="" onclick="event.stopPropagation();bigView(\''+j.id+'\')">':'<span class="twNoP">📵</span>')
+  +'<div class="tfRt"><div><b class="jid">'+esc(j.id)+'</b> '+tfTitle(j)+urgBadge(j)+'</div><div class="tfRp">🔧 '+esc(c.prob||'—')+'</div>'+(sub?'<div class="tfRs">'+sub+'</div>':'')+'</div><div class="tfRb" onclick="event.stopPropagation()">'+(btn||'')+'</div></div>';}
+function tfSec(ic,t,n,body,cls,open){if(!n)return '';return '<details class="panel tfSec '+(cls||'')+'"'+(open?' open':'')+'><summary><h2>'+ic+' '+t+' <b class="tdN">'+n+'</b></h2></summary>'+body+'</details>';}
+function tfSendAll(){var hi=LANG==='hi',L=tfMine().ctr;if(!L.length)return;L.forEach(function(j){j.mm=j.mm||{};j.mm.sent={ts:now(),by:me().name};logA(j,'📤 PHONE HANDED TO COUNTER by '+me().name,'','');});save(L.map(function(j){return j.id;}));
+  try{msgSend({to:'rec',kind:'sent',jid:L[0].id,text:(hi?'फोन काउंटर पर भेजे: ':'Phones sent to the counter: ')+L.map(function(j){return j.id;}).join(', ')});}catch(e){}toast('📤 '+L.length+' → '+(hi?'काउंटर':'counter'));render(1);}
+function vTechFast(v){var hi=LANG==='hi',M=tfMine(),open=tfOpen(),nx=open.filter(function(j){return !TW.skip[j.id];})[0]||open[0]||null,focus='',fm='';
+  if(M.run){focus=M.run;fm='run';}else if(M.qr.length){focus=M.qr[0];fm='mine';}else if(nx){focus=nx;fm='open';}
+  var top=twTopArrange({kpis:'',steps:'',bar:'',alerts:'',search:'',seg:''},null);
+  var h='<div id="tfV">'+top
+    +'<div class="tfHead"><h2>⚡ '+esc(me().name)+'</h2><div class="tfCnt"><span>🔧 <b>'+(M.q.length+(M.run?1:0))+'</b> '+(hi?'मेरे पास':'with me')+'</span><span>📤 <b>'+M.ctr.length+'</b> '+(hi?'काउंटर को':'to counter')+'</span><span>🆕 <b>'+open.length+'</b> '+(hi?'नए':'new')+'</span><span>✔ <b>'+M.done.length+'</b> '+(hi?'आज':'today')+'</span></div></div>'
+    +'<div class="mmSrch tfSrch"><input id="techQ" class="tkSearch" autocomplete="off" placeholder="🔎 '+(hi?'R-नंबर, मॉडल, खराबी, नाम...':'R-no, model, problem, name...')+'" value="'+esc(TECHQ)+'" oninput="TECHQ=this.value;clearTimeout(window._tq);window._tq=setTimeout(function(){render(1)},120)"><button class="mmScanB" onclick="techScan()">📷</button></div>'+twSearchHtml();
+  if(M.ctr.length)h+='<div class="panel tfCtr"><h2>📤 '+(hi?'पूरे फोन काउंटर पर दें':'Take finished phones to the counter')+' <b class="tdN">'+M.ctr.length+'</b></h2>'
+    +M.ctr.map(function(j){return tfRow(j,'<button class="tkB done" onclick="jobSent(\''+j.id+'\')">📤 '+(hi?'दिया':'GIVEN')+'</button>','✔ '+fmtT(j.tm.finished)+(j.qc&&j.qc.bad.length?' · ⚠ '+esc(j.qc.bad.join(', ')):''));}).join('')
+    +(M.ctr.length>1?'<button class="bigBtn bAccept" onclick="tfSendAll()">📤 '+(hi?'सारे ':'ALL ')+M.ctr.length+' '+(hi?'काउंटर पर दिए':'GIVEN TO COUNTER')+'</button>':'')+'</div>';
+  h+=focus?tfFocus(focus,fm):'<div class="tfFocus empty"><div class="tfEmpty">🎉 '+(hi?'अभी कोई काम नहीं':'No work waiting right now')+'<small>'+(hi?'नया काम आते ही यहाँ दिखेगा':'New jobs appear here the moment they come in')+'</small></div></div>';
+  if(M.ask.length)h+='<div class="panel twAppr"><h2>🙋 '+(hi?'ग्राहक से पूछ रहे':'Waiting for customer OK')+'</h2>'+M.ask.map(function(j){return tfRow(j,'',esc(j.appr.txt||''));}).join('')+'</div>';
+  var q=M.qr.filter(function(j){return j!==focus;});
+  h+=tfSec('🔧',hi?'मेरे बाकी काम':'My other jobs',q.length,q.map(function(j){return tfRow(j,'<button class="tkB go" onclick="twPick(\''+j.id+'\')">▶ '+(j.st==='ASSIGNED'?(hi?'शुरू':'START'):(hi?'फिर शुरू':'CONTINUE'))+'</button>',stName(j.st)+' · ⏱ '+durS(wkMs(j)));}).join(''),'',true);
+  h+=tfSec('🧩',hi?'पार्ट का इंतज़ार':'Waiting for a part',M.qw.length,M.qw.map(function(j){var p=(j.parts||[]).filter(function(x){return x.status==='WAITING';});return tfRow(j,'',p.map(function(x){return '🧩 '+esc(x.name)+(x.ord?' · 🛒 '+(hi?'ऑर्डर हुआ':'ordered'):'');}).join(' · '));}).join(''),'',true);
+  var on=open.filter(function(j){return j!==focus;});
+  h+=tfSec('🆕',hi?'नए काम — कोई भी ले सकता':'New jobs — anyone can take',on.length,on.slice(0,12).map(function(j){return tfRow(j,accFeat('techTake',true)?'<button class="tkB go" onclick="twTakeStart(\''+j.id+'\')">▶ '+(hi?'लें':'TAKE')+'</button>':'','⏳ '+insH(now()-(j.createdAt||now()))+(cbPrev(j)?' · 🔁':''));}).join('')+(on.length>12?'<button class="bigBtn bGhost" onclick="twSetMode(\'full\')">📋 '+(hi?'सारे देखें':'SEE ALL')+' ('+on.length+')</button>':''),'',on.length<=6);
+  h+=tfSec('✔',hi?'आज पूरे किए':'Done today',M.done.length,M.done.map(function(j){return tfRow(j,'','✔ '+fmtT(j.tm.finished)+' · '+stName(j.st));}).join(''),'',false);
+  v.innerHTML=h+techFeed()+'</div>'+twDock();try{var pz=v.querySelector('#tfV .twPrio');if(pz)pz.remove();}catch(e){}try{FLASH={};}catch(e){}}
+
+/* admin: default technician screen style */
+var _twAdminPanel932=twAdminPanel;twAdminPanel=function(){var hi=LANG==='hi',h=_twAdminPanel932(),m=(DB.settings&&DB.settings.twMode)||'fast';
+  var x='<div class="twAdmS"><b>📱 '+(hi?'टेक्नीशियन स्क्रीन का तरीका':'Technician screen style')+'</b><div class="twOrd"><button class="'+(m==='fast'?'on':'')+'" onclick="DB.settings.twMode=\'fast\';metaSave();render(1)">⚡ '+(hi?'तेज़ — एक समय में एक काम':'Fast — one job at a time')+'</button><button class="'+(m==='full'?'on':'')+'" onclick="DB.settings.twMode=\'full\';metaSave();render(1)">📋 '+(hi?'पूरा बोर्ड':'Full board')+'</button></div><div class="anDim">'+(hi?'हर टेक्नीशियन अपने फोन पर बदल भी सकता है':'Each technician can still switch on their own phone')+'</div></div>';
+  return h.replace(/<\/details>$/,x+'</details>');};
+
+/* ---------- 🧾 biller: frequent items in one tap ---------- */
+function bilFreq(){var m={},since=now()-90*864e5;saleArr().forEach(function(s){if(s.ret||s.ts<since)return;(s.items||[]).forEach(function(c){var k=anNm(c.name),r=+c.rate||0;if(!k||k==='—'||r<=0)return;var o=m[k]||(m[k]={k:k,n:c.name,c:0,r:[],t:0});o.c++;o.r.push(r);if(s.ts>o.t){o.t=s.ts;o.n=c.name;o.lr=r;o.pid=c.pid||'';}});});
+  return Object.keys(m).map(function(k){var o=m[k],a=o.r.slice().sort(function(x,y){return x-y;});o.med=a[Math.floor(a.length/2)];return o;}).filter(function(o){return o.c>=2;}).sort(function(a,b){return b.c-a.c;}).slice(0,10);}
+function bilQuickChips(){var L=bilFreq();if(!L.length)return '';window._bqL=L;return '<div class="bQuick"><span>⚡ '+(LANG==='hi'?'बार-बार बिकने वाले':'Frequent')+'</span>'+L.map(function(o,i){return '<button onclick="bilQuickAdd('+i+')">'+esc(o.n)+' <b>₹'+o.med+'</b></button>';}).join('')+'</div>';}
+function bilQuickAdd(i){var o=(window._bqL||[])[i];if(!o||!BIL.f)return;var R=BIL.f.rows,k=R.findIndex(function(r){return !(''+(r.name||'')).trim();});if(k<0){R.push({name:'',qty:'',rate:'',pid:''});k=R.length-1;}
+  R[k]={name:o.n,qty:'1',rate:''+o.med,pid:o.pid&&DB.prod&&DB.prod[o.pid]?o.pid:''};if(k===R.length-1)R.push({name:'',qty:'',rate:'',pid:''});bilDraw();toast('＋ '+esc(o.n));}
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>

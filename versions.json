@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.33",
+  "date": "2026-11-25",
+  "notes": "New FAST technician screen: one job at a time with giant buttons — NOW WORKING card (photo, timer, usual time, tips, parts) with COMPLETE / pause / part / customer OK / photo / message; the next job is chosen for you (admin priority first) with TAKE & START or show another; finished phones to the counter one by one or all in one tap; my other jobs, waiting for part, new jobs and done today in tidy sections. Full board one tap away; admin chooses the default. Compact status bar. Biller: frequent items in one tap.",
+  "hi": "नई तेज़ टेक्नीशियन स्क्रीन: एक समय में एक काम, बड़े बटन — अभी चल रहा कार्ड (फोटो, टाइमर, आम समय, टिप्स, पार्ट) और काम पूरा / रोकें / पार्ट / ग्राहक OK / फोटो / संदेश; अगला काम अपने आप चुना (एडमिन का ज़रूरी पहले), लें + शुरू या दूसरा दिखाएँ; पूरे फोन एक-एक या सब एक टैप में काउंटर पर; मेरे बाकी, पार्ट का इंतज़ार, नए और आज पूरे अलग हिस्सों में। पूरा बोर्ड एक टैप पर; एडमिन तय करे। बिलर: बार-बार बिकने वाले सामान एक टैप में।"
+ },
+ {
   "v": "9.32",
   "date": "2026-11-24",
   "notes": "Warranty desk: check any customer's warranty by mobile, R-no or IMEI and start a free warranty job that goes as priority to the technician who did the first repair. Technician status (available / break / out) seen by reception and used for assigning; technician end-of-day report to admin. Customer happiness at hand-over: happy customers get the review link, unhappy ones alert the owner, analytics per technician. Udhaar promise dates show on the day. Biller fills the customer name from a known mobile.",
