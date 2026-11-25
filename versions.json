@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.35",
+  "date": "2026-11-25",
+  "notes": "Faster technician screen: tap any phone in a list and it becomes the big card with its right button; scan a phone's sticker to jump to it; UNDO for 10 seconds after TAKE or COMPLETE; the phone buzzes on every big button. Auto-assign: new phones nobody took within a few minutes go to the best free technician (admin switch, minutes and max jobs per technician). One-tap expense from TODAY.",
+  "hi": "तेज़ टेक्नीशियन स्क्रीन: सूची में किसी भी फोन पर दबाएँ तो वही बड़ा कार्ड बने सही बटन के साथ; स्टिकर स्कैन करें तो सीधे वही फोन; लें या पूरा करने के बाद 10 सेकंड तक वापस करें; हर बड़े बटन पर हल्का कंपन। अपने आप काम बाँटना: कुछ मिनट में किसी ने नहीं लिया तो सबसे सही खाली टेक्नीशियन को (एडमिन चालू करे)। TODAY से एक टैप में खर्च।"
+ },
+ {
   "v": "9.34",
   "date": "2026-11-25",
   "notes": "Faster technician work: while repairing, one-tap 'what I found' (reception sees it), one-tap part request suggested for the problem and model (clock pauses by itself), one-tap messages to reception (password, data backup, call customer, more time, almost done). Daily repair target bar for each technician (admin sets it). No extra pop-up after COMPLETE on the fast screen. Live team panel for reception and owner: who is on which phone, timer vs usual time, done vs target, waiting parts, who is free.",
