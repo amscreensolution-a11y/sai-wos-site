@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.37';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.38';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -923,7 +923,7 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.38</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.39</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -1015,7 +1015,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.38';
+var APP_VER='9.39';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -5739,6 +5739,10 @@ function permPanel(){var o=document.getElementById('popArea');if(!o)return;var h
     +L.map(function(x){var on=p[x[0]]!==false;return '<div class="bLine" style="align-items:center"><span><b>'+x[1]+'</b>'+(x[2]?'<br><small style="color:#888">'+x[2]+'</small>':'')+'</span><b style="color:'+(on?'#12B76A':'#ED1C3A')+'">'+(on?'✔ '+(hi?'चालू':'Allowed'):'✖ '+(hi?'बंद':'Off'))+'</b></div>';}).join('')
     +'<div style="display:flex;gap:10px;margin-top:14px"><button class="bS" style="flex:1" onclick="SaiNative.fixPermissions();setTimeout(permPanel,2500)">'+(off?(hi?'सब चालू करें':'Allow all'):'✔ '+(hi?'सब ठीक है':'All good'))+'</button><button class="bS" style="flex:1;background:#fff;color:#0B72E7;border:1.5px solid #0B72E7" onclick="SaiNative.openSettings()">'+(hi?'फोन सेटिंग्स':'Phone settings')+'</button></div>'
     +'<div style="color:#888;font-size:12px;margin-top:10px">SAI WOS app v'+esc((function(){try{return SaiNative.version();}catch(e){return '?';}})())+'</div></div></div>';}
+/* app 1.8+: one tap → the app downloads and installs its own update (Android 12+ installs silently after the first allow) */
+function appUpdNow(btn){try{var hi=LANG==='hi';SaiNative.appUpdate();if(btn){btn.disabled=true;btn.innerText='⏳';}var k=0,t=setInterval(function(){var s='';try{s=(SaiNative.updState()||'').split('|')[0];}catch(e){}k++;
+  var m=/^downloading/.test(s)?(hi?'डाउनलोड हो रहा है…':'Downloading…'):/^installing|^tap/.test(s)?(hi?'इंस्टॉल हो रहा है…':'Installing…'):s==='allow'?(hi?'"इस स्रोत से अनुमति दें" चालू करें, फिर वापस आकर दोबारा दबाएँ':'Turn ON "Allow from this source", come back, tap Update again'):/^error/.test(s)?(hi?'अपडेट नहीं हुआ — फिर से दबाएँ':'Update failed — tap again'):s==='latest'?(hi?'ऐप पहले से नया है':'App is already up to date'):'';
+  if(m&&btn&&btn.parentNode){btn.parentNode.querySelector('span').innerText='⬆ '+m;}if(/^error|allow|latest/.test(s)||k>60){clearInterval(t);if(btn){btn.disabled=false;btn.innerText=hi?'अपडेट':'Update';}}},1000);}catch(e){}}
 /* on start inside the app: missing permissions → one gentle nudge; newer app on the website → update bar */
 try{setTimeout(function(){if(!brNative()||!USER)return;var p=natPerms();
     if(p&&(p.camera===false||p.mic===false||p.gallery===false)){var k='SSM_WOS_PERMNAG';var t=0;try{t=+sessionStorage.getItem(k)||0;}catch(e){}
@@ -5746,7 +5750,7 @@ try{setTimeout(function(){if(!brNative()||!USER)return;var p=natPerms();
     fetch(siteBase()+'bridge/version.json?t='+now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(v){var mine='';try{mine=SaiNative.version();}catch(e){}
       function n(x){var a=(''+x).split('.');return (+a[0]||0)*100000+(+a[1]||0);}
       if(v&&v.ver&&mine&&n(v.ver)>n(mine)){var b=document.createElement('div');b.id='appUpd';b.style.cssText='position:fixed;left:10px;right:10px;top:10px;z-index:450;background:#0B72E7;color:#fff;border-radius:12px;padding:12px 14px;font:600 15px Roboto,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.3);display:flex;gap:10px;align-items:center';
-        b.innerHTML='<span style="flex:1">⬆ '+(LANG==='hi'?'SAI WOS ऐप का नया वर्ज़न':'New SAI WOS app')+' v'+esc(v.ver)+'</span><a href="'+siteBase()+'bridge/sai-print.apk?v='+esc(v.ver)+'" download="SAI-WOS-'+esc(v.ver)+'.apk" style="background:#fff;color:#0B72E7;border-radius:18px;padding:6px 12px;text-decoration:none">'+(LANG==='hi'?'अपडेट':'Update')+'</a><span onclick="this.parentNode.remove()" style="cursor:pointer">✕</span>';
+        b.innerHTML='<span style="flex:1">⬆ '+(LANG==='hi'?'SAI WOS ऐप का नया वर्ज़न':'New SAI WOS app')+' v'+esc(v.ver)+'</span>'+(typeof SaiNative.appUpdate==='function'?'<button onclick="appUpdNow(this)" style="background:#fff;color:#0B72E7;border:0;border-radius:18px;padding:6px 12px;font:inherit">'+(LANG==='hi'?'अपडेट':'Update')+'</button>':'<a href="'+siteBase()+'bridge/sai-print.apk?v='+esc(v.ver)+'" download="SAI-WOS-'+esc(v.ver)+'.apk" style="background:#fff;color:#0B72E7;border-radius:18px;padding:6px 12px;text-decoration:none">'+(LANG==='hi'?'अपडेट':'Update')+'</a>')+'<span onclick="this.parentNode.remove()" style="cursor:pointer">✕</span>';
         document.body.appendChild(b);}}).catch(function(){});},4000);}catch(e){}
 
 /* ================= 🖨 PRINT CENTER — preview after save, thermal + regular themes, printer settings, barcode labels =================

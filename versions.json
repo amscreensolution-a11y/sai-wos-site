@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.39",
+  "date": "2026-11-27",
+  "notes": "Auto-update for the Android app",
+  "hi": "Android ऐप अपने आप अपडेट"
+ },
+ {
   "v": "9.38",
   "date": "2026-11-25",
   "notes": "Technicians see if a part is IN STOCK (and where) before asking; reception gets 'in stock — please give'. Supplier list skips what is in stock and adds shop items running low (sold this month, at or below minimum). Weekly technician leaderboard with points (repairs, happy customers, on time, minus unhappy and comebacks) on TODAY and the technician screen. Biller warns when a rate is far below what you usually charge.",
