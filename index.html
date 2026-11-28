@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.40';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.41';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -953,6 +953,20 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 .tfHt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.tfHt b{font-size:14.5px}.tfHt small{font-size:12px;color:var(--dim)}.tfHand .r,.tdSec .r{color:var(--red)}
 .tfHand.late{background:rgba(239,68,68,.06)}.tfHb{display:flex;flex-direction:column;gap:4px}.tfHb .tkB{white-space:nowrap}
 .pfR{padding:8px 0;border-bottom:1px solid var(--line)}.pfR b{display:block;margin-bottom:6px}.pfPop .twOrd button.on{background:var(--grn);color:#fff;border-color:var(--grn)}
+/* v9.42 — old phones entry */
+.oiF{display:flex;flex-direction:column;gap:9px}
+.oiPh{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:120px;border:2px dashed var(--cyn);border-radius:14px;cursor:pointer;color:var(--cyn);font-weight:800;overflow:hidden;background:var(--panel)}
+.oiPh b{font-size:40px}.oiPh input{position:absolute;inset:0;opacity:0;cursor:pointer}.oiPh.has{border-style:solid;min-height:0}.oiPh img{width:100%;max-height:220px;object-fit:cover}.oiPh.has span{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.6);color:#fff;border-radius:8px;padding:3px 8px;font-size:12px}
+.oiIn{width:100%;box-sizing:border-box;font-size:17px;padding:12px;border-radius:10px;border:1.5px solid var(--line2);background:var(--bg);color:var(--txt);font-family:inherit}.oiIn:focus{border-color:var(--cyn);outline:0}
+.oiRow{display:flex;gap:8px}.oiRow .oiIn{flex:1;min-width:0}
+.oiChips{display:flex;flex-wrap:wrap;gap:6px}.oiChips button{border:1px solid var(--line2);background:var(--panel);color:var(--txt);border-radius:16px;padding:6px 11px;font:inherit;font-size:13.5px;cursor:pointer}.oiChips button.on{background:var(--cyn);color:#fff;border-color:var(--cyn)}
+.oiLbl{font-weight:800;font-size:14px;margin-top:4px}.oiLbl b{color:var(--cyn)}
+.oiDays,.oiSt{flex-wrap:wrap}.oiDays input[type=date]{font:inherit;font-size:14px;padding:6px 8px;border-radius:8px;border:1px solid var(--line2);background:var(--panel);color:var(--txt)}.oiDays input.on{border-color:var(--cyn);box-shadow:0 0 0 2px var(--cyn)}
+.oiGo{font-size:18px;padding:16px}.oiDup{margin-top:6px;color:var(--red);font-weight:700;font-size:13px}
+.oiR{display:flex;gap:9px;align-items:center;padding:8px 2px;border-bottom:1px solid var(--line);cursor:pointer}.oiR img{width:46px;height:46px;border-radius:9px;object-fit:cover;flex:0 0 46px}.oiR .tdT{flex:1;min-width:0}
+.oiTag{background:#7c3aed;color:#fff;border-radius:6px;padding:0 6px;font-size:11px}
+.tfOiL{font-size:12.5px;color:var(--dim);font-weight:600;margin-bottom:4px}
+.mmBig.old{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff}
 </style>
 </head>
 <body>
@@ -960,7 +974,7 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.41</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.42</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -1052,7 +1066,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.41';
+var APP_VER='9.42';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -8632,7 +8646,7 @@ function render(force){if(!USER)return;var _TL=tabList();if(_TL.indexOf(curTab)<
     if(curTab==='NEWJOB'||curTab==='SETTINGS'){
       if(curTab==='NEWJOB'){var sw=document.getElementById('sbWrap');if(sw)sw.innerHTML=subsBanner();}
       if(ovlJob)openJob(ovlJob,true);return;}}
-  var f={MOBILES:vMobiles,TEAM:vTeam,QBILL:vQuickBill,EXPRESS:vExpress,LIVE:vLive,NEWJOB:vNewJob,BOARD:vBoard,JOBS:vTech,SEARCH:vSearch,SCAN:vScan,SHOP:vShop,QUICK:vQuick,TRACK:vTrack,FASTBILL:vFastBill,DAYBOOK:vDayBook2,ANALYTICS:vAnalytics,TODAY:vToday,RATES:vRates,REGISTER:vRegister,ITEMS:vItems,STOCK:vStock,PHOTOS:vPhotos,PRINTS:vPrints,DASH:vDash,INSIGHTS:vInsights,BILLER:vBiller,STAFF:vStaff2,REPORTS:vReports,AUDIT:vAudit,SETTINGS:vSettings}[curTab];
+  var f={MOBILES:vMobiles,OLDIN:vOldIn,TEAM:vTeam,QBILL:vQuickBill,EXPRESS:vExpress,LIVE:vLive,NEWJOB:vNewJob,BOARD:vBoard,JOBS:vTech,SEARCH:vSearch,SCAN:vScan,SHOP:vShop,QUICK:vQuick,TRACK:vTrack,FASTBILL:vFastBill,DAYBOOK:vDayBook2,ANALYTICS:vAnalytics,TODAY:vToday,RATES:vRates,REGISTER:vRegister,ITEMS:vItems,STOCK:vStock,PHOTOS:vPhotos,PRINTS:vPrints,DASH:vDash,INSIGHTS:vInsights,BILLER:vBiller,STAFF:vStaff2,REPORTS:vReports,AUDIT:vAudit,SETTINGS:vSettings}[curTab];
   if(f){if(typing)swapKeep(v,f);else f(v);_renderedTab=curTab;} if(ovlJob)openJob(ovlJob,true);}
 function bilDraw(){var v=document.getElementById('view');if(!v)return;var fn=curTab==='BILLER'?vBiller:curTab==='QBILL'?vQuickBill:null;if(!fn)return;
   var a=document.activeElement;if(a&&v.contains(a)&&isTyping(a))swapKeep(v,fn);else fn(v);}
@@ -10952,6 +10966,111 @@ var _vToday941=vToday;vToday=function(v){_vToday941(v);try{var r=role();if(r==='
   var bad=H.filter(function(x){return FIN_ST.indexOf(x.j.st)>=0||now()-x.ts>864e5;}).length;
   var h=tdSec('hand','📦',(hi?'पार्ट टेक्नीशियन के पास — अभी लगे नहीं':'Parts with technicians — not fitted yet')+(bad?' · <span class="r">⚠ '+bad+'</span>':''),H.length,H.map(function(x){return tfHandRow(x,true);}).join(''),'var(--amb)');
   var a=box.querySelector('#td_parts');if(a)a.insertAdjacentHTML('afterend',h);else{var w=box.querySelector('#td_low')||box.querySelector('.lbP')||box.querySelector('#td_watch');if(w)w.insertAdjacentHTML('beforebegin',h);else box.insertAdjacentHTML('beforeend',h);}}catch(e){}};
+
+
+/* ======================================================================================
+   v9.42 — ⏪ OLD PHONES: phones that were already in the shop before the app. The mobile manager enters them super fast
+   (📸 photo · mobile → name fills by itself · model · problem chips · amount · the day it came · where it is now) and one tap
+   saves + prints a barcode sticker marked "OLD ENTRY · CAME <date>". The job keeps the real day it came, so it sits in
+   the right place in "first come, first done" and shows "pending N days". Duplicate check, reprint, no new-job alarms.
+   ====================================================================================== */
+var OI={f:{ph:'',day:1,ts:0,unk:0,st:'NEW'},prob:{}};
+tabLbl.OLDIN='⏪ OLD PHONES';
+(function(){var _tld=tabListDef;tabListDef=function(r){var L=_tld(r).slice(),rr=r||role();if(['manager','reception','owner'].indexOf(rr)<0||L.indexOf('OLDIN')>=0)return L;var i=L.indexOf('MOBILES');L.splice(i>=0?i+1:L.length,0,'OLDIN');return L;};})();
+(function(){var _tlf=tabListFor;tabListFor=function(r,id){var L=_tlf(r,id).slice(),i=L.indexOf('MOBILES');if(i>=0&&L.indexOf('OLDIN')<0)L.splice(i+1,0,'OLDIN');return L;};})();
+try{if(ALL_TABS.indexOf('OLDIN')<0)ALL_TABS.splice(ALL_TABS.indexOf('MOBILES')+1,0,'OLDIN');}catch(e){}
+function oiCame(f){f=f||OI.f;if(f.unk)return dayStart()-864e5;if(f.ts)return f.ts;if(!f.day)return now();return dayStart()-f.day*864e5+10*36e5;}
+function oiCameTxt(j){var hi=LANG==='hi',p=j.past||{};if(p.unk)return hi?'आने का दिन पता नहीं (पुराना)':'came: day not known (old)';var d=Math.round((dayStart()-dayStart(j.createdAt))/864e5);
+  return (hi?'आया ':'came ')+fmtD(j.createdAt)+(d>0?' · '+d+(hi?' दिन पहले':' day'+(d>1?'s':'')+' ago'):(hi?' · आज':' · today'));}
+function oiModels(){var m={};jobsArr().forEach(function(j){var k=((j.c.brand||'')+' '+(j.c.model||'')).trim();if(k)m[k]=(m[k]||0)+1;});return Object.keys(m).sort(function(a,b){return m[b]-m[a];}).slice(0,60);}
+var OI_PROB=[['📱','Display'],['🔋','Battery'],['🔌','Charging'],['🔊','Speaker'],['🎤','Mic'],['💧','Water damage'],['💀','Dead'],['⚙','Software'],['📷','Camera'],['🪟','Back glass'],['🔘','Button'],['📶','Network']];
+function oiGrab(){['name','mob','model','prob','amt','adv'].forEach(function(k){var e=document.getElementById('oi_'+k);if(e)OI.f[k]=e.value;});}
+function oiSet(k,v){oiGrab();if(k==='day'){OI.f.day=v;OI.f.ts=0;OI.f.unk=0;}else if(k==='unk'){OI.f.unk=1;OI.f.ts=0;}else if(k==='ts'){OI.f.ts=v?new Date(v+'T10:00').getTime():0;OI.f.unk=0;}else OI.f[k]=v;render(1);}
+function oiProb(p){oiGrab();var cur=(OI.f.prob||'').split(',').map(function(x){return x.trim();}).filter(Boolean),i=cur.indexOf(p);if(i>=0)cur.splice(i,1);else cur.push(p);OI.f.prob=cur.join(', ');render(1);}
+function oiPhoto(inp){var f=inp.files&&inp.files[0];if(!f)return;var img=new Image(),rd=new FileReader();
+  rd.onload=function(){img.onload=function(){var c=document.createElement('canvas'),s=Math.min(1,560/Math.max(img.width,img.height));c.width=img.width*s;c.height=img.height*s;c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    oiGrab();OI.f.ph=c.toDataURL('image/jpeg',.6);render(1);setTimeout(function(){var m=document.getElementById(OI.f.mob?'oi_model':'oi_mob');if(m)m.focus();},80);};img.src=rd.result;};rd.readAsDataURL(f);}
+function oiMob(e){var m=(e.value||'').replace(/\D/g,'').slice(0,10);if(e.value!==m)e.value=m;var h=document.getElementById('oiHint');
+  if(m.length===10){var D=null;try{D=custData(m);}catch(x){}var n=document.getElementById('oi_name');if(D&&D.name&&n&&!n.value.trim()){n.value=D.name;}
+    try{if(h)h.innerHTML=bilCustHintHtml(m);}catch(x){}var dup=oiDups(m,'');if(dup.length&&h)h.insertAdjacentHTML('beforeend','<div class="oiDup">⚠ '+(LANG==='hi'?'इस नंबर के फोन पहले से दुकान में: ':'Already in the shop for this number: ')+dup.map(function(j){return '<b>'+esc(j.id)+'</b> '+esc((j.c.brand||'')+' '+(j.c.model||''));}).join(', ')+'</div>');
+    if(n&&!n.value.trim())n.focus();else{var md=document.getElementById('oi_model');if(md&&!md.value)md.focus();}}else if(h)h.innerHTML='';}
+function oiDups(mob,model){var M=(''+model).toUpperCase().replace(/\s+/g,'');return jobsArr().filter(function(j){if(j.st==='DELIVERED'||j.noRep||tdMob((j.c||{}).mob)!==mob)return false;if(!M)return true;var jm=((j.c.brand||'')+(j.c.model||'')).toUpperCase().replace(/\s+/g,'');return jm.indexOf(M)>=0||M.indexOf((j.c.model||'').toUpperCase().replace(/\s+/g,''))>=0;});}
+function oiToday(){var ds=dayStart();return jobsArr().filter(function(j){return j.past&&j.past.ts>=ds;}).sort(function(a,b){return b.past.ts-a.past.ts;});}
+function vOldIn(v){var hi=LANG==='hi',f=OI.f,T=(DB.staff||[]).filter(function(s){return s.role==='tech'&&s.active!==false;}),cur=(f.prob||'').split(',').map(function(x){return x.trim();});
+  var days=[[0,hi?'आज':'Today'],[1,hi?'कल':'Yesterday'],[2,hi?'2 दिन':'2 days'],[3,hi?'3 दिन':'3 days'],[7,hi?'1 हफ़्ता':'1 week'],[15,hi?'15 दिन':'15 days'],[30,hi?'1 महीना':'1 month']];
+  var came=oiCame(),L=oiToday(),allOld=jobsArr().filter(function(j){return j.past&&j.st!=='DELIVERED';}).length;
+  var h='<div id="oiV"><div class="panel oiHead"><h2>⏪ '+(hi?'पुराने फोन — जो पहले से दुकान में हैं':'OLD PHONES — already in the shop')+'</h2><div class="anDim">'+(hi?'फोटो · नंबर · मॉडल · खराबी · रकम · कब आया → सेव + बारकोड स्टिकर ("पुरानी एंट्री" और आने की तारीख के साथ)':'Photo · number · model · problem · amount · when it came → saved + barcode sticker marked "OLD ENTRY" with the day it came')+'</div>'
+    +'<div class="chK"><div><b>'+L.length+'</b><span>'+(hi?'आज डाले':'entered today')+'</span></div><div><b>'+allOld+'</b><span>'+(hi?'पुराने फोन दुकान में':'old phones in shop')+'</span></div></div></div>'
+    +'<div class="panel oiF">'
+    +'<label class="oiPh'+(f.ph?' has':'')+'">'+(f.ph?'<img src="'+f.ph+'" alt=""><span>🔄 '+(hi?'फोटो बदलें':'Change photo')+'</span>':'<b>📸</b><span>'+(hi?'फोन की फोटो लें':'TAKE PHOTO OF THE PHONE')+'</span>')+'<input type="file" accept="image/*" capture="environment" onchange="oiPhoto(this)"></label>'
+    +'<div class="oiRow"><input id="oi_mob" class="oiIn" inputmode="numeric" maxlength="10" autocomplete="off" placeholder="📞 '+(hi?'मोबाइल नंबर':'Mobile number')+'" value="'+esc(f.mob||'')+'" oninput="oiMob(this)"><input id="oi_name" class="oiIn" autocomplete="off" placeholder="👤 '+(hi?'ग्राहक का नाम':'Customer name')+'" value="'+esc(f.name||'')+'"></div><div id="oiHint"></div>'
+    +'<input id="oi_model" class="oiIn" list="oiMl" autocomplete="off" placeholder="📱 '+(hi?'मॉडल (जैसे Vivo Y20)':'Model (e.g. Vivo Y20)')+'" value="'+esc(f.model||'')+'"><datalist id="oiMl">'+oiModels().map(function(m){return '<option value="'+esc(m)+'">';}).join('')+'</datalist>'
+    +'<div class="oiChips">'+OI_PROB.map(function(p){return '<button class="'+(cur.indexOf(p[1])>=0?'on':'')+'" onclick="oiProb(\''+p[1]+'\')">'+p[0]+' '+p[1]+'</button>';}).join('')+'</div>'
+    +'<input id="oi_prob" class="oiIn" autocomplete="off" placeholder="🔧 '+(hi?'खराबी':'Problem')+'" value="'+esc(f.prob||'')+'">'
+    +'<div class="oiRow"><input id="oi_amt" class="oiIn" inputmode="numeric" autocomplete="off" placeholder="₹ '+(hi?'रकम':'Amount')+'" value="'+esc(f.amt||'')+'"><input id="oi_adv" class="oiIn" inputmode="numeric" autocomplete="off" placeholder="₹ '+(hi?'एडवांस मिला (हो तो)':'Advance taken (if any)')+'" value="'+esc(f.adv||'')+'"></div>'
+    +'<div class="oiLbl">📅 '+(hi?'फोन कब आया था?':'When did the phone come?')+' <b>'+(f.unk?(hi?'पता नहीं':'not known'):fmtD(came))+'</b></div>'
+    +'<div class="twOrd oiDays">'+days.map(function(d){return '<button class="'+(!f.unk&&!f.ts&&f.day===d[0]?'on':'')+'" onclick="oiSet(\'day\','+d[0]+')">'+d[1]+'</button>';}).join('')
+    +'<button class="'+(f.unk?'on':'')+'" onclick="oiSet(\'unk\')">❓ '+(hi?'पता नहीं':'Not known')+'</button><input type="date" class="'+(f.ts?'on':'')+'" value="'+(f.ts?new Date(f.ts).toISOString().slice(0,10):'')+'" max="'+new Date().toISOString().slice(0,10)+'" onchange="oiSet(\'ts\',this.value)"></div>'
+    +'<div class="oiLbl">📍 '+(hi?'फोन अभी किस हाल में?':'Where is the phone now?')+'</div>'
+    +'<div class="twOrd oiSt"><button class="'+(f.st==='NEW'?'on':'')+'" onclick="oiSet(\'st\',\'NEW\')">⏳ '+(hi?'अभी बना नहीं':'Not repaired yet')+'</button>'
+    +T.map(function(s){return '<button class="'+(f.st===s.id?'on':'')+'" onclick="oiSet(\'st\',\''+s.id+'\')">🔧 '+esc(s.name)+'</button>';}).join('')
+    +'<button class="'+(f.st==='READY'?'on':'')+'" onclick="oiSet(\'st\',\'READY\')">✔ '+(hi?'बन गया — ग्राहक को देना है':'Repaired — ready for customer')+'</button></div>'
+    +'<button class="bigBtn bAccept oiGo" onclick="oiSave(1)">💾 '+(hi?'सेव + 🖨 बारकोड प्रिंट':'SAVE + 🖨 PRINT BARCODE')+'</button>'
+    +'<button class="bigBtn bGhost" onclick="oiSave(0)">💾 '+(hi?'सिर्फ़ सेव':'SAVE ONLY')+'</button></div>';
+  h+='<div class="panel oiList"><h2>✔ '+(hi?'आज डाले गए पुराने फोन':'Old phones entered today')+' <b class="tdN">'+L.length+'</b></h2>'
+    +(L.length?L.map(function(j){var ps=photosOf(j);return '<div class="oiR" onclick="openJob(\''+j.id+'\')">'+(ps.length?'<img src="'+imgSrc(ps[0].d)+'" alt="">':'<span class="twNoP">📵</span>')
+      +'<div class="tdT"><div><b class="jid">'+esc(j.id)+'</b> '+esc(j.c.name||'')+' · '+esc(((j.c.brand||'')+' '+(j.c.model||'')).trim())+'</div><div class="tdS">⏪ '+oiCameTxt(j)+' · '+esc(j.c.prob||'')+(+j.c.est?' · ₹'+(+j.c.est):'')+' · '+stName(j.st)+(j.tech?' · 🔧 '+esc(techName(j.tech)):'')+'</div></div>'
+      +'<button class="tkB" onclick="event.stopPropagation();oiPrint(\''+j.id+'\')">🖨</button></div>';}).join(''):'<div class="twEmpty">'+(hi?'अभी कोई नहीं':'None yet')+'</div>')+'</div></div>';
+  v.innerHTML=h;}
+function oiSave(pr){oiGrab();var hi=LANG==='hi',f=OI.f,mob=(f.mob||'').replace(/\D/g,''),name=(f.name||'').trim(),model=(f.model||'').trim(),prob=(f.prob||'').trim();
+  if(!model&&!f.ph){toast('⚠ '+(hi?'मॉडल लिखें या फोटो लें':'Type the model or take a photo'));var m=document.getElementById('oi_model');if(m)m.focus();return;}
+  if(mob&&mob.length!==10){toast('⚠ '+(hi?'मोबाइल नंबर 10 अंक का':'Mobile number must be 10 digits'));return;}
+  if(!f._dupOk&&mob){var d=oiDups(mob,model);if(d.length){if(!confirm((hi?'यह फोन शायद पहले से डाला है: ':'This phone may already be entered: ')+d.map(function(j){return j.id+' '+(j.c.brand||'')+' '+(j.c.model||'');}).join(', ')+'\n\n'+(hi?'फिर भी नया बनाएँ?':'Create a new one anyway?')))return;}}
+  var n=nextN(),ts=now(),came=Math.min(oiCame(),ts),g=jobGuess(model),brand=g.brand||'',md=g.model||(model&&!g.brand?model.toUpperCase():model.toUpperCase().replace(brand,'').trim()),amt=+(''+f.amt).replace(/\D/g,'')||0,adv=+(''+f.adv).replace(/\D/g,'')||0;
+  var j={id:'R-'+pad(n,4),n:n,cid:custId(mob,name||'Customer'),createdAt:came,by:me().name,st:'NEW',tech:null,tray:'',
+    c:{name:name||(hi?'ग्राहक':'Customer'),mob:mob,wa:mob,brand:brand,model:md,imei:'',color:'',prob:prob,pat:'',acc:'',req:[],dtype:brand==='APPLE'?'iphone':'android',icheck:[],patSeq:null,pin:'',expTs:0,cond:'',scr:'',est:amt,adv:adv,exp:'',rem:'⏪ OLD ENTRY'},
+    tm:{created:came,accepted:0,started:0,finished:0,ready:0,delivered:0},notes:[],parts:[],chk:{},pF:f.ph?phSave(f.ph):'',pB:'',
+    pay:{amt:0,paid:adv,mode:'',status:'PENDING'},log:[],up:ts,past:{ts:ts,by:me().name,unk:f.unk?1:0}};
+  logA(j,'⏪ OLD PHONE ENTERED — '+(f.unk?'came: day not known':'came '+fmtD(came))+' — by '+me().name,'','NEW');
+  if(f.st==='READY'){j.st='READY';j.tm.finished=ts;j.tm.ready=ts;logA(j,'already repaired — READY for customer','NEW','READY');}
+  else if(f.st&&f.st!=='NEW'){j.tech=f.st;j.st='ASSIGNED';j.tm.accepted=came;logA(j,'with '+techName(f.st)+' (old entry)','NEW','ASSIGNED');}
+  DB.jobs[j.id]=j;_renderedTab='';save([j.id]);beep('done');
+  if(pr)oiPrint(j.id);
+  toast('✔ '+j.id+' '+(hi?'सेव':'saved')+(pr?' · 🖨':''));
+  OI.f={ph:'',day:f.day,ts:f.ts,unk:f.unk,st:f.st==='READY'?'READY':f.st};render(1);setTimeout(function(){var m=document.getElementById('oi_mob');if(m)m.focus();},80);return j.id;}
+/* the sticker: big R-number + barcode, "OLD ENTRY · CAME <date>", customer, model, problem, amount */
+function buildPastTag(j){var S=DB.settings,e='',t='',p=j.past||{};function b(x){e+=x;t+=x;}
+  var l4=(''+(j.c.mob||'')).slice(-4),d=Math.round((dayStart()-dayStart(j.createdAt))/864e5);
+  e+=ESCP.INIT+ESCP.CENTER;
+  e+=ESCP.B1+ESCP.BIG;b(A(j.id)+'\n');e+=ESCP.NORM+ESCP.B0;
+  e+=ebar(j.id,'8')+'\n';t+=ctr('['+j.id+']')+'\n';
+  e+=ESCP.B1+ESCP.BIG;b('** OLD ENTRY **\n');e+=ESCP.NORM+ESCP.B0;
+  e+=ESCP.B1;b((p.unk?'CAME: NOT KNOWN (OLD)':'CAME: '+A(fmtD(j.createdAt))+(d>0?' ('+d+(d>1?' DAYS':' DAY')+' AGO)':''))+'\n');e+=ESCP.B0;
+  b('Entered '+A(fmtDT(p.ts||now()))+'\n');
+  e+=ESCP.LEFT;b(eline());
+  e+=ESCP.B1+ESCP.BIG;b(A((j.c.name||'').toUpperCase()).slice(0,16)+'\n');e+=ESCP.NORM+ESCP.B0;
+  try{e+=hiNameBlock(j.c.name);}catch(x){}
+  if(l4)b('Mob ****'+l4+'\n');if(j.cid)b(A(j.cid)+'\n');
+  e+=ESCP.B1;b(A(((j.c.brand||'')+' '+(j.c.model||'')).toUpperCase()).slice(0,24)+'\n');e+=ESCP.B0;
+  b(eline());e+=ESCP.B1;b('FAULT\n');e+=ESCP.B0;b(ewrap(A(j.c.prob||'-')));
+  b(eline());
+  if(+j.c.est)b('Amount: Rs.'+(+j.c.est)+(+j.c.adv?'  Adv: Rs.'+(+j.c.adv)+'  Baki: Rs.'+Math.max(0,j.c.est-j.c.adv):'')+'\n');
+  b('Now: '+(j.st==='READY'?'READY FOR CUSTOMER':j.tech?'WITH '+A(techName(j.tech)).slice(0,14):'NOT REPAIRED YET')+'\n');
+  b(eline());e+=ESCP.B1;b('EXTRA WORK / PARTS\n');e+=ESCP.B0;b(wline(''));b(wline(''));
+  b('\n'+wline('AMOUNT Rs. '));b('\n');
+  e+=ESCP.CENTER;b(A(S.shop).slice(0,24)+'\n');
+  e+=ESCP.CUT;return {esc:e,txt:t};}
+function oiPrint(id,force){var j=DB.jobs[id];if(!j)return;var d=buildPastTag(j);
+  if(DB.settings.preview&&!force){previewShow(d,function(){oiPrint(id,1);},'⏪ OLD ENTRY '+id);return;}
+  var m=sendRaw(d);logPrint('oldtag',id,m);toast('🏷 '+(LANG==='hi'?'बारकोड प्रिंट':'barcode printed')+' — '+id);}
+/* old entries never ring the new-job alarm on technician phones */
+var _newJobPopup942=newJobPopup;newJobPopup=function(ids){return _newJobPopup942((ids||[]).filter(function(id){var j=DB.jobs[id];return !(j&&j.past);}));};
+/* technician lists say "⏪ old entry" + the real day it came */
+var _tfArr942=tfArr;tfArr=function(j){return j.past?'<b class="oiTag">⏪ '+(LANG==='hi'?'पुरानी एंट्री':'old entry')+'</b> '+(j.past.unk?oiCameTxt(j):_tfArr942(j)):_tfArr942(j);};
+/* the big technician card shows it too */
+var _tfFocus942=tfFocus;tfFocus=function(j,mode){var h=_tfFocus942(j,mode);try{if(j&&j.past){var d=Math.round((dayStart()-dayStart(j.createdAt))/864e5);h=h.replace('<div class="tfH">','<div class="tfOiL"><b class="oiTag">⏪ '+(LANG==='hi'?'पुरानी एंट्री':'old entry')+'</b> '+oiCameTxt(j)+(j.past.unk?'':tfDayTag(d))+'</div><div class="tfH">');}}catch(e){}return h;};
+/* mobile manager: a big button */
+var _vMobiles942=vMobiles;vMobiles=function(v){_vMobiles942(v);try{var a=v.querySelector('.mmActs');if(a)a.insertAdjacentHTML('beforeend','<button class="mmBig old" onclick="curTab=\'OLDIN\';render()">⏪ '+(LANG==='hi'?'पुराने फोन डालें + बारकोड':'OLD PHONES — ENTER + BARCODE')+'</button>');}catch(e){}};
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>
