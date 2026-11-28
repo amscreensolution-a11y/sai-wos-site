@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/* 🕘 front door: a phone that chose an older version goes to it; a version that keeps failing to start offers the previous one */
-var SAI_PREV='9.41';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
+var SAI_PREV='9.42';(function(){try{var L=localStorage,p=location.pathname,inV=/\/v\//.test(p),pv=L.getItem('SSM_WOS_PINVER');
  if(/[?&]latest\b/.test(location.search)){L.removeItem('SSM_WOS_PINVER');pv='';}
  if(pv&&!inV){location.replace(p.replace(/[^/]*$/,'')+'v/'+encodeURIComponent(pv)+'/'+location.hash);return;}
  var n=+(L.getItem('SSM_WOS_BOOTFAIL')||0)+1;L.setItem('SSM_WOS_BOOTFAIL',''+n);
@@ -967,6 +967,13 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 .oiTag{background:#7c3aed;color:#fff;border-radius:6px;padding:0 6px;font-size:11px}
 .tfOiL{font-size:12.5px;color:var(--dim);font-weight:600;margin-bottom:4px}
 .mmBig.old{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff}
+/* v9.43 — old phone bar on the quick bill */
+.oiBar{background:#F3EEFF;border:1.5px solid #7c3aed;border-radius:12px;margin:8px 10px;padding:9px 10px;color:#2d1b69}
+.oiBarT{font-weight:800;font-size:14.5px;margin-bottom:6px}.oiBarT b{color:#7c3aed}
+.oiBarC{display:flex;flex-wrap:wrap;gap:6px}.oiBarC button,.oiPick{border:1px solid #c4b5fd;background:#fff;color:#2d1b69;border-radius:16px;padding:6px 11px;font:inherit;font-size:13.5px;cursor:pointer;position:relative}
+.oiBarC button.on,.oiPick.on{background:#7c3aed;color:#fff;border-color:#7c3aed}.oiPick input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.oiBarS{font-size:11.5px;color:#6b5aa6;margin-top:6px}
+.oiBL{margin:10px;padding:8px 10px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#222}.oiBL h3{margin:2px 0 6px;font-size:14px}.oiBL .tdS{color:#666;font-size:12px}
 </style>
 </head>
 <body>
@@ -974,7 +981,7 @@ details.twAdm>summary::after{content:' ▾';color:var(--dim)}details.twAdm[open]
 <!-- LOGIN -->
 <div id="login">
   <div class="loginBox">
-    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.42</span></small></div>
+    <div class="brand">SAI WORKSHOP OS<small>SHRI SAI MOBILE &bull; KAWARDHA &bull; <span id="verTag" title="app versions" style="cursor:pointer;text-decoration:underline dotted">v9.43</span></small></div>
     <div class="staffGrid" id="staffGrid"></div>
     <div id="pinRow" class="hide"><label>PIN</label><input id="pinInp" type="text" inputmode="numeric" autocomplete="off" style="-webkit-text-security:disc" placeholder="Enter PIN"></div>
     <button class="goBtn" id="goBtn" onclick="doLogin()">ENTER TERMINAL</button>
@@ -1066,7 +1073,7 @@ window.addEventListener('unhandledrejection',function(ev){try{var r=ev&&ev.reaso
   if(/failed to fetch|networkerror|network request|offline|load failed|aborted|unavailable|deadline-exceeded/i.test(m))return;   /* shop internet drops are normal */
   errRec('async: '+m,(r&&r.stack||'').split('\n').slice(1,2).join('').trim().slice(0,120));}catch(e){}});
 /* ================= CORE STATE ================= */
-var APP_VER='9.42';
+var APP_VER='9.43';
 /* ---- device identity (survives wipes so blocks stick) ---- */
 function devModel(){try{var ua=navigator.userAgent||'';
   var m=ua.match(/Android[^;)]*;\s*([^);]+)/);if(m)return m[1].replace(/\s*Build.*/,'').trim().slice(0,24);
@@ -5331,7 +5338,7 @@ function bilNextPay(k){var m=0,pf=k==='in'?'PI-':'PO-';payArr().forEach(function
 function bilNextParty(){var m=0;partyArr().forEach(function(p){var n=+(''+p.id).replace('P-','');if(n>m)m=n;});return 'P-'+pad(m+1,4);}
 /* a background sync must never wipe what someone is typing */
 function bilBusy(){if(BIL.scr!=='home'&&BIL.scr!=='ledger')return true;var a=document.activeElement;return !!(a&&a.closest&&a.closest('#bil')&&/INPUT|TEXTAREA|SELECT/.test(a.tagName));}
-function vBiller(v){if(!DB.party)DB.party={};if(!DB.pay)DB.pay={};BIL.quick=curTab==='QBILL'?1:0;
+function vBiller(v){if(!DB.party)DB.party={};if(!DB.pay)DB.pay={};BIL.quick=(curTab==='QBILL'||curTab==='OLDIN')?1:0;
   var h={home:bilHome,sale:bilSale,pin:bilPay,pout:bilPay,newparty:bilNewParty,ledger:bilLedger,item:bilItem,preview:bilPreview2,pset:bilPset,labels:bilLabels}[BIL.scr]||bilHome;
   v.innerHTML='<div id="bil">'+h()+'</div>';bilAfter();}
 function bilGo(scr){BIL.scr=scr;BIL.sug=-1;bilDraw();try{document.getElementById('view').scrollTop=0;window.scrollTo(0,0);}catch(e){}}
@@ -5840,7 +5847,7 @@ function ipSet(path,val){var S=DB.settings,p=(''+path).split('.');S.ip=JSON.pars
   if(p.length===2){S.ip[p[0]]=S.ip[p[0]]||{};S.ip[p[0]][p[1]]=val;}else S.ip[p[0]]=val;
   if(path==='th.size')S.pwidth=(+val===58?58:80);metaSave();}
 var _ipLogo=null,_ipLogoSrc='';
-function ipLogo(){var s=DB.settings.logo||'';if(!s)return null;if(s!==_ipLogoSrc){_ipLogoSrc=s;_ipLogo=new Image();_ipLogo.onload=function(){if((curTab==='BILLER'||curTab==='QBILL')&&(BIL.scr==='preview'||BIL.scr==='pset'))bilDraw();};_ipLogo.src=s;}
+function ipLogo(){var s=DB.settings.logo||'';if(!s)return null;if(s!==_ipLogoSrc){_ipLogoSrc=s;_ipLogo=new Image();_ipLogo.onload=function(){if((curTab==='BILLER'||curTab==='QBILL'||curTab==='OLDIN')&&(BIL.scr==='preview'||BIL.scr==='pset'))bilDraw();};_ipLogo.src=s;}
   return _ipLogo&&_ipLogo.complete&&_ipLogo.naturalWidth?_ipLogo:null;}
 function ipDots(size){return {58:384,80:576,104:832}[+size]||384;}
 function ipSaleInfo(sl){var items=(sl.items||[]).map(function(c){var p=c.pid&&DB.prod[c.pid];return {name:c.name,qty:+c.qty||0,rate:+c.rate||0,mrp:+(c.mrp||(p&&p.mrp)||0)};});
@@ -6050,7 +6057,7 @@ function blCanvas(sl,B,dpi){B=B||blS();dpi=dpi||lblS().dpi||203;var dpm=dpi/25.4
   var L=[];if(B.shop)L.push({k:'t',t:sl.firm||S.shop||'',w:0.8,b:1});L.push({k:'t',t:'BILL '+sl.id+(sl.job?'  ·  '+sl.job:''),w:1.35,b:1});L.push({k:'bar',w:B.h>=40?3.2:2.2});
   if(B.cust&&(sl.cust||'').trim())L.push({k:'t',t:sl.cust,w:1.25,b:1});if(B.mob&&sl.mob)L.push({k:'t',t:'Mob: '+sl.mob,w:1.05,b:1});
   if(B.model&&sl.model)L.push({k:'t',t:sl.model,w:0.95});
-  if(B.lock&&sl.lock&&sl.lock.v&&(''+sl.lock.v).length){if(sl.lock.t==='pattern')L.push({k:'pat',w:B.h>=40?2.6:1.9});else L.push({k:'t',t:(sl.lock.t==='pwd'?'PWD: ':'PIN: ')+sl.lock.v,w:1.15,b:1});}if(B.items&&itxt)L.push({k:'t',t:itxt,w:0.9});if(B.date)L.push({k:'t',t:dt,w:0.85});
+  if(B.lock&&sl.lock&&sl.lock.v&&(''+sl.lock.v).length){if(sl.lock.t==='pattern')L.push({k:'pat',w:B.h>=40?2.6:1.9});else L.push({k:'t',t:(sl.lock.t==='pwd'?'PWD: ':'PIN: ')+sl.lock.v,w:1.15,b:1});}if(B.items&&itxt)L.push({k:'t',t:itxt,w:0.9});if(sl.past)L.push({k:'t',t:'OLD ENTRY · CAME '+(sl.past.unk?'?':dt.split(' ')[0]),w:1.05,b:1});else if(B.date)L.push({k:'t',t:dt,w:0.85});
   var mt=[];if(B.total)mt.push('Total ₹'+(+sl.total||0));if(B.due)mt.push(+sl.due>0?'Due ₹'+(+sl.due):'PAID');if(mt.length)L.push({k:'t',t:mt.join('  ·  '),w:1.2,b:1});
   var tw=0;L.forEach(function(l){tw+=l.w;});var unit=(H-2*pad)/tw,y=pad;
   L.forEach(function(l){var h=l.w*unit;if(l.k==='pat'){var seq=sl.lock.v,g=h*0.92,x0=pad+Math.round(IW*0.08),y0=y+(h-g)/2,st=g/3;function P(i){return {x:x0+st/2+(i%3)*st,y:y0+st/2+Math.floor(i/3)*st};}
@@ -8640,7 +8647,7 @@ function render(force){if(!USER)return;var _TL=tabList();if(_TL.indexOf(curTab)<
   if(same&&!force){
     if(curTab==='EXPRESS'){if(ovlJob)openJob(ovlJob,true);return;}   /* never wipe a half-typed express job */
     if(!user){
-      if((curTab==='BILLER'||curTab==='QBILL')&&bilBusy()){if(ovlJob)openJob(ovlJob,true);return;}   /* never wipe a half-made bill */
+      if((curTab==='BILLER'||curTab==='QBILL'||curTab==='OLDIN')&&bilBusy()){if(ovlJob)openJob(ovlJob,true);return;}   /* never wipe a half-made bill */
       if(curTab==='TEAM'&&teamBusy()){if(ovlJob)openJob(ovlJob,true);return;}
       if(curTab==='MOBILES'&&mmBusy()){if(ovlJob)openJob(ovlJob,true);return;}}
     if(curTab==='NEWJOB'||curTab==='SETTINGS'){
@@ -8648,7 +8655,7 @@ function render(force){if(!USER)return;var _TL=tabList();if(_TL.indexOf(curTab)<
       if(ovlJob)openJob(ovlJob,true);return;}}
   var f={MOBILES:vMobiles,OLDIN:vOldIn,TEAM:vTeam,QBILL:vQuickBill,EXPRESS:vExpress,LIVE:vLive,NEWJOB:vNewJob,BOARD:vBoard,JOBS:vTech,SEARCH:vSearch,SCAN:vScan,SHOP:vShop,QUICK:vQuick,TRACK:vTrack,FASTBILL:vFastBill,DAYBOOK:vDayBook2,ANALYTICS:vAnalytics,TODAY:vToday,RATES:vRates,REGISTER:vRegister,ITEMS:vItems,STOCK:vStock,PHOTOS:vPhotos,PRINTS:vPrints,DASH:vDash,INSIGHTS:vInsights,BILLER:vBiller,STAFF:vStaff2,REPORTS:vReports,AUDIT:vAudit,SETTINGS:vSettings}[curTab];
   if(f){if(typing)swapKeep(v,f);else f(v);_renderedTab=curTab;} if(ovlJob)openJob(ovlJob,true);}
-function bilDraw(){var v=document.getElementById('view');if(!v)return;var fn=curTab==='BILLER'?vBiller:curTab==='QBILL'?vQuickBill:null;if(!fn)return;
+function bilDraw(){var v=document.getElementById('view');if(!v)return;var fn=curTab==='BILLER'?vBiller:curTab==='QBILL'?vQuickBill:curTab==='OLDIN'?vOldIn:null;if(!fn)return;
   var a=document.activeElement;if(a&&v.contains(a)&&isTyping(a))swapKeep(v,fn);else fn(v);}
 
 /* ---------- 🔔 pop-ups only for recent alerts ---------- */
@@ -11071,6 +11078,46 @@ var _tfArr942=tfArr;tfArr=function(j){return j.past?'<b class="oiTag">⏪ '+(LAN
 var _tfFocus942=tfFocus;tfFocus=function(j,mode){var h=_tfFocus942(j,mode);try{if(j&&j.past){var d=Math.round((dayStart()-dayStart(j.createdAt))/864e5);h=h.replace('<div class="tfH">','<div class="tfOiL"><b class="oiTag">⏪ '+(LANG==='hi'?'पुरानी एंट्री':'old entry')+'</b> '+oiCameTxt(j)+(j.past.unk?'':tfDayTag(d))+'</div><div class="tfH">');}}catch(e){}return h;};
 /* mobile manager: a big button */
 var _vMobiles942=vMobiles;vMobiles=function(v){_vMobiles942(v);try{var a=v.querySelector('.mmActs');if(a)a.insertAdjacentHTML('beforeend','<button class="mmBig old" onclick="curTab=\'OLDIN\';render()">⏪ '+(LANG==='hi'?'पुराने फोन डालें + बारकोड':'OLD PHONES — ENTER + BARCODE')+'</button>');}catch(e){}};
+
+
+/* ======================================================================================
+   v9.43 — ⏪ OLD PHONES = the same QUICK BILLING screen + the same bill sticker, with one extra bar on top:
+   "When did the phone come?" (today / yesterday / 2 / 3 days / 1 week / 15 days / 1 month / not known / pick a date).
+   The bill, the repair job and the sticker all get that date; the sticker says "OLD ENTRY · CAME dd/mm/yy".
+   ====================================================================================== */
+function oiPastTs(P){P=P||{};if(P.unk)return dayStart()-864e5+10*36e5;if(P.ts)return P.ts;if(!P.day)return now();return dayStart()-P.day*864e5+10*36e5;}
+function oiPastApply(f){f=f||BIL.f;if(!f||!f.past)return;var d=new Date(oiPastTs(f.past));f.date=d.getFullYear()+'-'+bilPad(d.getMonth()+1)+'-'+bilPad(d.getDate());f.time=bilPad(d.getHours())+':'+bilPad(d.getMinutes());}
+function oiPastStart(){var f=BIL.f;if(!f||f.edit)return;f.past={day:OI.f.unk||OI.f.ts?0:(OI.f.day==null?1:OI.f.day),ts:OI.f.ts||0,unk:OI.f.unk||0};if(f.job&&!f.job.linked)f.job.on=1;oiPastApply(f);}
+function oiPast(k,v){var f=BIL.f;if(!f||!f.past)return;if(k==='day'){f.past={day:v,ts:0,unk:0};}else if(k==='unk'){f.past={day:0,ts:0,unk:1};}else if(k==='ts'){var t=v?new Date(v+'T10:00').getTime():0;if(!t||t>now())return;f.past={day:0,ts:t,unk:0};}
+  OI.f.day=f.past.day;OI.f.ts=f.past.ts;OI.f.unk=f.past.unk;oiPastApply(f);bilDraw();}
+function oiBar(){var f=BIL.f,P=f.past,hi=LANG==='hi',t=oiPastTs(P),on=function(d){return !P.unk&&!P.ts&&P.day===d;};
+  var days=[[0,hi?'आज':'Today'],[1,hi?'कल':'Yesterday'],[2,hi?'2 दिन':'2 days'],[3,hi?'3 दिन':'3 days'],[7,hi?'1 हफ़्ता':'1 week'],[15,hi?'15 दिन':'15 days'],[30,hi?'1 महीना':'1 month']];
+  return '<div class="oiBar"><div class="oiBarT">⏪ '+(hi?'पुराना फोन — कब आया था?':'OLD PHONE — when did it come?')+' <b>'+(P.unk?(hi?'पता नहीं':'not known'):fmtD(t))+'</b></div>'
+    +'<div class="oiBarC">'+days.map(function(d){return '<button class="'+(on(d[0])?'on':'')+'" onclick="oiPast(\'day\','+d[0]+')">'+d[1]+'</button>';}).join('')
+    +'<button class="'+(P.unk?'on':'')+'" onclick="oiPast(\'unk\')">❓ '+(hi?'पता नहीं':'Not known')+'</button>'
+    +'<label class="oiPick'+(P.ts?' on':'')+'">📅 '+(P.ts?fmtD(P.ts):(hi?'तारीख चुनें':'Pick date'))+'<input type="date" max="'+new Date().toISOString().slice(0,10)+'" value="'+(P.ts?new Date(P.ts).toISOString().slice(0,10):'')+'" onchange="oiPast(\'ts\',this.value)"></label></div>'
+    +'<div class="oiBarS">'+(hi?'बिल, रिपेयर जॉब और स्टिकर पर यही तारीख · स्टिकर पर "OLD ENTRY" छपेगा':'Bill, repair job and sticker get this date · the sticker says "OLD ENTRY"')+'</div></div>';}
+/* the OLD PHONES tab: quick billing in "old phone" mode */
+vOldIn=function(v){BIL.quick=1;if(!DB.party)DB.party={};if(!DB.pay)DB.pay={};
+  var ok={sale:1,preview:1,pset:1,item:1,newparty:1,labels:1};
+  if(BIL.scr==='sale'&&BIL.f&&!BIL.f.past&&!BIL.f.edit){if(bilHasData(BIL.f))bilHoldCur();BIL.f=null;}
+  if(!ok[BIL.scr]||(BIL.scr==='sale'&&!BIL.f)||(BIL.scr==='preview'&&!(BIL.pv&&DB.sale[BIL.pv.sid])))bilSaleStart('','',1);
+  vBiller(v);
+  try{if(BIL.scr==='sale'){var L=oiTodaySales(),hi=LANG==='hi';if(L.length){var b=v.querySelector('#bil');if(b)b.insertAdjacentHTML('beforeend','<div class="oiList oiBL"><h3>✔ '+(hi?'आज डाले गए पुराने फोन':'Old phones entered today')+' <b class="tdN">'+L.length+'</b></h3>'
+    +L.map(function(s){return '<div class="oiR"><div class="tdT"><div><b class="jid">'+esc(s.id)+'</b>'+(s.job?' · '+esc(s.job):'')+' · '+esc(s.cust||'')+(s.model?' · '+esc(s.model):'')+'</div><div class="tdS">⏪ '+(s.past.unk?(hi?'आने का दिन पता नहीं':'came: not known'):(hi?'आया ':'came ')+fmtD(s.ts))+' · ₹'+(+s.total||0)+(+s.due>0?' · due ₹'+(+s.due):'')+'</div></div><button class="tkB" onclick="blSheet(\''+s.id+'\')">🏷</button></div>';}).join('')+'</div>');}}}catch(e){}};
+function oiTodaySales(){var ds=dayStart();return saleArr().filter(function(s){return s.past&&s.past.ts>=ds;}).sort(function(a,b){return b.past.ts-a.past.ts;});}
+/* every new bill started in the OLD PHONES tab is an old-phone bill */
+var _bilSaleStart943=bilSaleStart;bilSaleStart=function(partyId,editId,noGo){var r=_bilSaleStart943.apply(this,arguments);try{if(curTab==='OLDIN'&&!editId)oiPastStart();}catch(e){}return r;};
+/* the bar on top of the bill */
+var _bilSale943=bilSale;bilSale=function(){var f=BIL.f;try{if(f&&f.past&&curTab!=='OLDIN'&&!bilHasData(f)){delete f.past;var d=new Date();f.date=d.getFullYear()+'-'+bilPad(d.getMonth()+1)+'-'+bilPad(d.getDate());f.time=bilPad(d.getHours())+':'+bilPad(d.getMinutes());}}catch(e){}
+  var h=_bilSale943();try{if(f&&f.past&&!f.edit){var i=h.indexOf('<div class="bInv">');h=i>=0?h.slice(0,i)+oiBar()+h.slice(i):oiBar()+h;}}catch(e){}return h;};
+/* saving: the bill + the job keep the old date, marked as an old entry */
+var _bilMakeJob943=bilMakeJob;bilMakeJob=function(sl,J){var id=_bilMakeJob943(sl,J);try{var P=window._oiPast,j=DB.jobs[id];if(P&&j){var t=Math.min(sl.ts||now(),now());j.createdAt=t;j.tm.created=t;j.past={ts:now(),by:me().name,unk:P.unk?1:0,bill:sl.id};
+  logA(j,'⏪ OLD PHONE (from bill '+sl.id+') — '+(P.unk?'came: day not known':'came '+fmtD(t)),'','');save([id]);}}catch(e){}return id;};
+var _bilSave943=bilSave;bilSave=function(andNew,after,skipStock){var f=BIL.f,P=f&&f.past&&!f.edit?JSON.parse(JSON.stringify(f.past)):null,t0=now()-1;window._oiPast=P;
+  try{return _bilSave943.apply(this,arguments);}finally{window._oiPast=null;
+    if(P){var s=saleArr().filter(function(x){return (x.up||0)>=t0&&!x.past;}).sort(function(a,b){return b.n-a.n;})[0];if(s){s.past={ts:now(),by:me().name,unk:P.unk?1:0};saveColl('sale',[s.id]);
+      DB.audit.push({ts:now(),by:me().name,jid:s.id,a:'⏪ OLD PHONE BILL — '+(P.unk?'came: not known':'came '+fmtD(s.ts)),f:'',t:''});}}}};
 
 </script>
 <script>if('serviceWorker' in navigator){try{navigator.serviceWorker.register('sw.js').catch(function(){});}catch(e){}}</script>
