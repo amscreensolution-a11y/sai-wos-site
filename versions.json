@@ -1,5 +1,11 @@
 [
  {
+  "v": "9.41",
+  "date": "2026-11-28",
+  "notes": "Technician sections: new on top, working, pending oldest-first, parts in hand",
+  "hi": "टेक्नीशियन: नए ऊपर, चल रहा, बाकी पुराना पहले, हाथ में पार्ट"
+ },
+ {
   "v": "9.40",
   "date": "2026-11-27",
   "notes": "Technician big-picture tiles, own work only, my work history, hold bill",
